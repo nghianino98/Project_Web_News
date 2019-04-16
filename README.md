@@ -11,10 +11,6 @@ Báo điện tử TH16 - News
 
 - [Source](./source)
 
-## Template sử dụng
-
-- [Link template](https://www.free-css.com/free-css-templates/page203/newsfeed)
-
 ## Front-end
 
 ### 1. Guest
