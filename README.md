@@ -4,8 +4,9 @@ Báo điện tử TH16 - News
 ## Thành viên
 
 - 1612421 Nguyễn Ngọc Nghĩa
+- 1612424 Đặng Ngọc Nghĩa
 - 1612425 Tạ Đăng Hiếu Nghĩa
-- 1612426 Đặng Ngọc Nghĩa
+
 
 ## Project
 
