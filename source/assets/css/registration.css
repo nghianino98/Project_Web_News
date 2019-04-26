@@ -1,0 +1,16 @@
+.btn-primary 
+{
+    background: #cf82ce;
+    border: none;
+    border-radius: 4px;
+    padding: 11px;
+    box-shadow: none;
+    margin-top: 26px;
+    text-shadow: none;
+    outline: none !important;
+}
+
+.btn-primary:hover, .btn-primary:active
+{
+    background: #b274b1;
+}
