@@ -39,6 +39,7 @@
     }
   }
   body {
+    min-width: 48rem;
     font-size: 0.9rem;
   }
   .page-wrapper .sidebar-wrapper,
@@ -478,4 +479,6 @@
   .chiller-theme .sidebar-footer>a:last-child {
       border-right: none;
   }
+
+
   
