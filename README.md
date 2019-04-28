@@ -1,4 +1,4 @@
-Báo điện tử TH16 - News
+﻿Báo điện tử TH16 - News
 ===
 
 ## Thành viên
@@ -15,10 +15,9 @@ Báo điện tử TH16 - News
 ## Front-end
 
 ### 1. Guest
-- [x] Hệ thống Menu ( Tạ Đăng Hiếu Nghĩa )
+- [x] Hệ thống Menu - Tìm kiếm bài viết ( Tạ Đăng Hiếu Nghĩa )
 - [x] Trang chủ ( Tạ Đăng Hiếu Nghĩa )
 - [x] Xem danh sách bài viết ( Tạ Đăng Hiếu Nghĩa )
-- [ ] Tìm kiếm bài viết ( Tạ Đăng Hiếu Nghĩa )
 - [ ] Xem chi tiết bài viết ( Đặng Ngọc Nghĩa )
 ### 2. Subcriber
 ### 3. Writer
