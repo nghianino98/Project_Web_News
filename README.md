@@ -15,21 +15,21 @@ Báo điện tử TH16 - News
 ## Front-end
 
 ### 1. Guest
-- [ ] Hệ thống Menu ( Tạ Đăng Hiếu Nghĩa )
-- [ ] Trang chủ ( Tạ Đăng Hiếu Nghĩa )
-- [ ] Xem danh sách bài viết ( Tạ Đăng Hiếu Nghĩa )
+- [x] Hệ thống Menu ( Tạ Đăng Hiếu Nghĩa )
+- [x] Trang chủ ( Tạ Đăng Hiếu Nghĩa )
+- [x] Xem danh sách bài viết ( Tạ Đăng Hiếu Nghĩa )
 - [ ] Tìm kiếm bài viết ( Tạ Đăng Hiếu Nghĩa )
 - [ ] Xem chi tiết bài viết ( Đặng Ngọc Nghĩa )
 ### 2. Subcriber
 ### 3. Writer
-- [ ] Đăng bài viết ( Nguyễn Ngọc Nghĩa )
-- [ ] Xem danh sách bài viết - Hiệu chỉnh bài viết ( Nguyễn Ngọc Nghĩa )
+- [x] Đăng bài viết ( Nguyễn Ngọc Nghĩa )
+- [x] Xem danh sách bài viết - Hiệu chỉnh bài viết ( Nguyễn Ngọc Nghĩa )
 ### 4. Editor
-- [ ] Danh sách bài viết `draft` theo chuyên mục quản lý ( Nguyễn Ngọc Nghĩa )
+- [x] Danh sách bài viết `draft` theo chuyên mục quản lý ( Nguyễn Ngọc Nghĩa )
 ### 5. Administrator 
 - [ ] Quản lý chuyên mục `category` ( Đặng Ngọc Nghĩa )
 - [ ] Quản lý nhãn `tag` ( Đặng Ngọc Nghĩa )
-- [ ] Quản lý bài viết (  Nguyễn Ngọc Nghĩa )
+- [x] Quản lý bài viết (  Nguyễn Ngọc Nghĩa )
 - [ ] Quản lý danh sách người dùng ( Tạ Đăng Hiếu Nghĩa )
 
 ### Yêu cầu chi tiết

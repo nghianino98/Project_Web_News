@@ -80,7 +80,7 @@ img:hover{opacity:0.75}
 .dropdown-menu > li > a{clear:both; color:#ddd; background-color:#222; padding:10px 20px; font-family:'Oswald',sans-serif; -webkit-transition:all 0.5s; -mz-transition:all 0.5s; -ms-transition:all 0.5s; -o-transition:all 0.5s; transition:all 0.5s}
 .dropdown-menu > li > a:hover, .dropdown-menu > li > a:focus{color:#fff}
 #newsSection{float:left; display:inline; width:100%; padding:0 30px; background-color:#fff; padding-bottom:20px}
-.latest_newsarea{float:left; display:inline; width:100%; background-color:#000; position:relative}
+.latest_newsarea{float:left; display:inline; width:100%; background-color:#303030; position:relative}
 .latest_newsarea span{ color:#fff; font-family:Oswald,sans-serif; font-size:15px; left:0; line-height:1.8em; margin-right:20px; overflow:hidden; padding:2px 18px 1px 19px; position:absolute; z-index:15}
 .social_area{ position:absolute; right:0; top:0; background:#fff; border-top:1px solid #ccc; border-bottom:1px solid #ccc; border-right:1px solid #ccc; height:31px}
 .social_nav{ text-align:right}
@@ -118,7 +118,7 @@ img:hover{opacity:0.75}
 .slick-prev, .slick-next{background-color:#000; top:10%; width:40px; height:40px}
 .slick-prev:hover, .slick-next:hover{opacity:0.5}
 .latest_post{float:left; display:inline; width:100%}
-.latest_post > h2{background:none repeat scroll 0 0 #151515; color:#fff; font-family:'Oswald',sans-serif; font-size:18px; margin-top:5px; font-weight:400; margin-bottom:10px; margin-left:0; padding:0; position:relative; text-align:center; text-transform:uppercase}
+.latest_post > h2{background:none repeat scroll 0 0 #303030; color:#fff; font-family:'Oswald',sans-serif; font-size:18px; margin-top:5px; font-weight:400; margin-bottom:10px; margin-left:0; padding:0; position:relative; text-align:center; text-transform:uppercase}
 .latest_post > h2 span{padding:4px 10px}
 .latest_postnav{height:400px !important; margin-top:20px}
 .latest_postnav li{margin-bottom:10px; float:left; width:100%}
@@ -129,11 +129,12 @@ img:hover{opacity:0.75}
 #contentSection{float:left; display:inline; width:100%; background-color:#fff; padding:0 30px}
 .left_content{float:left; display:inline; width:100%}
 .single_post_content{float:left; display:inline; width:100%; margin-bottom:20px}
-.single_post_content > h2{background:none repeat scroll 0 0 #151515; color:#fff; font-family:'Oswald',sans-serif; font-size:18px; font-weight:400; margin-bottom:10px; margin-left:0; margin-top:5px; padding:0; position:relative; text-align:center; text-transform:uppercase; margin-bottom:20px}
+.single_post_content > h2{background:none repeat scroll 0 0 #303030; color:#fff; font-family:'Oswald',sans-serif; font-size:18px; font-weight:400; margin-bottom:10px; margin-left:0; margin-top:5px; padding:0; position:relative; text-align:center; text-transform:uppercase; margin-bottom:20px}
 .single_post_content > h2 span{padding:4px 10px}
 .single_post_content_left{float:left; display:inline; width:49%}
 .business_catgnav{}
 .business_catgnav li{float:left; display:block; width:100%}
+/* Tạ Đăng Hiếu Nghĩa added */
 .bsbig_fig{width:100%}
 .bsbig_fig > a{display:block}
 .bsbig_fig > a img{width:100%}
@@ -144,6 +145,9 @@ img:hover{opacity:0.75}
 .spost_nav li{float:left; display:block; width:100%; margin-bottom:10px}
 /* .spost_nav .media-left{width:100px; height:80px} */
 .media-left > img{height:70px; width:90px}
+/* Tạ Đăng Hiếu Nghĩa added */
+.pic-left-articles > img{height:auto; width:300px; margin: 0 20 0 0 }
+.articles_one { display: flex; justify-content: space-between;}
 .spost_nav .media-body > a{font-family:"Oswald",sans-serif}
 .featured_img{position:relative}
 .overlay:hover{ background:none repeat scroll 0 0 rgba(0,0,0,0.4)}
@@ -178,7 +182,7 @@ figure.effect-layla:hover h2{padding-top:26%}
 figure.effect-layla:hover h2, figure.effect-layla:hover a{opacity:1; -webkit-transform:translate3d(0,-35px,0); transform:translate3d(0,-35px,0)}
 figure.effect-layla:hover figcaption::after, figure.effect-layla:hover h2, figure.effect-layla:hover a, figure.effect-layla:hover img{-webkit-transition-delay:0.15s; transition-delay:0.15s}
 .single_sidebar{float:left; display:inline; width:100%; margin-bottom:20px}
-.single_sidebar > h2{background:none repeat scroll 0 0 #151515; color:#fff; font-family:"Oswald",sans-serif; font-size:18px; font-weight:400; margin-bottom:10px; margin-left:0; margin-top:5px; padding:0; position:relative; text-align:center; text-transform:uppercase}
+.single_sidebar > h2{background:none repeat scroll 0 0 #303030; color:#fff; font-family:"Oswald",sans-serif; font-size:18px; font-weight:400; margin-bottom:10px; margin-left:0; margin-top:5px; padding:0; position:relative; text-align:center; text-transform:uppercase}
 .single_sidebar > h2 span{padding:4px 10px}
 .cat-item a{background:none repeat scroll 0 0 #e4e4e4; color:#888; display:block; float:left; border-bottom:none !important; font-size:13px; line-height:12px; margin:0 2px 2px 0; padding:12px 17px; -webkit-transition:all 0.5s; -mz-transition:all 0.5s; -ms-transition:all 0.5s; -o-transition:all 0.5s; transition:all 0.5s}
 .cat-item a:hover{color:#fff; text-decoration:none !important}
@@ -211,7 +215,7 @@ figure.effect-layla:hover figcaption::after, figure.effect-layla:hover h2, figur
 .nav-tabs > li{display:inline-block; float:none; width:32.55%}
 .nav-tabs{ text-align:center}
 .pagination > li > a, .pagination > li > span{background-color:#000; border:1px solid #000; color:#eee; margin-right:5px; -webkit-transition:all 0.5s; -o-transition:all 0.5s; transition:all 0.5s}
-.pagination > li > a:hover, .pagination > li > a:focus{background-color:#d083cf; color:#fff; border-color:#d083cf}
+.pagination > li > a:hover, .pagination > li > a:focus{background-color:#0a8ec4; color:#fff; border-color:#0a8ec4}
 .pagination > li:first-child > a, .pagination > li:first-child > span{border-bottom-left-radius:0; border-top-left-radius:0}
 .pagination > li:last-child > a, .pagination > li:last-child > span{border-bottom-right-radius:0; border-top-right-radius:0}
 .single_page{float:left; display:inline; width:100%}
@@ -289,3 +293,24 @@ figure.effect-layla:hover figcaption::after, figure.effect-layla:hover h2, figur
     justify-content: space-between;
 }
 .media-body-new .title-mini > a{font-family:"Oswald",sans-serif}
+
+/* Tạ Đăng Hiếu Nghĩa added */
+.material-icons.md-small { font-size: 12px; }
+.material-icons.md-home { font-size: 14px; margin: 0 0 0 0;border: 0 0 0 0; padding: 0 0 0 0 }
+.material-icons.md-medium { font-size: 14px;border: 0 0 0 0}
+.material-icons.md-36 { font-size: 36px; }
+.material-icons.md-48 { font-size: 48px; }
+
+.content-article {display:flex; flex-direction:column;justify-content:space-between}
+.content-article-around {display:flex; flex-direction:column;justify-content:space-around}
+.tag-text{display:flex;flex-direction:column;justify-content: space-around}
+.badge {margin: 0 0 0 0}
+hr {
+    display: block;
+    height: 1px;
+    border: 0;
+    border-top: 1px solid #ccc;
+    margin: 1em 0;
+    padding: 0;
+}
+.pagination-mid{display:flex;justify-content:center}
