@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-<title>NewsFeed | Pages | Single Page</title>
+<title>Báo điện tử TH16 - News</title>
 <meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -14,6 +14,8 @@
 <link rel="stylesheet" type="text/css" href="../assets/css/jquery.fancybox.css">
 <link rel="stylesheet" type="text/css" href="../assets/css/theme.css">
 <link rel="stylesheet" type="text/css" href="../assets/css/style.css">
+<link href="https://fonts.googleapis.com/icon?family=Material+Icons"
+      rel="stylesheet">
 <!--[if lt IE 9]>
 <script src="../assets/js/html5shiv.min.js"></script>
 <script src="../assets/js/respond.min.js"></script>
@@ -28,23 +30,9 @@
   <header id="header">
     <div class="row">
       <div class="col-lg-12 col-md-12 col-sm-12">
-        <div class="header_top">
-          <div class="header_top_left">
-            <ul class="top_nav">
-              <li><a href="../index.html">Home</a></li>
-              <li><a href="#">About</a></li>
-              <li><a href="contact.html">Contact</a></li>
-            </ul>
-          </div>
-          <div class="header_top_right">
-            <p>Friday, December 05, 2045</p>
-          </div>
-        </div>
-      </div>
-      <div class="col-lg-12 col-md-12 col-sm-12">
         <div class="header_bottom">
           <div class="logo_area"><a href="../index.html" class="logo"><img src="../images/logo.jpg" alt=""></a></div>
-          <div class="add_banner"><a href="#"><img src="../images/addbanner_728x90_V1.jpg" alt=""></a></div>
+          <!--<div class="add_banner"><a href="#"><img src="../images/addbanner_728x90_V1.jpg" alt=""></a></div>-->
         </div>
       </div>
     </div>
@@ -57,28 +45,65 @@
       <div id="navbar" class="navbar-collapse collapse">
         <ul class="nav navbar-nav main_nav">
           <li class="active"><a href="../index.html"><span class="fa fa-home desktop-home"></span><span class="mobile-show">Home</span></a></li>
-          <li><a href="#">Technology</a></li>
-          <li class="dropdown"> <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Mobile</a>
+          <li class="dropdown"> <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Xã hội</a>
             <ul class="dropdown-menu" role="menu">
-              <li><a href="#">Android</a></li>
-              <li><a href="#">Samsung</a></li>
-              <li><a href="#">Nokia</a></li>
-              <li><a href="#">Walton Mobile</a></li>
-              <li><a href="#">Sympony</a></li>
+              <li><a href="#">Chính trị</a></li>
+              <li><a href="#">Phóng sự - Ký sự</a></li>
+              <li><a href="#">Môi trường</a></li>
+              <li><a href="#">Giao thông</a></li>
+              <li><a href="#">Hồ sơ</a></li>
             </ul>
           </li>
-          <li><a href="#">Laptops</a></li>
-          <li><a href="#">Tablets</a></li>
-          <li><a href="contact.html">Contact Us</a></li>
-          <li><a href="404.html">404 Page</a></li>
+          <li class="dropdown"> <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Thế giới</a>
+            <ul class="dropdown-menu" role="menu">
+              <li><a href="#">Châu Á</a></li>
+              <li><a href="#">EU & Nga</a></li>
+              <li><a href="#">Châu Mỹ</a></li>
+            </ul>
+          </li>
+          <li class="dropdown"> <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Kinh doanh</a>
+            <ul class="dropdown-menu" role="menu">
+              <li><a href="#">Doanh nhân</a></li>
+              <li><a href="#">Tài chính</a></li>
+              <li><a href="#">Ngân hàng</a></li>
+              <li><a href="#">Nông sản</a></li>
+              <li><a href="#">Hải sản</a></li>
+              <li><a href="#">Bất động sản</a></li>
+              <li><a href="#">Khởi nghiệp</a></li>
+            </ul>
+          </li>
+          <li class="dropdown"> <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Thể thao</a>
+            <ul class="dropdown-menu" role="menu">
+              <li><a href="#">Bóng đá trong nước</a></li>
+              <li><a href="#">Bóng đá thế giới</a></li>
+              <li><a href="#">Thể thao trong nước</a></li>
+              <li><a href="#">Thể thao thế giới</a></li>
+            </ul>
+          </li>
+          <li class="dropdown"> <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Công nghệ</a>
+            <ul class="dropdown-menu" role="menu">
+              <li><a href="#">Máy tính - Mạng</a></li>
+              <li><a href="#">Di động - Viễn thông</a></li>
+              <li><a href="#">Điện tử tiêu dùng</a></li>
+              <li><a href="#">Nghe nhìn</a></li>
+              <li><a href="#">Phần mềm - Bảo mật</a></li>
+              <li><a href="#">Thị trường công nghệ</a></li>
+            </ul>
+          </li>
         </ul>
+        <form class="search-bar"> 
+          <input class="search-box form-control" type="search" placeholder="Search.." aria-label="Search">
+            <button type="submit" class="search-button btn btn-info">
+                <span class="glyphicon glyphicon-search"></span>
+            </button>
+        </form>
       </div>
     </nav>
   </section>
   <section id="newsSection">
     <div class="row">
       <div class="col-lg-12 col-md-12">
-        <div class="latest_newsarea"> <span>Latest News</span>
+        <div class="latest_newsarea"> <span>Tin mới nhất</span>
           <ul id="ticker01" class="news_sticker">
             <li><a href="#"><img src="../images/news_thumbnail3.jpg" alt="">My First News Item</a></li>
             <li><a href="#"><img src="../images/news_thumbnail3.jpg" alt="">My Second News Item</a></li>
@@ -107,41 +132,46 @@
     </div>
   </section>
   <section id="contentSection">
+    <ol class="breadcrumb">
+              <li><a href="../index.html">Home</a></li>
+              <li><a href="#">Technology</a></li>
+              <li class="active">Mobile</li>
+            </ol>          
+          <div class="single-big-img img-ovarlay" style="background-image: url(../images/single_post_img.jpg)">
+            <img class=" src="../images/single_post_img.jpg" alt="">
+          </div>
     <div class="row">
       <div class="col-lg-8 col-md-8 col-sm-8">
         <div class="left_content">
           <div class="single_page">
-            <ol class="breadcrumb">
-              <li><a href="../index.html">Home</a></li>
-              <li><a href="#">Technology</a></li>
-              <li class="active">Mobile</li>
-            </ol>
+            
             <h1>Morbi dapibus, enim quis luctus interdum</h1>
-            <div class="post_commentbox"> <a href="#"><i class="fa fa-user"></i>Wpfreeware</a> <span><i class="fa fa-calendar"></i>6:49 AM</span> <a href="#"><i class="fa fa-tags"></i>Technology</a> </div>
-            <div class="single_page_content"> <img class="img-center" src="../images/single_post_img.jpg" alt="">
+            <div class="post_commentbox"> <a href="#"><i class="fa fa-user"></i>Tác giả</a> <span><i class="fa fa-calendar"></i>02/05/2019 6:49 AM</span> <a href="#"><i class="fa fa-tags"></i>Technology</a> </div>
+            <div class="single_page_content"> 
               <p>Nunc tincidunt, elit non cursus euismod, lacus augue ornare metus, egestas imperdiet nulla nisl quis mauris. Suspendisse a pharetra urna. Morbi dui lectus, pharetra nec elementum eget, vulputate ut nisi. Aliquam accumsan, nulla sed feugiat vehicula, lacus justo semper libero, quis porttitor turpis odio sit amet ligula. Duis dapibus fermentum orci, nec malesuada libero vehicula ut. Integer sodales, urna eget interdum eleifend, nulla nibh laoreet nisl, quis dignissim mauris dolor eget mi. Donec at mauris enim. Duis nisi tellus, adipiscing a convallis quis, tristique vitae risus. Nullam molestie gravida lobortis. Proin ut nibh quis felis auctor ornare. Cras ultricies, nibh at mollis faucibus, justo eros porttitor mi, quis auctor lectus arcu sit amet nunc. Vivamus gravida vehicula arcu, vitae vulputate augue lacinia faucibus.</p>
-              <blockquote> Donec volutpat nibh sit amet libero ornare non laoreet arcu luctus. Donec id arcu quis mauris euismod placerat sit amet ut metus. Sed imperdiet fringilla sem eget euismod. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Pellentesque adipiscing, neque ut pulvinar tincidunt, est sem euismod odio, eu ullamcorper turpis nisl sit amet velit. Nullam vitae nibh odio, non scelerisque nibh. Vestibulum ut est augue, in varius purus. </blockquote>
+              <img class="img-center" src="../images/single_post_img.jpg" alt="">
+              <blockquote><div class="quote-text"> Donec volutpat nibh sit amet libero ornare non laoreet arcu luctus. Donec id arcu quis mauris euismod placerat sit amet ut metus. Sed imperdiet fringilla sem eget euismod.</div>
+              <div class="quote-name">TTH 6 -NEWS</div>
+               </blockquote>
               <ul>
                 <li>Nullam vitae nibh odio, non scelerisque nibh</li>
                 <li>Nullam vitae nibh odio, non scelerisque nibh</li>
-                <li>Nullam vitae nibh odio, non scelerisque nibh</li>
-                <li>Nullam vitae nibh odio, non scelerisque nibh</li>
+             
               </ul>
-              <h2>This is h2 title</h2>
-              <h3>This is h3 title</h3>
-              <h4>This is h4 title</h4>
-              <h5>This is h5 title</h5>
-              <h6>This is h6 Title</h6>
-              <button class="btn default-btn">Default</button>
-              <button class="btn btn-red">Red Button</button>
-              <button class="btn btn-yellow">Yellow Button</button>
-              <button class="btn btn-green">Green Button</button>
-              <button class="btn btn-black">Black Button</button>
-              <button class="btn btn-orange">Orange Button</button>
-              <button class="btn btn-blue">Blue Button</button>
-              <button class="btn btn-lime">Lime Button</button>
-              <button class="btn btn-theme">Theme Button</button>
+              <p>Nunc tincidunt, elit non cursus euismod, lacus augue ornare metus, egestas imperdiet nulla nisl quis mauris. Suspendisse a pharetra urna. Morbi dui lectus, pharetra nec elementum eget, vulputate ut nisi. Aliquam accumsan, nulla sed feugiat vehicula, lacus justo semper libero, quis porttitor turpis odio sit amet ligula. Duis dapibus fermentum orci, nec malesuada libero vehicula ut. Integer sodales, urna eget interdum eleifend, nulla nibh laoreet nisl, quis dignissim mauris dolor eget mi. Donec at mauris enim. Duis nisi tellus, adipiscing a convallis quis, tristique vitae risus. Nullam molestie gravida lobortis. Proin ut nibh quis felis auctor ornare. Cras ultricies, nibh at mollis faucibus, justo eros porttitor mi, quis auctor lectus arcu sit amet nunc. Vivamus gravida vehicula arcu, vitae vulputate augue lacinia faucibus.</p>
+
+              <div class="mt-30">
+                <i class="material-icons" id="icon-center">label</i>
+                <!-- <span href="#" class="badge badge-dark">#Ngoại hạng Anh</span> -->
+                <a href="#" class="badge badge-dark">#Ngoại hạng Anh</a>
+                <!-- <span href="#" class="badge badge-dark">#Top4</span> -->
+                <a href="#" class="badge badge-dark">#Top4</a>
+                <!-- <span href="#" class="badge badge-dark">#Derby London</span> -->
+                <a href="#" class="badge badge-dark">#Derby</a>
+              </div>
+           
             </div>
+            
             <div class="social_link">
               <ul class="sociallink_nav">
                 <li><a href="#"><i class="fa fa-facebook"></i></a></li>
@@ -151,25 +181,129 @@
                 <li><a href="#"><i class="fa fa-pinterest"></i></a></li>
               </ul>
             </div>
+
             <div class="related_post">
-              <h2>Related Post <i class="fa fa-thumbs-o-up"></i></h2>
+              <div class="border-bottom">
+                <h2>Bài viết gần đây <!--<i class="fa fa-thumbs-o-up"></i>--></h2>
+              </div>
               <ul class="spost_nav wow fadeInDown animated">
                 <li>
-                  <div class="media"> <a class="media-left" href="single_page.html"> <img src="../images/post_img1.jpg" alt=""> </a>
-                    <div class="media-body"> <a class="catg_title" href="single_page.html"> Aliquam malesuada diam eget turpis varius</a> </div>
+                  <div class="media"> <a class="media-left resize-img" href="single_page.html"> <img src="../images/post_img1.jpg" alt=""> </a>
+                    <div class="media-body"> <a class="catg_title" href="single_page.html"> Bài viết 1</a> </div>
                   </div>
                 </li>
                 <li>
-                  <div class="media"> <a class="media-left" href="single_page.html"> <img src="../images/post_img2.jpg" alt=""> </a>
-                    <div class="media-body"> <a class="catg_title" href="single_page.html"> Aliquam malesuada diam eget turpis varius</a> </div>
+                  <div class="media"> <a class="media-left resize-img" href="single_page.html"> <img src="../images/post_img2.jpg" alt=""> </a>
+                    <div class="media-body"> <a class="catg_title" href="single_page.html"> Bài viết 2</a> </div>
                   </div>
                 </li>
                 <li>
-                  <div class="media"> <a class="media-left" href="single_page.html"> <img src="../images/post_img1.jpg" alt=""> </a>
-                    <div class="media-body"> <a class="catg_title" href="single_page.html"> Aliquam malesuada diam eget turpis varius</a> </div>
+                  <div class="media"> <a class="media-left resize-img" href="single_page.html"> <img src="../images/post_img1.jpg" alt=""> </a>
+                    <div class="media-body"> <a class="catg_title" href="single_page.html"> Bài viết 3</a> </div>
                   </div>
                 </li>
               </ul>
+            </div>
+
+            <h2 class="page-header">Comments</h2>
+            <section class="comment-list">
+              <!-- First Comment -->
+              <article class="row">
+                <div class="col-md-2 col-sm-2 hidden-xs">
+                  <figure class="thumbnail">
+                    <img class="img-responsive" src="http://www.tangoflooring.ca/wp-content/uploads/2015/07/user-avatar-placeholder.png" />
+                    <figcaption class="text-center">username</figcaption>
+                  </figure>
+                </div>
+                <div class="col-md-10 col-sm-10">
+                  <div class="panel panel-default arrow left">
+                    <div class="panel-body">
+                      <header class="text-left">
+                        <div class="comment-user"><i class="fa fa-user"></i> That Guy</div>
+                        <time class="comment-date" datetime="16-12-2014 01:05"><i class="fa fa-clock-o"></i> Dec 16, 2014</time>
+                      </header>
+                      <div class="comment-post">
+                        <p>
+                          Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
+                        </p>
+                      </div>
+                      <p class="text-right"><a href="#" class="btn btn-default btn-sm"><i class="fa fa-reply"></i> reply</a></p>
+                    </div>
+                  </div>
+                </div>
+              </article>
+              <!-- Second Comment Reply -->
+              <article class="row">
+                <div class="col-md-2 col-sm-2 col-md-offset-1 col-sm-offset-0 hidden-xs">
+                  <figure class="thumbnail">
+                    <img class="img-responsive" src="http://www.tangoflooring.ca/wp-content/uploads/2015/07/user-avatar-placeholder.png" />
+                    <figcaption class="text-center">username</figcaption>
+                  </figure>
+                </div>
+                <div class="col-md-9 col-sm-9">
+                  <div class="panel panel-default arrow left">
+                    <div class="panel-heading right">Reply</div>
+                    <div class="panel-body">
+                      <header class="text-left">
+                        <div class="comment-user"><i class="fa fa-user"></i> That Guy</div>
+                        <time class="comment-date" datetime="16-12-2014 01:05"><i class="fa fa-clock-o"></i> Dec 16, 2014</time>
+                      </header>
+                      <div class="comment-post">
+                        <p>
+                          Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
+                        </p>
+                      </div>
+                      <p class="text-right"><a href="#" class="btn btn-default btn-sm"><i class="fa fa-reply"></i> reply</a></p>
+                    </div>
+                  </div>
+                </div>
+              </article>
+              <!-- Third Comment -->
+              <article class="row">
+                <div class="col-md-2 col-sm-2 hidden-xs">
+                  <figure class="thumbnail">
+                    <img class="img-responsive" src="http://www.tangoflooring.ca/wp-content/uploads/2015/07/user-avatar-placeholder.png" />
+                    <figcaption class="text-center">username</figcaption>
+                  </figure>
+                </div>
+                <div class="col-md-10 col-sm-10 col-xs-12">
+                  <div class="panel panel-default arrow left">
+                    <div class="panel-body">
+                      <header class="text-left">
+                        <div class="comment-user"><i class="fa fa-user"></i> That Guy</div>
+                        <time class="comment-date" datetime="16-12-2014 01:05"><i class="fa fa-clock-o"></i> Dec 16, 2014</time>
+                      </header>
+                      <div class="comment-post">
+                        <p>
+                          Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
+                        </p>
+                      </div>
+                      <p class="text-right"><a href="#" class="btn btn-default btn-sm"><i class="fa fa-reply"></i> reply</a></p>
+                    </div>
+                  </div>
+                </div>
+              </article>
+            </section>
+
+
+            <h2 class="page-header">Ý kiến bạn đọc</h2>
+            <div class="contact-form-area">
+                <form action="#" method="post">
+                  <div class="row">
+                      <div class="col-12 col-lg-6">
+                          <input type="text" class="comment-form form-control" id="name" placeholder="Your Name*" required="">
+                      </div>
+                      <div class="col-12 col-lg-6">
+                          <input type="email" class="comment-form form-control" id="email" placeholder="Your Email*" required="">
+                      </div>
+                      <div class="col-lg-12">
+                          <textarea name="message" class="comment-form form-control" id="message" cols="20" rows="10" placeholder="Message*" required=""></textarea>
+                      </div>
+                      <div class="col-lg-12 mb-30 text-align-r">
+                          <button class="btn btn-orange" type="submit">Submit Comment</button>
+                      </div>
+                  </div>
+              </form>
             </div>
           </div>
         </div>
@@ -186,26 +320,61 @@
       <div class="col-lg-4 col-md-4 col-sm-4">
         <aside class="right_content">
           <div class="single_sidebar">
-            <h2><span>Popular Post</span></h2>
+            <h2><span>Tin hot</span></h2>
             <ul class="spost_nav">
               <li>
                 <div class="media wow fadeInDown"> <a href="single_page.html" class="media-left"> <img alt="" src="../images/post_img1.jpg"> </a>
-                  <div class="media-body"> <a href="single_page.html" class="catg_title"> Aliquam malesuada diam eget turpis varius 1</a> </div>
+                  <div class="media-body"> <a href="single_page.html" class="catg_title"> Tin hot 1</a> </div>
                 </div>
               </li>
               <li>
                 <div class="media wow fadeInDown"> <a href="single_page.html" class="media-left"> <img alt="" src="../images/post_img2.jpg"> </a>
-                  <div class="media-body"> <a href="single_page.html" class="catg_title"> Aliquam malesuada diam eget turpis varius 2</a> </div>
+                  <div class="media-body"> <a href="single_page.html" class="catg_title"> Tin hot 2</a> </div>
                 </div>
               </li>
               <li>
                 <div class="media wow fadeInDown"> <a href="single_page.html" class="media-left"> <img alt="" src="../images/post_img1.jpg"> </a>
-                  <div class="media-body"> <a href="single_page.html" class="catg_title"> Aliquam malesuada diam eget turpis varius 3</a> </div>
+                  <div class="media-body"> <a href="single_page.html" class="catg_title"> Tin hot 3</a> </div>
                 </div>
               </li>
               <li>
                 <div class="media wow fadeInDown"> <a href="single_page.html" class="media-left"> <img alt="" src="../images/post_img2.jpg"> </a>
-                  <div class="media-body"> <a href="single_page.html" class="catg_title"> Aliquam malesuada diam eget turpis varius 4</a> </div>
+                  <div class="media-body"> <a href="single_page.html" class="catg_title"> Tin hot 4</a> </div>
+                </div>
+              </li>
+              <li>
+                <div class="media wow fadeInDown"> <a href="single_page.html" class="media-left"> <img alt="" src="../images/post_img2.jpg"> </a>
+                  <div class="media-body"> <a href="single_page.html" class="catg_title"> Tin hot 5</a> </div>
+                </div>
+              </li>
+            </ul>
+          </div>
+          <div class="single_sidebar">
+            <h2><span>Cùng chuyên mục</span></h2>
+            <ul class="spost_nav">
+              <li>
+                <div class="media wow fadeInDown"> <a href="single_page.html" class="media-left"> <img alt="" src="../images/post_img1.jpg"> </a>
+                  <div class="media-body"> <a href="single_page.html" class="catg_title"> Bài viết 1</a> </div>
+                </div>
+              </li>
+              <li>
+                <div class="media wow fadeInDown"> <a href="single_page.html" class="media-left"> <img alt="" src="../images/post_img2.jpg"> </a>
+                  <div class="media-body"> <a href="single_page.html" class="catg_title"> Bài viết 2</a> </div>
+                </div>
+              </li>
+              <li>
+                <div class="media wow fadeInDown"> <a href="single_page.html" class="media-left"> <img alt="" src="../images/post_img1.jpg"> </a>
+                  <div class="media-body"> <a href="single_page.html" class="catg_title">Bài viết 3</a> </div>
+                </div>
+              </li>
+              <li>
+                <div class="media wow fadeInDown"> <a href="single_page.html" class="media-left"> <img alt="" src="../images/post_img2.jpg"> </a>
+                  <div class="media-body"> <a href="single_page.html" class="catg_title"> Bài viết 4</a> </div>
+                </div>
+              </li>
+              <li>
+                <div class="media wow fadeInDown"> <a href="single_page.html" class="media-left"> <img alt="" src="../images/post_img2.jpg"> </a>
+                  <div class="media-body"> <a href="single_page.html" class="catg_title"> Bài viết 5</a> </div>
                 </div>
               </li>
             </ul>
@@ -213,19 +382,30 @@
           <div class="single_sidebar">
             <ul class="nav nav-tabs" role="tablist">
               <li role="presentation" class="active"><a href="#category" aria-controls="home" role="tab" data-toggle="tab">Category</a></li>
-              <li role="presentation"><a href="#video" aria-controls="profile" role="tab" data-toggle="tab">Video</a></li>
-              <li role="presentation"><a href="#comments" aria-controls="messages" role="tab" data-toggle="tab">Comments</a></li>
+              <li role="presentation"><a href="#tags" aria-controls="profile" role="tab" data-toggle="tab">Tags</a></li>
+              <li role="presentation"><a href="#video" aria-controls="messages" role="tab" data-toggle="tab">Video</a></li>
             </ul>
             <div class="tab-content">
-              <div role="tabpanel" class="tab-pane active" id="category">
+              <div role="tabpanel" class="tab-pane active" id="category">             
+                  <ul class="catagory-widgets">
+                    <li><a href="#"><span><i class="fa fa-angle-double-right" aria-hidden="true"></i> Life Style</span> <span style="float: right;">35</span></a></li>
+                    <li><a href="#"><span><i class="fa fa-angle-double-right" aria-hidden="true"></i> Travel</span> <span style="float: right;">30</span></a></li>
+                    <li><a href="#"><span><i class="fa fa-angle-double-right" aria-hidden="true"></i> Foods</span> <span style="float: right;">13</span></a></li>
+                    <li><a href="#"><span><i class="fa fa-angle-double-right" aria-hidden="true"></i> Game</span> <span style="float: right;">06</span></a></li>
+                    <li><a href="#"><span><i class="fa fa-angle-double-right" aria-hidden="true"></i> Sports</span> <span style="float: right;">28</span></a></li>
+                    <li><a href="#"><span><i class="fa fa-angle-double-right" aria-hidden="true"></i> Football</span> <span style="float: right;">08</span></a></li>
+                    <li><a href="#"><span><i class="fa fa-angle-double-right" aria-hidden="true"></i> TV Show</span> <span style="float: right;">13</span></a></li>
+                  </ul>
+              </div>
+              <div role="tabpanel" class="tab-pane" id="tags">
                 <ul>
-                  <li class="cat-item"><a href="#">Sports</a></li>
-                  <li class="cat-item"><a href="#">Fashion</a></li>
-                  <li class="cat-item"><a href="#">Business</a></li>
-                  <li class="cat-item"><a href="#">Technology</a></li>
-                  <li class="cat-item"><a href="#">Games</a></li>
-                  <li class="cat-item"><a href="#">Life &amp; Style</a></li>
-                  <li class="cat-item"><a href="#">Photography</a></li>
+                  <li class="cat-item"><a href="#">the thao</a></li>
+                  <li class="cat-item"><a href="#">giao duc</a></li>
+                  <li class="cat-item"><a href="#">cong nghe</a></li>
+                  <li class="cat-item"><a href="#">tin hot</a></li>
+                  <li class="cat-item"><a href="#">truyen</a></li>
+                  <li class="cat-item"><a href="#">tuyen sinh</a></li>
+                  <li class="cat-item"><a href="#">cong nhan</a></li>
                 </ul>
               </div>
               <div role="tabpanel" class="tab-pane" id="video">
@@ -233,33 +413,9 @@
                   <iframe width="100%" height="250" src="http://www.youtube.com/embed/h5QWbURNEpA?feature=player_detailpage" frameborder="0" allowfullscreen></iframe>
                 </div>
               </div>
-              <div role="tabpanel" class="tab-pane" id="comments">
-                <ul class="spost_nav">
-                  <li>
-                    <div class="media wow fadeInDown"> <a href="single_page.html" class="media-left"> <img alt="" src="../images/post_img1.jpg"> </a>
-                      <div class="media-body"> <a href="single_page.html" class="catg_title"> Aliquam malesuada diam eget turpis varius 1</a> </div>
-                    </div>
-                  </li>
-                  <li>
-                    <div class="media wow fadeInDown"> <a href="single_page.html" class="media-left"> <img alt="" src="../images/post_img2.jpg"> </a>
-                      <div class="media-body"> <a href="single_page.html" class="catg_title"> Aliquam malesuada diam eget turpis varius 2</a> </div>
-                    </div>
-                  </li>
-                  <li>
-                    <div class="media wow fadeInDown"> <a href="single_page.html" class="media-left"> <img alt="" src="../images/post_img1.jpg"> </a>
-                      <div class="media-body"> <a href="single_page.html" class="catg_title"> Aliquam malesuada diam eget turpis varius 3</a> </div>
-                    </div>
-                  </li>
-                  <li>
-                    <div class="media wow fadeInDown"> <a href="single_page.html" class="media-left"> <img alt="" src="../images/post_img2.jpg"> </a>
-                      <div class="media-body"> <a href="single_page.html" class="catg_title"> Aliquam malesuada diam eget turpis varius 4</a> </div>
-                    </div>
-                  </li>
-                </ul>
-              </div>
             </div>
           </div>
-          <div class="single_sidebar wow fadeInDown">
+          <!--<div class="single_sidebar wow fadeInDown">
             <h2><span>Sponsor</span></h2>
             <a class="sideAdd" href="#"><img src="../images/add_img.jpg" alt=""></a> </div>
           <div class="single_sidebar wow fadeInDown">
@@ -271,7 +427,7 @@
               <option>Technology</option>
               <option>Treads</option>
             </select>
-          </div>
+          </div>-->
           <div class="single_sidebar wow fadeInDown">
             <h2><span>Links</span></h2>
             <ul>
@@ -290,12 +446,7 @@
       <div class="row">
         <div class="col-lg-4 col-md-4 col-sm-4">
           <div class="footer_widget wow fadeInLeftBig">
-            <h2>Flickr Images</h2>
-          </div>
-        </div>
-        <div class="col-lg-4 col-md-4 col-sm-4">
-          <div class="footer_widget wow fadeInDown">
-            <h2>Tag</h2>
+            <h2>Category</h2>
             <ul class="tag_nav">
               <li><a href="#">Games</a></li>
               <li><a href="#">Sports</a></li>
@@ -309,19 +460,27 @@
           </div>
         </div>
         <div class="col-lg-4 col-md-4 col-sm-4">
+          <div class="footer_widget wow fadeInDown">
+            <h2>Address</h2>
+              227 Nguyễn Văn Cừ, Quận 5, Thành phố Hồ Chí Minh
+          </div>
+        </div>
+        <div class="col-lg-4 col-md-4 col-sm-4">
           <div class="footer_widget wow fadeInRightBig">
             <h2>Contact</h2>
-            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua Lorem ipsum dolor sit amet, consectetur adipisicing elit.</p>
+            <p>1612421 Nguyễn Ngọc Nghĩa</p>
+            <p>1612424 Đặng Ngọc Nghĩa</p>
+            <p>1612425 Tạ Đăng Hiếu Nghĩa</p>
             <address>
-            Perfect News,1238 S . 123 St.Suite 25 Town City 3333,USA Phone: 123-326-789 Fax: 123-546-567
+            Ho Chi Minh City University of Science, VietNam
             </address>
           </div>
         </div>
       </div>
     </div>
     <div class="footer_bottom">
-      <p class="copyright">Copyright &copy; 2045 <a href="../index.html">NewsFeed</a></p>
-      <p class="developer">Developed By Wpfreeware</p>
+      <p class="copyright">Copyright &copy; <a href="index.html"></a></p>
+      <p class="developer"></p>
     </div>
   </footer>
 </div>
