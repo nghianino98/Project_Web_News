@@ -481,4 +481,19 @@
   }
 
 
-  
+  /* Tạ Đăng Hiếu Nghĩa added */
+.avatar {
+  vertical-align: middle;
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+}
+.fa-trash{
+  color:rgb(236, 14, 14);
+}
+.fa-user-clock{
+  color:rgb(45, 231, 45);
+}
+.fa-user-slash{
+  color:rgb(236, 14, 14);
+}
