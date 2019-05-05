@@ -26,8 +26,8 @@
 ### 4. Editor
 - [x] Danh sách bài viết `draft` theo chuyên mục quản lý ( Nguyễn Ngọc Nghĩa )
 ### 5. Administrator 
-- [ ] Quản lý chuyên mục `category` ( Đặng Ngọc Nghĩa )
-- [ ] Quản lý nhãn `tag` ( Đặng Ngọc Nghĩa )
+- [x] Quản lý chuyên mục `category` ( Đặng Ngọc Nghĩa )
+- [x] Quản lý nhãn `tag` ( Đặng Ngọc Nghĩa )
 - [x] Quản lý bài viết (  Nguyễn Ngọc Nghĩa )
 - [x] Quản lý danh sách người dùng ( Tạ Đăng Hiếu Nghĩa )
 
