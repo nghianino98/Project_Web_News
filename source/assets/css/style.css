@@ -58,8 +58,8 @@ img:hover{opacity:0.75}
 .btn-blue:hover{background-color:#0707a2; color:#fff}
 .btn-lime{background-color:lime; color:#fff}
 .btn-lime:hover{background-color:#05ae05; color:#fff}
-.default-btn{background-color:#12a3df; color:#fff}
-.default-btn:hover{background-color:#0a8ec4; color:#fff}
+.default-btn{background-color:#83c1d0; color:#fff}
+.default-btn:hover{background-color:#337ab7; color:#fff}
 .btn-theme{background-color:#d083cf; color:#fff}
 .btn-theme:hover{background-color:#ce39cc; color:#fff}
 .transition{-webkit-transition:all 0.5s; -moz-transition:all 0.5s; -ms-transition:all 0.5s; -o-transition:all 0.5s; transition:all 0.5s}
