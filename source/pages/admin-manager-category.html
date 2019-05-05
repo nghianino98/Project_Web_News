@@ -1,0 +1,339 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="Responsive sidebar template with sliding effect and dropdown menu based on bootstrap 3">
+    <title>Admin | Quản lý Chuyên mục</title>
+    <script src="../assets/jquery-3.3.1/jquery.min.js"></script>
+    <link rel="stylesheet" href="../assets/bootstrap-4.1.3/css/bootstrap.min.css">
+    <link href="https://use.fontawesome.com/releases/v5.0.6/css/all.css" rel="stylesheet">
+    <link rel="stylesheet" href="../assets/css/writer.css">
+</head>
+
+<body>
+  <div class="page-wrapper chiller-theme toggled">
+  <a id="show-sidebar" class="btn btn-sm btn-dark" href="#">
+    <i class="fas fa-bars"></i>
+  </a>
+  <nav id="sidebar" class="sidebar-wrapper">
+    <div class="sidebar-content">
+      <div class="sidebar-brand">
+        <a href="#">Sidemenu</a>
+        <div id="close-sidebar">
+          <i class="fas fa-times"></i>
+        </div>
+      </div>
+      <div class="sidebar-header">
+        <div class="user-pic">
+          <img class="img-responsive img-rounded" src="https://raw.githubusercontent.com/azouaoui-med/pro-sidebar-template/gh-pages/src/img/user.jpg"
+            alt="User picture">
+        </div>
+        <div class="user-info">
+          <span class="user-name">Nguyễn Ngọc
+            <strong>Nghĩa</strong>
+          </span>
+          <span class="user-role">Quản trị viên</span>
+          <span class="user-status">
+            <i class="fa fa-circle"></i>
+            <span>Online</span>
+          </span>
+        </div>
+      </div>
+      <!-- sidebar-header  -->
+      <div class="sidebar-search">
+        <div>
+          <div class="input-group">
+            <input type="text" class="form-control search-menu" placeholder="Tìm kiếm...">
+            <div class="input-group-append">
+              <span class="input-group-text">
+                <i class="fa fa-search" aria-hidden="true"></i>
+              </span>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- sidebar-search  -->
+      <div class="sidebar-menu">
+        <ul>
+            <li class="header-menu">
+                <span>Chức năng</span>
+            </li>
+            <li>
+                <a href="#">
+                    <i class="fa fa-folder"></i>
+                    <span>Quản lý chuyên mục</span>
+                </a>
+
+            </li>
+            <li>
+                <a href="admin-manager-tag.html">
+                    <i class="fa fa-book"></i>
+                    <span>Quản lý nhãn tag</span>
+                </a>
+            </li>
+            <li class="sidebar-dropdown">
+              <a href="#">
+                <i class="fas fa-paste"></i>
+                <span>Quản lý bài viết</span>
+                <!--<span class="badge badge-pill badge-warning">New</span>-->
+              </a>
+              <div class="sidebar-submenu">
+                <ul>
+                  <li>
+                    <a href="admin.html">Danh sách bài viết
+                      <!--<span class="badge badge-pill badge-success">Pro</span>-->
+                    </a>
+                  </li>
+                  <li>
+                    <a href="admin-confirm-posts.html">Bài viết chờ duyệt</a>
+                  </li>
+                </ul>
+              </div>
+            </li>           
+            <li>
+                <a href="adminusers.html">
+                    <i class="fas fa-users"></i>
+                    <span>Quản lý người dùng</span>
+                </a>
+            </li>
+        </ul>
+      </div>
+      <!-- sidebar-menu  -->
+    </div>
+    <!-- sidebar-content  -->
+    <div class="sidebar-footer">
+        <a href="#">
+            <i class="fa fa-cog"> Cài đặt</i>
+        </a>
+        <a href="#">
+            <i class="fa fa-power-off"> Đăng xuất</i>
+        </a>
+    </div>
+  </nav>
+  <!-- sidebar-wrapper  -->
+  <main class="page-content">
+      <div class="container-fluid">
+        <div class="card" style="min-width: 44rem;">
+          <div class="card-body">
+            <div class="row">
+              <div class="col-md-4 border-right">
+                  <h4>Danh sách chuyên mục</h4>
+              </div>     
+              <div class="col">
+                <button type="button" class="btn btn-sm btn-primary" data-toggle="modal" data-target=".bd-example-modal-lg">Thêm chuyên mục</button>
+                
+                <div class="modal fade bd-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+                  <div class="modal-dialog modal-lg modal-dialog-centered">
+                    <div class="modal-content">
+                      <form class="form-horizontal">
+                      <fieldset>
+                      <div class="modal-header">
+                          <legend>CHUYÊN MỤC</legend>
+                      </div>
+                      <div class="modal-body">
+                        <div class="text-right">        
+                          <div class="form-group row">
+                            <label class="col-md-3 col-form-label" for="category_name"><b>Tên chuyên mục</b></label>
+                            <div class="col-md-7">
+                              <input id="category_name" name="category_name" placeholder="Nhập vào tên chuyên mục" class="form-control input-md" required="" type="text">
+                            </div>
+                          </div>
+
+                          <!-- Text input-->
+                          <div class="form-group row">
+                            <label class="col-md-3 col-form-label" for="link"><b>Địa chỉ</b> </label>  
+                            <div class="col-md-7">
+                            <input id="modification_date" name="link" placeholder="VD: chuyen-muc" class="form-control input-md" required="" type="text">
+                              
+                            </div>
+                          </div>
+
+                          <div class="form-group row">
+                            <label class="col-md-3 col-form-label" for="description"><b>Mô tả</b></label>  
+                            <div class="col-md-7">
+                              <textarea class="form-control" id="description" name="description"></textarea>
+                             
+                            </div>
+                          </div>
+                          
+                          <!-- Select Basic -->
+                          <div class="form-group row">
+                            <label class="col-md-3 col-form-label" for="category_parent"><b>Chuyên mục cha</b></label>
+                            <div class="col-md-7">
+                              <select id="category_name_fr" name="category_parent" class="form-control">
+                              </select>
+                            </div>
+                          </div>
+                         
+                        </div>
+                      </div>
+
+                      <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                        <button id="" name="" class="btn btn-primary">Submit</button>
+                      </div>
+                      </fieldset>
+                      </form>
+                    </div>
+                  </div>
+                </div>  
+              </div> 
+            </div>
+            <!-- filter -->
+            <div class="row align-items-center justify-content-center">
+              <div class="col pt-3">
+                <div class="form-group">
+                  <select id="categories" class="form-control">
+                    <option selected>Tất cả chuyên mục</option>
+                    <option>Tất cả chuyên mục cha</option>                  
+                  </select>
+                </div>
+              </div>
+              <div class="col pt-3">
+                <div class="form-group">
+                  <select id="tasg" class="form-control">
+                    <option selected>Tất cả chuyên mục con</option>
+                    <option>Nông nghiệp</option>
+                    <option>Kinh tế</option>
+                    <option>Ẩm thực</option>
+                    <option>Thể thao</option>
+                  </select>
+                </div>
+              </div>
+              <div class="col-md-3">
+                <button type="button" class="btn btn-primary btn-block"><i class="fas fa-filter"></i>Lọc</button>
+              </div>
+            </div> <!-- end filter-->
+            <!-- list posts -->
+            <div class="row">
+              <div class="col-md-12">
+                <table class="table table-hover ">
+                  <thead class="bg-light ">
+                    <tr>
+                      <th>
+                        <div class="form-check-inline">
+                            <label class="form-check-label">
+                              <input type="checkbox" class="form-check-input" value="">
+                             </label>
+                         </div>
+                      </th>  
+                      <th>Tên chuyên mục</th>
+                      <th>Địa chỉ</th>
+                      <th><center>Mô tả</center></th>
+                      <th><center>Chuyên mục cha</center></th>
+                      <th><center>Chuyên mục con</center></th>
+                      <th><center>Bài viết</center></th>
+                      <th><center>Thao tác</center></th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td>
+                          <div class="form-check-inline">
+                            <label class="form-check-label">
+                              <input type="checkbox" class="form-check-input" value="">
+                             </label>
+                         </div>
+                      </td>  
+                      <td><a href="#">Thể thao</a></td>
+                      <td><small>the-thao.html</small></td>
+                      <td><small>Tin tức thể thao trên toàn thế giới</small></td>
+                      <td><center><i class="far fa-check-square"></i></center>
+                       </td>
+                      <td><center><a href="#"><small>5</small></a></center></td>
+                      <td><a href="#"><center><small>25</small></center></a></td>
+                      <td><center>
+                        <a href="#"><i class="fas fa-pencil-alt" title="Sửa chuyên mục"></i></a>
+                        <a href="#"><i class="fa fa-trash" title="Xóa chuyên mục"></i></a></center>
+                      </td>
+                    </tr>
+                    <thead class="bg-light "> 
+                      <tr>
+                        <td>
+                            <div class="form-check-inline">
+                              <label class="form-check-label">
+                                <input type="checkbox" class="form-check-input" value="">
+                               </label>
+                           </div>
+                        </td>  
+                        <td><a href="#">Bóng đá</a></td>
+                        <td><small>the-thao-bong-da.html</small></td>
+                        <td><small>Trận cầu đỉnh cao khắp thế giới</small></td>
+                        <td><center><!--<div class="form-check-inline">
+                              <label class="form-check-label">
+                                <input type="checkbox" class="form-check-input" value="" disabled="">
+                               </label>
+                           </div>--><small>Thể thao</small></center>
+                         </td>
+                        <td><center><a href="#"><small>-</small></a></center></td>
+                        <td><a href="#"><center><small>10</small></center></a></td>
+                        <td><center>
+                          <a href="#"><i class="fas fa-pencil-alt" title="Sửa chuyên mục"></i></a>
+                          <a href="#"><i class="fa fa-trash" title="Xóa chuyên mục"></i></a></center>
+                        </td>
+                      </tr>
+                    </thead>
+
+                    <tr>
+                      <td>
+                          <div class="form-check-inline">
+                            <label class="form-check-label">
+                              <input type="checkbox" class="form-check-input" value="">
+                             </label>
+                         </div>
+                      </td>  
+                      <td><a href="#">Nông nghiệp</a></td>
+                      <td><small>nong-nghiep.html</small></td>
+                      <td><small>Tin tức nông nghiệp toàn quốc</small></td>
+                      <td><center><i class="far fa-check-square"></i></center>
+                       </td>
+                      <td><center><a href="#"><small>4</small></a></center></td>
+                      <td><a href="#"><center><small>10</small></center></a></td>
+                      <td><center>
+                        <a href="#"><i class="fas fa-pencil-alt" title="Sửa chuyên mục"></i></a>
+                        <a href="#"><i class="fa fa-trash" title="Xóa chuyên mục"></i></a></center>
+                      </td>
+                    </tr>
+                    <tr>
+                      <td>
+                          <div class="form-check-inline">
+                            <label class="form-check-label">
+                              <input type="checkbox" class="form-check-input" value="">
+                             </label>
+                         </div>
+                      </td>  
+                      <td><a href="#">Kinh tế</a></td>
+                      <td><small>kinh-te.html</small></td>
+                      <td><small>Chuyển động kinh tế toàn cầu</small></td>
+                      <td><center><i class="far fa-check-square"></i></center>
+                       </td>
+                      <td><center><a href="#"><small>3</small></a></center></td>
+                      <td><a href="#"><center><small>35</small></center></a></td>
+                      <td><center>
+                        <a href="#"><i class="fas fa-pencil-alt" title="Sửa chuyên mục"></i></a>
+                        <a href="#"><i class="fa fa-trash" title="Xóa chuyên mục"></i></a></center>
+                      </td>
+                    </tr>
+                           
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+  </main>
+  <!-- page-content" -->
+  </div>
+  <!-- page-wrapper -->
+    
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+    crossorigin="anonymous"></script>
+  <script src="../assets/bootstrap-4.1.3/js/bootstrap.min.js"></script>
+  <script src="../assets/js/writer.js"></script>
+</body>
+
+</html>
