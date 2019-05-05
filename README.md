@@ -18,7 +18,7 @@
 - [x] Hệ thống Menu - Tìm kiếm bài viết ( Tạ Đăng Hiếu Nghĩa )
 - [x] Trang chủ ( Tạ Đăng Hiếu Nghĩa )
 - [x] Xem danh sách bài viết ( Tạ Đăng Hiếu Nghĩa )
-- [ ] Xem chi tiết bài viết ( Đặng Ngọc Nghĩa )
+- [x] Xem chi tiết bài viết ( Đặng Ngọc Nghĩa )
 ### 2. Subcriber
 ### 3. Writer
 - [x] Đăng bài viết ( Nguyễn Ngọc Nghĩa )
@@ -29,7 +29,7 @@
 - [ ] Quản lý chuyên mục `category` ( Đặng Ngọc Nghĩa )
 - [ ] Quản lý nhãn `tag` ( Đặng Ngọc Nghĩa )
 - [x] Quản lý bài viết (  Nguyễn Ngọc Nghĩa )
-- [ ] Quản lý danh sách người dùng ( Tạ Đăng Hiếu Nghĩa )
+- [x] Quản lý danh sách người dùng ( Tạ Đăng Hiếu Nghĩa )
 
 ### Yêu cầu chi tiết
 
