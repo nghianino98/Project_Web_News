@@ -124,11 +124,21 @@ img:hover{opacity:0.75}
 .single_iteam{display:inline; float:left; position:relative; width:100%; height:448px}
 .single_iteam img{width:100%; height:100%}
 .single_iteam img:hover{opacity:1}
-.slider_article{ bottom:20px; left:0; position:absolute; right:0; padding:10px 15px}
+.slider_article{ bottom:10px; left:0; position:absolute; right:0; padding:10px 15px}
 .slider_article > h2 a{ background:none repeat scroll 0 0 rgba(0,0,0,0.4); color:#fff; font-size:18px; padding:10px; display:inline-block}
+.slider_article > h2 a span { color:#fff; font-size:12px; padding:0x; display:inline-block}
+
 /**Tạ Đăng Hiếu Nghĩa added**/
+.slider_article > h6 a{ background:none repeat scroll 0 0 rgba(0,0,0,0.4); color:#fff; font-size:18px; padding:10px; display:inline-block}
 .slider_article > h3 a{ background:none repeat scroll 0 0 rgba(0,0,0,0.4); color:#fff; padding:3px; display:inline-block}
 .slider_article > p{ background:none repeat scroll 0 0 rgba(0,0,0,0.4); color:#fff; padding:3px; display:inline-block}
+.slider_article > p a{ color:#fff; padding:3px; display:inline-block}
+.slider_top{
+  top:0px; right:0; position:absolute; right:0; padding:5px 5px
+}
+.slider_top > h2 a{ background:none repeat scroll 0 0 rgba(0,0,0,0.4); color:#fff; font-size:18px; padding:5px; display:inline-block}
+
+
 .slick-prev:before{ content:""}
 .slick-prev{ background-image:url(images/slider_prev.png); background-repeat:no-repeat; background-position:center; left:10px}
 .slick-next:before{ content:""}
@@ -166,6 +176,7 @@ img:hover{opacity:0.75}
 .resize-img > img{height:90px !important; width:120px !important}
 /* Tạ Đăng Hiếu Nghĩa added */
 .pic-left-articles > img{height:auto; width:300px; margin: 0 20 0 0 }
+.pic-top-week > img {height:auto; width:100%}
 .articles_one { display: flex; justify-content: space-between;}
 .spost_nav .media-body > a{font-family:"Oswald",sans-serif}
 .featured_img{position:relative}
@@ -324,6 +335,11 @@ figure.effect-layla:hover figcaption::after, figure.effect-layla:hover h2, figur
 .content-article-around {display:flex; flex-direction:column;justify-content:space-around}
 .tag-text{display:flex;flex-direction:column;justify-content: space-around}
 .badge {margin: 0 0 0 0}
+.hot-news-content{
+  display:flex;
+  flex-direction: column;
+  
+}
 hr {
     display: block;
     height: 1px;
