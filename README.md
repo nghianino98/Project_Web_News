@@ -45,6 +45,10 @@ Phase I - Back-end Database ( 7/5 - 21/5 )
 - View Engine: `handlebars`
 - Database: `mongoDB`
 
+## Modify
+- Chỉnh file HTML -> Handlebars
+- Tổ chức express js
+
 ## Design DB 
 - Design DB Newspaper
 - Design DB Users
