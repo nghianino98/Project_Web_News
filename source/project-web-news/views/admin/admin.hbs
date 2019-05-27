@@ -1,0 +1,116 @@
+<div class="container-fluid">
+  <div class="card" style="min-width: 44rem;">
+    <div class="card-body">
+      <div class="row">
+        <div class="col-md-3 border-right">
+            <h4>Danh sách bài viết</h4>
+        </div>     
+        <div class="col">
+          <button type="button" class="btn btn-sm btn-primary" onclick="window.location='/user/admin/add-posts'">Thêm bài viết</button>
+        </div>   
+      </div>
+      <!-- filter -->
+      <div class="row align-items-center justify-content-center">
+        <div class="col pt-3">
+          <div class="form-group">
+            <select id="categories" class="form-control">
+              <option selected>Tất cả chuyên mục</option>
+              <option>Nông nghiệp</option>
+              <option>Kinh tế</option>
+              <option>Ẩm thực</option>
+              <option>Thể thao</option>
+            </select>
+          </div>
+        </div>
+        <div class="col pt-3">
+          <div class="form-group">
+            <select id="tasg" class="form-control">
+              <option selected>Tất cả thẻ tag</option>
+              <option>Nông nghiệp</option>
+              <option>Kinh tế</option>
+              <option>Ẩm thực</option>
+              <option>Thể thao</option>
+            </select>
+          </div>
+        </div>
+        <div class="col pt-3">
+            <div class="form-group">
+              <select id="tasg" class="form-control">
+                <option selected>Tất cả trạng thái</option>
+                <option>Đã duyệt</option>
+                <option>Bị từ chối</option>
+              </select>
+            </div>
+          </div>
+        <div class="col-md-3">
+          <button type="button" class="btn btn-primary btn-block">Lọc</button>
+        </div>
+      </div> <!-- end filter-->
+      <!-- list posts -->
+      <div class="row">
+        <div class="col-md-12">
+          <table class="table table-hover ">
+            <thead class="bg-light ">
+              <tr>
+                <th>
+                  <div class="form-check-inline">
+                      <label class="form-check-label">
+                        <input type="checkbox" class="form-check-input" value="">
+                       </label>
+                   </div>
+                </th>  
+                <th>Tiêu đề</th>
+                <th>Tác giả</th>
+                <th>Chuyên mục</th>
+                <th>Tags</th>
+                <th>Comments</th>
+                <th>Trạng thái</th>
+                <th>Thao tác</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>
+                    <div class="form-check-inline">
+                      <label class="form-check-label">
+                        <input type="checkbox" class="form-check-input" value="">
+                       </label>
+                   </div>
+                </td>  
+                <td><a href="#"><small>Johnyahua</small></a></td>
+                <td><small>Doe</small></td>
+                <td><small>john@example.com</small></td>
+                <td><small>Admin</small></td>
+                <td><a href="#"><small>5</small></a></td>
+                <td><small>published 5/3/2019 13:30:21</small></td>
+                <td>
+                  <a href="#"><i class="fa fa-eye" title="Xem chi tiết bài viết"></i></a>
+                  <a href="#"><i class="fa fa-trash" title="Xóa bài viết"></i></a>
+                </td>
+              </tr>
+              <tr>
+                <td>
+                    <div class="form-check-inline">
+                      <label class="form-check-label">
+                        <input type="checkbox" class="form-check-input" value="">
+                       </label>
+                   </div>
+                </td>  
+                <td><a href="#"><small>Johnyahua</small></a></td>
+                <td><small>Doe</small></td>
+                <td><small>john@example.com</small></td>
+                <td><small>Admin</small></td>
+                <td><a href="#"><small>5</small></a></td>
+                <td><small>denied 1/1/2018 10:00:00</small></td>
+                <td>
+                  <a href="#"><i class="fa fa-eye" title="Xem chi tiết bài viết"></i></a>
+                  <a href="#"><i class="fa fa-trash" title="Xóa bài viết"></i></a>
+                </td>
+              </tr>         
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

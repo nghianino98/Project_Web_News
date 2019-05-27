@@ -1,0 +1,142 @@
+<div class="container-fluid">
+  <div class="card" style="min-width: 44rem;">
+    <div class="card-body">
+      <div class="row">
+        <div class="col-md-3 border-right">
+            <h4>Danh sách Tags</h4>
+        </div>     
+        <div class="col">
+          <button type="button" class="btn btn-sm btn-primary" data-toggle="modal" data-target=".bd-example-modal-lg">Thêm tag mới</button>
+          
+          <div class="modal fade bd-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-lg modal-dialog-centered">
+              <div class="modal-content">
+                <form class="form-horizontal">
+                <fieldset>
+                <div class="modal-header">
+                    <legend>TAGS</legend>
+                </div>
+                <div class="modal-body">
+                  <div class="text-right">        
+                    <div class="form-group row">
+                      <label class="col-md-3 col-form-label" for="tag_name"><b>Tag Name</b></label>
+                      <div class="col-md-7">
+                        <input id="tag_name" name="tag_name" placeholder="Input tag name" class="form-control input-md" required="" type="text">
+                      </div>
+                    </div>
+                    <!-- Text input-->
+                    <div class="form-group row">
+                      <label class="col-md-3 col-form-label" for="tagid"><b>Tag ID</b> </label>  
+                      <div class="col-md-7">
+                      <input id="modification_date" name="tagid" placeholder="Input a number" class="form-control input-md" required="" type="text">
+                        
+                      </div>
+                    </div>                       
+                   
+                  </div>
+                </div>
+                <div class="modal-footer">
+                  <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                  <button id="" name="" class="btn btn-primary">Submit</button>
+                </div>
+                </fieldset>
+                </form>
+              </div>
+            </div>
+          </div>  
+        </div> 
+      </div>
+      <!-- filter -->
+      <div class="row align-items-center justify-content-center">
+        <div class="col pt-3">               
+        </div>
+        <div class="col pt-3">               
+        </div>
+        <div class="col pt-3">
+          <div class="form-group">
+            <div class="input-group">
+              <input type="text" class="form-control search-menu" placeholder="Tìm kiếm...">
+              <div class="input-group-append">                     
+                  <button type="button" class="btn btn-primary btn-block"><i class="fa fa-search" aria-hidden="true"></i></button>                     
+              </div>
+            </div>
+          </div>
+        </div>
+       
+      </div> <!-- end filter-->
+      <!-- list posts -->
+      <div class="row">
+        <div class="col-md-12">
+          <table class="table table-hover ">
+            <thead class="bg-light ">
+              <tr>
+                <th>
+                  <div class="form-check-inline">
+                      <label class="form-check-label">
+                        <input type="checkbox" class="form-check-input" value="">
+                       </label>
+                   </div>
+                </th>  
+                <th>Tên tag</th>
+                <th><center>Tag ID</center></th>
+                <th><center>Bài viết</center></th>
+                <th><center>Thao tác</center></th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>
+                    <div class="form-check-inline">
+                      <label class="form-check-label">
+                        <input type="checkbox" class="form-check-input" value="">
+                       </label>
+                   </div>
+                </td>  
+                <td><a href="#">bongda</a></td>
+                <td><center><small>#12</small></center></td>                     
+                <td><a href="#"><center><small>25</small></center></a></td>
+                <td><center>
+                  <a href="#"><i class="fas fa-pencil-alt" title="Sửa chuyên mục"></i></a>
+                  <a href="#"><i class="fa fa-trash" title="Xóa chuyên mục"></i></a></center>
+                </td>
+              </tr>
+              <tr>
+                <td>
+                    <div class="form-check-inline">
+                      <label class="form-check-label">
+                        <input type="checkbox" class="form-check-input" value="">
+                       </label>
+                   </div>
+                </td>  
+                <td><a href="#">treem</a></td>
+                <td><center><small>#6</small></center></td>                     
+                <td><a href="#"><center><small>15</small></center></a></td>
+                <td><center>
+                  <a href="#"><i class="fas fa-pencil-alt" title="Sửa chuyên mục"></i></a>
+                  <a href="#"><i class="fa fa-trash" title="Xóa chuyên mục"></i></a></center>
+                </td>
+              </tr>
+              <tr>
+                <td>
+                    <div class="form-check-inline">
+                      <label class="form-check-label">
+                        <input type="checkbox" class="form-check-input" value="">
+                       </label>
+                   </div>
+                </td>  
+                <td><a href="#">giaoduc2019</a></td>
+                <td><center><small>#25</small></center></td>                     
+                <td><a href="#"><center><small>7</small></center></a></td>
+                <td><center>
+                  <a href="#"><i class="fas fa-pencil-alt" title="Sửa chuyên mục"></i></a>
+                  <a href="#"><i class="fa fa-trash" title="Xóa chuyên mục"></i></a></center>
+                </td>
+              </tr>
+                     
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

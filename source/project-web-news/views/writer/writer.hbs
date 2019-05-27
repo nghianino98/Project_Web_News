@@ -1,0 +1,122 @@
+
+<!-- Include external CSS. -->
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.4.0/css/font-awesome.min.css" rel="stylesheet" type="text/css" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.25.0/codemirror.min.css">
+
+<!-- Include Editor style. -->
+<link href="https://cdn.jsdelivr.net/npm/froala-editor@2.9.5/css/froala_editor.pkgd.min.css" rel="stylesheet" type="text/css" />
+<link href="https://cdn.jsdelivr.net/npm/froala-editor@2.9.5/css/froala_style.min.css" rel="stylesheet" type="text/css" />
+
+<!-- Include external JS libs. -->
+<script src="../assets/jquery-3.3.1/jquery.min.js"></script>
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.25.0/codemirror.min.js"></script>
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.25.0/mode/xml/xml.min.js"></script>
+
+<!-- Include Editor JS files. -->
+<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/froala-editor@2.9.5/js/froala_editor.pkgd.min.js"></script>
+    
+<div class="container-fluid">
+  <div class="card">
+      <div class="card-body">
+          <div class="row">
+              <div class="col-md-3">
+                  <h4>Thêm bài viết</h4>
+              </div>
+          </div>
+          <hr>
+          <div class="row">
+              <div class="col">
+                  <form style="min-width: 20rem;">
+                      <div class="form-group row">
+                          <label for="text" class="col-12 col-form-label">Enter Title here</label> 
+                          <div class="col-12">
+                              <input id="text" name="text" placeholder="Enter Title here" class="form-control here" required="required" type="text">
+                          </div>
+                      </div>
+                      <div class="form-group row">
+                          <label for="textarea" class="col-12 col-form-label">Visual Editor</label> 
+                          <div class="col-12">
+                              <textarea id="froala-editor" name="froala-editor" cols="40" rows="5" class="form-control"></textarea>
+                              <script> $(function() { $('#froala-editor').froalaEditor() }); </script>
+                          </div>
+                      </div> 
+                  </form>
+              </div>
+              <div class="col-md-auto">
+                  <div class="card mb-3" style="max-width: 18rem;">
+                        <div class="card-header bg-light ">Publish</div>
+                        <div class="card-body">
+                         
+                        </div>
+                        <div class="card-footer bg-light">
+                            <button type="button" class="btn btn-outline-secondary btn-sm">Preview</button>
+                            <button type="button" class="btn btn-info btn-sm">Save Draft</button>
+                            <button type="button" class="btn btn-primary btn-sm">Publish</button>
+                        </div>
+                      </div>
+                  <div class="card mb-3" style="max-width: 18rem;">
+                        <div class="card-header bg-light ">Tags</div>
+                        <div class="card-body">
+                          <form>
+                            <div class="form-group row">
+                              <div class="col-9">
+                                <input id="tags" name="tags" placeholder="seperate with commas" required="required" class="form-control here" type="text">
+                              </div>
+                              <div class=" col-2">
+                                <button name="submit" type="submit" class="btn btn-light">Add</button>
+                              </div>
+                              <div class="col-12">
+                                  <small>Seperate Tags with commas</small>
+                              </div>
+                            </div> 
+                          </form>
+                          
+                        </div>
+                        <div class="card-footer bg-light">
+                            <a href="#">Choose from the most used tags</a>
+                        </div>
+                      </div>
+                  <div class="card mb-3" style="max-width: 18rem;">
+                        <div class="card-header bg-light ">Categories</div>
+                        <div class="card-body">
+                          <form>
+                            <div class="form-group row">
+                              <div class="col-9">
+                                <input id="tags" name="tags" placeholder=" " required="required" class="form-control here" type="text">
+                              </div>
+                              <div class=" col-2">
+                                <button name="submit" type="submit" class="btn btn-light">Add</button>
+                              </div>
+                              
+                            </div> 
+                          </form>
+                          <form>
+                            <div class="form-group row">
+                              <label for="select" class="col-12 col-form-label">Select Category</label> 
+                              <div class="col-8">
+                                <select id="select" name="select" class="custom-select" required="required">
+                                  <option value="rabbit">Rabbit</option>
+                                  <option value="duck">Duck</option>
+                                  <option value="fish">Fish</option>
+                                </select>
+                              </div>
+                            </div> 
+                          </form>
+                        </div>
+                        <div class="card-footer bg-light">
+                            <button type="button" class="btn btn-primary btn-sm">Add New Category</button>
+                        </div>
+                      </div>
+                  <div class="card mb-3" style="max-width: 18rem;">
+                    <div class="card-header bg-light ">Featured Image</div>
+                    <div class="card-body">
+                    </div>
+                    <div class="card-footer bg-light">
+                        <a href="#">Set Featured Image</a>
+                    </div>
+                  </div>    
+              </div>
+          </div>
+      </div>
+  </div>
+</div>
