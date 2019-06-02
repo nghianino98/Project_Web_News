@@ -20,6 +20,9 @@ var app = express();
 // Tạo kết nối tới database
 require('./utils/db.connection');
 
+// Thêm các kịch bản đăng nhập đăng ký passport
+require('./config/passport');
+
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
 app.engine('.hbs', expressHbs({
