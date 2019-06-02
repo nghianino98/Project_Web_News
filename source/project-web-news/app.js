@@ -18,11 +18,16 @@ app.engine('.hbs', expressHbs({
 }));
 app.set('view engine', '.hbs');
 
+// db connection
+require('./utils/db.connection');
+
 app.use(logger('dev'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
+
+
 
 app.use('/', indexRouter);
 app.use('/user', usersRouter);
