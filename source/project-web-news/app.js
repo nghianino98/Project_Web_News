@@ -31,9 +31,6 @@ app.engine('.hbs', expressHbs({
 }));
 app.set('view engine', '.hbs');
 
-// db connection
-require('./utils/db.connection');
-
 app.use(logger('dev'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
@@ -51,7 +48,15 @@ app.use(passport.initialize());
 app.use(passport.session());
 app.use(express.static(path.join(__dirname, 'public')));
 
-
+app.use((req, res, next) => {
+  if (req.cookies['Authorization']) {
+    req.isLoggedIn = true;
+  } else {
+    req.isLoggedIn = false;
+  }
+  
+  next();
+});
 
 app.use('/', indexRouter);
 app.use('/user', usersRouter);

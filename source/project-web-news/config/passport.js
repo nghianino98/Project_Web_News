@@ -19,7 +19,6 @@ passport.use('local.signup', new LocalStrategy({
     passwordField: 'password',
     passReqToCallback: true
 }, (req, email, password, done) => {
-    console.log('email');
     User.findOne({email: email})
         .exec()
         .then(user => {
@@ -29,7 +28,6 @@ passport.use('local.signup', new LocalStrategy({
             
             bcrypt.hash(password, 5, (err, hash) => {
                 if (err) {
-                    console.log(err);
                     return done(err);
                 }
 
@@ -42,18 +40,15 @@ passport.use('local.signup', new LocalStrategy({
 
                 newUser.save()
                     .then(result => {
-                        console.log(newUser);
                         return done(null, newUser);
                     })
                     .catch(err => {
-                        console.log(err);
                         return done(err);
                     });
             });
 
         })
         .catch(err => {
-            console.log(err);
             return done(err);
         });
 }));
@@ -68,7 +63,7 @@ passport.use('local.login', new LocalStrategy({
         .exec()
         .then(user => {
             if (!user) {
-                return done(null, false, {message: 'No user found.'});
+                return done(null, false, {message: 'Địa chỉ email không tồn tại'});
             }
 
            bcrypt.compare(password, user.password, (err, result) => {
@@ -77,7 +72,7 @@ passport.use('local.login', new LocalStrategy({
                 }
 
                 if (!result) {
-                    return done(null, false, {message: 'Wrong password'});
+                    return done(null, false, {message: 'Mật khẩu không đúng'});
                 }
 
                 return done(null, user);
