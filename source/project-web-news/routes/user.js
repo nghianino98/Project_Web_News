@@ -10,8 +10,36 @@ const adminRouter = require('./admin');
 const editorRouter = require('./editor');
 const writerRouter = require('./writer');
 
+const User = require('../models/user');
+
 // Thêm middle ware chống tấn công CSRF
 router.use(csurfProrecttion);
+
+// Xử lí xác thực tài khoảng
+router.use('/confirm/:token', (req, res, next) => {
+    const token = req.params.token;
+    try {
+        const decode = jwt.decode(token, 'fit-hcmus');
+
+        User.update({_id: decode.id}, {$set: {isConfirm: true}})
+            .exec()
+            .then(result => {
+                const token = jwt.sign({
+                    email: decode.email,
+                    id: decode.id,
+                }, 'fit-hcmus', {
+                    expiresIn: '1h'
+                });
+            
+                res.cookie('Authorization', 'Bearer ' + token, {httpOnly: true});
+                res.redirect('/user/admin');
+            })
+            .catch();
+    } catch(err) {
+        req.flash('error', err.message);
+        res.redirect('/user/register');
+    }
+});
 
 /* GET users listing. */
 router.use('/admin', checkAuth, adminRouter);
@@ -52,7 +80,8 @@ router.post('/login', passport.authenticate('local.login', {
 
 // Lấy view đăng ký
 router.get('/register', (req, res, next) => {
-    res.render('user/registration');
+    const messages = req.flash('error');
+    res.render('user/registration', {csrfToken: req.csrfToken(), messages: messages, hasError: messages.length > 0});
 });
 
 // Xử lí đăng ký
@@ -61,15 +90,8 @@ router.post('/register', passport.authenticate('local.signup', {
     failureRedirect: '/user/register',
     failureFlash: true
 }),  (req, res, next) => {
-    const token = jwt.sign({
-        email: req.user.email,
-        id: req.user.id,
-    }, 'fit-hcmus', {
-        expiresIn: '1h'
-    });
-
-    res.cookie('Authorization', 'Bearer ' + token, {httpOnly: true});
-    res.redirect('/user/admin');
+    req.flash('error', 'Đăng ký thành công. Mời bạn kiểm tra email để xác thực tài khoảng');
+    res.redirect('/user/register');
 });
 
 module.exports = router;
