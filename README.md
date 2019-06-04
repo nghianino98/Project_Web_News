@@ -50,9 +50,9 @@ Phase I - Back-end Database ( 7/5 - 21/5 )
 - Tổ chức express js
 
 ## Design DB 
-- Design DB Newspaper
-- Design DB Users
 
+- [Thiết kế các Collections](./MongoDBDesign.md)
+- 
 ## Code
 
 ### 1. DB Utils
