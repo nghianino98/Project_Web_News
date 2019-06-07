@@ -21,12 +21,6 @@ router.post('/', (req, res, next) => {
     res.status(200).json({message: 'post thành công ko có lỗi gì cả'});
 });
 
-router.post('/',(req, res, next)=>{
-    console.log(req.body);
-    res.end('...');
-});
-
-
 router.get('/waiting', (req, res, next) => {
     res.render('writer/writer-waiting', {layout: 'writer-layout', title: 'writer'});
 });
