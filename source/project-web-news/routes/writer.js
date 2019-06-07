@@ -2,6 +2,8 @@ const express = require('express');
 const router = express.Router();
 const checkRole = require('../middleware/check-role');
 
+const article = require('../models/article');
+
 // Kiểm tra nếu là writer thì mới cho qua
 router.use(checkRole.isWriter);
 
@@ -14,6 +16,12 @@ router.get((req, res, next) => {
 router.get('/', (req, res, next) => {
     res.render('writer/writer', {layout: 'writer-layout', title: 'writer'});
 });
+
+router.post('/',(req, res, next)=>{
+    console.log(req.body);
+    res.end('...');
+});
+
 
 router.get('/waiting', (req, res, next) => {
     res.render('writer/writer-waiting', {layout: 'writer-layout', title: 'writer'});

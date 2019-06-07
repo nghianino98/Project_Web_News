@@ -26,7 +26,7 @@
           <hr>
           <div class="row">
               <div class="col">
-                  <form style="min-width: 20rem;">
+                  <form style="min-width: 20rem;" id="articleContent">
                       <div class="form-group row">
                           <label for="text" class="col-12 col-form-label">Enter Title here</label> 
                           <div class="col-12">
@@ -36,7 +36,7 @@
                       <div class="form-group row">
                           <label for="textarea" class="col-12 col-form-label">Visual Editor</label> 
                           <div class="col-12">
-                              <textarea id="froala-editor" name="froala-editor" cols="40" rows="5" class="form-control"></textarea>
+                              <textarea id="froala-editor" name="froala-editor" cols="40" rows="5" class="form-control" required="required"></textarea>
                               <script> $(function() { $('#froala-editor').froalaEditor() }); </script>
                           </div>
                       </div> 
@@ -45,13 +45,12 @@
               <div class="col-md-auto">
                   <div class="card mb-3" style="max-width: 18rem;">
                         <div class="card-header bg-light ">Publish</div>
-                        <div class="card-body">
-                         
+                        <div class="card-body"> 
                         </div>
                         <div class="card-footer bg-light">
                             <button type="button" class="btn btn-outline-secondary btn-sm">Preview</button>
                             <button type="button" class="btn btn-info btn-sm">Save Draft</button>
-                            <button type="button" class="btn btn-primary btn-sm">Publish</button>
+                            <button type="submit" form="articleContent" class="btn btn-primary btn-sm">Publish</button>
                         </div>
                       </div>
                   <div class="card mb-3" style="max-width: 18rem;">

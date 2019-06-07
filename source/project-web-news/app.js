@@ -15,6 +15,7 @@ const MongoStore = require('connect-mongo')(session);
 var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/user');
 
+
 var app = express();
 
 // Tạo kết nối tới database
