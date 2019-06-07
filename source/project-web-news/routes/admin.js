@@ -36,4 +36,8 @@ router.get('/manager-user', (req, res, next) => {
     res.render('admin/adminusers', {layout: 'admin-layout', title: 'Admin | Quản lí người dùng'});
 });
 
+router.get('/profile', (req, res, next) => {
+    res.render('admin/profile', {layout: 'admin-layout', userName: req.user.userName});
+});
+
 module.exports = router;

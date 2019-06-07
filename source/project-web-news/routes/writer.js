@@ -6,13 +6,17 @@ const checkRole = require('../middleware/check-role');
 router.use(checkRole.isWriter);
 
 // Load avatar của user
-router.get((req, res, next) => {
+router.use((req, res, next) => {
     res.locals.avatar = req.user.avatar;
     next();
 });
 
 router.get('/', (req, res, next) => {
-    res.render('writer/writer', {layout: 'writer-layout', title: 'writer'});
+    res.render('writer/writer', {layout: 'writer-layout', title: 'writer', csrfToken: req.csrfToken()});
+});
+
+router.post('/', (req, res, next) => {
+    res.status(200).json({message: 'post thành công ko có lỗi gì cả'});
 });
 
 router.get('/waiting', (req, res, next) => {

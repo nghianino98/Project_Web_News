@@ -3,7 +3,7 @@ var router = express.Router();
 const passport = require('passport');
 const jwt = require('jsonwebtoken');
 const csrf = require('csurf');
-const csurfProrecttion = csrf();
+const csurfProtection = csrf();
 const checkAuth = require('../middleware/check-auth');
 
 const adminRouter = require('./admin');
@@ -13,10 +13,10 @@ const writerRouter = require('./writer');
 const User = require('../models/user');
 
 // Thêm middle ware chống tấn công CSRF
-router.use(csurfProrecttion);
+router.use(csurfProtection);
 
 // Xử lí xác thực tài khoảng
-router.use('/confirm/:token', (req, res, next) => {
+router.get('/confirm/:token', (req, res, next) => {
     const token = req.params.token;
     try {
         const decode = jwt.decode(token, 'fit-hcmus');
@@ -27,12 +27,15 @@ router.use('/confirm/:token', (req, res, next) => {
                 const token = jwt.sign({
                     email: decode.email,
                     id: decode.id,
+                    role: decode.role,
+                    avatar: decode.avatar,
+                    userName: decode.userName
                 }, 'fit-hcmus', {
                     expiresIn: '1h'
                 });
             
                 res.cookie('Authorization', 'Bearer ' + token, {httpOnly: true});
-                res.redirect('/user/admin');
+                res.redirect('/');
             })
             .catch();
     } catch(err) {
@@ -71,13 +74,21 @@ router.post('/login', passport.authenticate('local.login', {
         email: req.user.email,
         id: req.user.id,
         role: req.user.role,
-        avatar: req.user.avatar
+        avatar: req.user.avatar,
+        userName: req.user.userName,
     }, 'fit-hcmus', {
         expiresIn: '1h'
     });
 
     res.cookie('Authorization', 'Bearer ' + token, {httpOnly: true});
-    res.redirect('/user/admin');
+
+    if (req.user.role === 'guest') {
+        res.redirect('/');
+    } else {
+        res.redirect(`/user/${req.user.role}`);
+    }
+
+    
 });
 
 // Lấy view đăng ký

@@ -55,6 +55,9 @@ passport.use('local.signup', new LocalStrategy({
                         const token = jwt.sign({
                             email: email,
                             id: result.id,
+                            role: result.role,
+                            avatar: result.avatar,
+                            userName: result.userName
                         }, 'fit-hcmus', {
                             expiresIn: 15 * 60
                         });

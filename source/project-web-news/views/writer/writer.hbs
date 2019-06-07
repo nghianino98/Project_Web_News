@@ -51,7 +51,7 @@
                         <div class="card-footer bg-light">
                             <button type="button" class="btn btn-outline-secondary btn-sm">Preview</button>
                             <button type="button" class="btn btn-info btn-sm">Save Draft</button>
-                            <button type="button" class="btn btn-primary btn-sm">Publish</button>
+                            <button type="submit" form="form1" class="btn btn-primary btn-sm">Publish</button>
                         </div>
                       </div>
                   <div class="card mb-3" style="max-width: 18rem;">
@@ -90,7 +90,7 @@
                               
                             </div> 
                           </form>
-                          <form>
+                          <form method="POST" action="/user/writer" id="form1">
                             <div class="form-group row">
                               <label for="select" class="col-12 col-form-label">Select Category</label> 
                               <div class="col-8">
@@ -101,6 +101,7 @@
                                 </select>
                               </div>
                             </div> 
+                            <input type="text" id="_csrf" name="_csrf" value="{{csrfToken}}" hidden>
                           </form>
                         </div>
                         <div class="card-footer bg-light">

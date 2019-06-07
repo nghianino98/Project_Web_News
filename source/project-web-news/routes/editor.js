@@ -6,7 +6,7 @@ const checkRole = require('../middleware/check-role');
 router.use(checkRole.isEditor);
 
 // Load avatar của user
-router.get((req, res, next) => {
+router.use((req, res, next) => {
     res.locals.avatar = req.user.avatar;
     next();
 });
