@@ -111,7 +111,7 @@ passport.use('local.login', new LocalStrategy({
                     return done(null, false, {message: 'Mật khẩu không đúng'});
                 }
 
-                if (!user.status) {
+                if (!user.isConfirm) {
                     return done(null, false, {message: 'Tài khoảng chưa được kích hoạt'});
                 }
 

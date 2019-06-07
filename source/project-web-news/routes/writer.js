@@ -1,5 +1,15 @@
 const express = require('express');
 const router = express.Router();
+const checkRole = require('../middleware/check-role');
+
+// Kiểm tra nếu là writer thì mới cho qua
+router.use(checkRole.isWriter);
+
+// Load avatar của user
+router.get((req, res, next) => {
+    res.locals.avatar = req.user.avatar;
+    next();
+});
 
 router.get('/', (req, res, next) => {
     res.render('writer/writer', {layout: 'writer-layout', title: 'writer'});

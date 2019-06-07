@@ -70,6 +70,8 @@ router.post('/login', passport.authenticate('local.login', {
     const token = jwt.sign({
         email: req.user.email,
         id: req.user.id,
+        role: req.user.role,
+        avatar: req.user.avatar
     }, 'fit-hcmus', {
         expiresIn: '1h'
     });

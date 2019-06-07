@@ -10,7 +10,7 @@ module.exports = (req, res, next) => {
         }
 
         const decode = jwt.decode(token.split(' ')[1], 'fit-hcmus');
-        req.userData = decode;
+        req.user = decode;
     } catch(err) {
         req.flash('error', err.message);
         return res.redirect('/user/login');

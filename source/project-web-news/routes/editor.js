@@ -1,5 +1,15 @@
 const express = require('express');
 const router = express.Router();
+const checkRole = require('../middleware/check-role');
+
+// Kiểm tra nếu là editor mới cho qua
+router.use(checkRole.isEditor);
+
+// Load avatar của user
+router.get((req, res, next) => {
+    res.locals.avatar = req.user.avatar;
+    next();
+});
 
 // Lấy trang mặc định của editor
 router.get('/', (req, res, next) => {

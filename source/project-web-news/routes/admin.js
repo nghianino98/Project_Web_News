@@ -1,5 +1,15 @@
 const express = require('express');
 const router = express.Router();
+const checkRole = require('../middleware/check-role');
+
+// Kiểm tra nếu là admin mới cho qua
+router.use(checkRole.isAdmin);
+
+// Load avatar của user
+router.use((req, res, next) => {
+    res.locals.avatar = req.user.avatar;
+    next();
+});
 
 // Lấy trang mặc định của admin
 router.get('/', (req, res, next) => {

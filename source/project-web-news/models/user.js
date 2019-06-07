@@ -8,10 +8,11 @@ var userChema = Schema({
     password: {type: String, required: true},
     dob: {type: Date, requied: true},
     TimeRemaining: {type: Date},
-    CategoryEditor: {type: Array},
+    CategoryEditor: [{type: String}],
     pseudonym: {type: String},
     gender: {type: Boolean},
-    isConfirm: {type: Boolean, default: false}
+    isConfirm: {type: Boolean, default: false},
+    avatar: {type: String, default:'/images/user.png'}
 });
 
 module.exports = mongoose.model('User', userChema);
