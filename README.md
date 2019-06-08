@@ -56,7 +56,7 @@ Phase I - Back-end Database
 - [ ] CRUD News 
 - [ ] CRUD Users 
 ### 2. Các tính năng chung cho các phân hệ người dùng
-- [ ] Đăng nhập ( `Nguyen` )
+- [x] Đăng nhập ( `Nguyen` )
   - Tự cài đặt
   - Hoặc sử dụng `passportjs` (http://www.passportjs.org)
   - _Khuyến khích_ cài đặt thêm chức năng đăng nhập qua Google, Facebook, Twitter, Github, ...
@@ -75,7 +75,7 @@ Phase I - Back-end Database
 
 ### 3. Phân hệ phóng viên - `writer`
 
-- [ ] Đăng bài viết ( `Ta` )
+- [x] Đăng bài viết ( `Ta` )
   - Hỗ trợ `WYSIWYG`
     - ckeditor (https://ckeditor.com)
     - quilljs (https://quilljs.com)

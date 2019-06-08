@@ -60,15 +60,26 @@ Ví dụ một định dạng các trường của một document trong Accounts
 }
 ```
 `Trường ExpirationDate chỉ có hoặc khác null khi là Subcriber, trường CategoryEditor chỉ có hoặc khác null khi là Editor, trường Psseudonym chỉ có khi là Writer`
-## Collection Categories
+## Collection CategoriesMain
 Ví dụ một định dạng các trường của một document trong Categories:
 ```json
 {
-    "CategoryName":"Tên chuyên mục",
+    "CategoryMainName":"Tên chuyên mục",
     "ArrayOfArticles":["ArticleID1","ArticleID2"],
     "ArrayOfCategorySub":["CategoryID1","CategoryID2"]
 }
 ```
+
+## Collection CategoriesSub
+Ví dụ một định dạng các trường của một document trong Categories:
+```json
+{
+    "CategorySubName":"Tên chuyên mục",
+    "ArrayOfArticles":["ArticleID1","ArticleID2"],
+    "CategoryMain": "CategoryMain"
+}
+```
+
 `Trường ArrayOfCategorySub chỉ có khi là chuyên mục cha`
 ## Collection Tags
 Ví dụ một định dạng các trường của một document trong Tags:
