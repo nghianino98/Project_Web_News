@@ -5,7 +5,7 @@ var articleSchema = Schema({
     title: { type: String, required: true },
     content: { type: String, required: true },
     abstract: { type: String, required: true },
-    writeDate: { type: Date},
+    writeDate: { type: Date },
     writer: Schema.Types.ObjectId,
     editor: Schema.Types.ObjectId,
     // status: {type: Boolean },
@@ -21,29 +21,40 @@ var articleSchema = Schema({
     views: { type: Number, default: 0 },
     smallAvatar: { type: String, default: '/images/news_thumbnail2.jpg' },
     bigAvatar: { type: String, default: '/images/photograph_img2.jpg' },
-    arrayOfTags: Schema.Types.ObjectId,
+    arrayOfTags: [Schema.Types.ObjectId],
     isPremiumArticle: { type: String },
-    comment: [JSON],
+    comments: [JSON],
 })
 
 
 
 // module.exports = mongoose.model('Article', articleSchema);
 
+const baibao = mongoose.model('Articles', articleSchema);
+
 module.exports = {
+
+    find: (statusArticles, writerID) => {
+        return new Promise((resolve, reject) => {
+            baibao.find({ status: statusArticles, writer: writerID }).exec((err, succ) => {
+                if (err)
+                    reject(err);
+                else
+                    resolve(succ);
+            })
+        });
+    },
+
     add: (entity, writer) => {
         return new Promise((resolve, reject) => {
-
-            var baibao = mongoose.model('Articles', articleSchema);
-
             var obj = new baibao({
                 title: entity.title,
                 content: entity.content,
                 abstract: entity.abstract,
                 writeDate: Date.now(),
-                writer: writer,                                
+                writer: writer,
                 editor: entity.editor,                          // Editor add
-                status: entity.status,      
+                status: entity.status,
                 reasonForRefusing: entity.reasonForRefusing,    // Editor add
                 postDate: entity.postDate,                      // Editor add
                 categoryMain: entity.categoryMain,              // Update
@@ -60,7 +71,7 @@ module.exports = {
             // let connection = require('../utils/db.connection');
 
             obj.save((err, succ) => {
-                if (err){
+                if (err) {
                     reject(err);
                 }
                 else {
@@ -68,5 +79,49 @@ module.exports = {
                 }
             })
         });
+    },
+
+    findById: (id) => {
+        return new Promise((resolve, reject) => {
+            baibao.findById(id).exec((err, succ) => {
+                if (err)
+                    reject(err);
+                else
+                    resolve(succ);
+            })
+        });
+    },
+
+    findByIdAndUpdate: (entity, writer)  => {
+        return new Promise((resolve, reject) => {
+
+            var obj = {
+                title: entity.title,
+                content: entity.content,
+                abstract: entity.abstract,
+                writeDate: Date.now(),
+                writer: writer,
+                editor: entity.editor,                          // Editor add
+                status: "notApproved",
+                reasonForRefusing: entity.reasonForRefusing,    // Editor add
+                postDate: entity.postDate,                      // Editor add
+                categoryMain: entity.categoryMain,              // Update
+                categorySub: entity.categorySub,                // Update
+                views: entity.views,                            // Guest add
+                smallAvatar: entity.smallAvatar,                // Update
+                bigAvatar: entity.bigAvatar,                    // Update
+                arrayOfTags: entity.arrayOfTags,                // Update
+                isPremiumArticle: entity.isPremiumArticle,      // Update
+                comment: entity.comment                         // Guest add
+            };
+
+            baibao.findByIdAndUpdate(entity._articleID, obj).exec((err, succ) => {
+                if (err)
+                    reject(err);
+                else
+                    resolve(succ);
+            })
+        })
     }
+
 }
