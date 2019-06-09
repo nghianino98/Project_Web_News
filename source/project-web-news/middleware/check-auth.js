@@ -1,4 +1,4 @@
-const jwt = require('jsonwebtoken');
+const jwt = require('../FunctionHelper/jwt');
 
 module.exports = (req, res, next) => {
     try {
@@ -8,7 +8,7 @@ module.exports = (req, res, next) => {
             return res.redirect('/user/login');
         }
 
-        const decode = jwt.decode(token.split(' ')[1], 'fit-hcmus');
+        const decode = jwt.decodeJWT(token.split(' ')[1], 'fit-hcmus');
         req.user = decode;
     } catch(err) {
         req.flash('error', err.message);

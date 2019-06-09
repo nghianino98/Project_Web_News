@@ -3,7 +3,7 @@ const User = require('../models/user');
 const LocalStrategy = require('passport-local').Strategy;
 const bcrypt = require('bcrypt');
 const mailer = require('../config/mail');
-const jwt = require('jsonwebtoken');
+const jwt = require('../FunctionHelper/jwt');
 
 module.exports = (app) => {
     passport.serializeUser((user, done) => {
@@ -41,15 +41,7 @@ module.exports = (app) => {
                             }, 15 * 60 * 1000);
 
                             // Tạo mã xác nhận
-                            const token = jwt.sign({
-                                email: email,
-                                id: result.id,
-                                role: result.role,
-                                avatar: result.avatar,
-                                userName: result.userName
-                            }, 'fit-hcmus', {
-                                expiresIn: 15 * 60
-                            });
+                            const token = jwt.generateJWT(result, 'fit-hcmus', 15 * 60);
 
                             const url = `localhost:3000/user/confirm/${token}`;
 
@@ -105,7 +97,7 @@ module.exports = (app) => {
                     if (!user.isConfirm) {
                         return done(null, false, {message: 'Tài khoảng chưa được kích hoạt'});
                     }
-
+                   
                     return done(null, user);
             });
             })

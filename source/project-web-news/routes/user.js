@@ -1,7 +1,7 @@
 var express = require('express');
 var router = express.Router();
 const passport = require('passport');
-const jwt = require('jsonwebtoken');
+const jwt = require('../FunctionHelper/jwt');
 const csrf = require('csurf');
 const csurfProtection = csrf();
 const checkAuth = require('../middleware/check-auth');
@@ -19,19 +19,11 @@ router.use(csurfProtection);
 router.get('/confirm/:token', (req, res, next) => {
     const token = req.params.token;
     try {
-        const decode = jwt.decode(token, 'fit-hcmus');
+        const decode = jwt.decodeJWT(token, 'fit-hcmus');
 
         User.update({_id: decode.id}, {isConfirm: true})
             .then(result => {
-                const token = jwt.sign({
-                    email: decode.email,
-                    id: decode.id,
-                    role: decode.role,
-                    avatar: decode.avatar,
-                    userName: decode.userName
-                }, 'fit-hcmus', {
-                    expiresIn: '1h'
-                });
+                const token = jwt.generateJWT(decode, 'fit-hcmus', '1h');
             
                 res.cookie('Authorization', 'Bearer ' + token, {httpOnly: true});
                 res.redirect('/');
@@ -41,6 +33,27 @@ router.get('/confirm/:token', (req, res, next) => {
         req.flash('error', err.message);
         res.redirect('/user/register');
     }
+});
+
+router.get('/profile', checkAuth, (req, res, next) => {
+    const date = new Date(req.user.dob);
+    const user = {
+        userName: req.user.userName,
+        email: req.user.email,
+        role: req.user.role,
+        phoneNumber: req.user.phoneNumber,
+        date: date.getDate(),
+        month: date.getMonth() + 1,
+        year: date.getFullYear(),
+        pseudonym: req.user.pseudonym
+    }
+
+    res.render('user/profile', {
+        layout: 'admin-layout', 
+        user: user, 
+        isWriter: user.role === 'writer',
+        avatar: req.user.avatar
+    });
 });
 
 /* GET users listing. */
@@ -54,30 +67,19 @@ router.get('/logout', isLoggedIn, (req, res, next) => {
     res.redirect('/user/login');
 });
 
-// middle ware cho qua nếu chưa đăng nhập
-router.use('/', notLoggedIn);
-
 // Lấy view đăng nhập
-router.get('/login', (req, res, next) => {
+router.get('/login', notLoggedIn, (req, res, next) => {
     const messages = req.flash('error');
     res.render('user/login', {csrfToken: req.csrfToken(), messages: messages, hasError: messages.length > 0});
 });
 
 // Xử lí đăng nhập
-router.post('/login', passport.authenticate('local.login', {
+router.post('/login', notLoggedIn, passport.authenticate('local.login', {
     session: false,
     failureRedirect: '/user/login',
     failureFlash: true
 }), (req, res, next) => {
-    const token = jwt.sign({
-        email: req.user.email,
-        id: req.user.id,
-        role: req.user.role,
-        avatar: req.user.avatar,
-        userName: req.user.userName,
-    }, 'fit-hcmus', {
-        expiresIn: '1h'
-    });
+    const token = jwt.generateJWT(req.user, 'fit-hcmus', '1h');
 
     res.cookie('Authorization', 'Bearer ' + token, {httpOnly: true});
 
@@ -91,13 +93,13 @@ router.post('/login', passport.authenticate('local.login', {
 });
 
 // Lấy view đăng ký
-router.get('/register', (req, res, next) => {
+router.get('/register',notLoggedIn, (req, res, next) => {
     const messages = req.flash('error');
     res.render('user/registration', {csrfToken: req.csrfToken(), messages: messages, hasError: messages.length > 0});
 });
 
 // Xử lí đăng ký
-router.post('/register', passport.authenticate('local.signup', {
+router.post('/register', notLoggedIn, passport.authenticate('local.signup', {
     session: false,
     failureRedirect: '/user/register',
     failureFlash: true

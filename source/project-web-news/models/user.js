@@ -9,17 +9,18 @@ var userSchema = Schema({
     dob: {type: Date, requied: true},
     TimeRemaining: {type: Date},
     CategoryEditor: [{type: String}],
-    pseudonym: {type: String},
+    pseudonym: {type: String, default: 'anonymous'},
     gender: {type: Boolean},
     isConfirm: {type: Boolean, default: false},
+    phoneNumber: {type: String},
     avatar: {type: String, default:'/images/user.png'}
 });
 
-const UserClass = mongoose.model('User', userSchema);
+const User = mongoose.model('User', userSchema);
 
-function User(entity){
-    this.save = (entity, passwordHash) => {
-        user = new UserClass({
+module.exports = {
+    save: (entity, passwordHash) => {
+        user = new User({
             email: entity.email,
             password: passwordHash,
             userName: entity.name,
@@ -29,23 +30,21 @@ function User(entity){
         });
 
         return user.save();
-    };
+    },
 
-    this.findById = (id) => {
-        return UserClass.find({_id: id}).exec();
-    };
+    findById: (id) => {
+        return User.find({_id: id}).exec();
+    },
 
-    this.findOneByEmail = (email) => {
-        return UserClass.findOne({email: email}).exec();
-    };
+    findOneByEmail: (email) => {
+        return User.findOne({email: email}).exec();
+    },
 
-    this.deleteOne = (conditionObject) => {
-        return UserClass.deleteOne(conditionObject).exec();
-    };
+    deleteOne: (conditionObject) => {
+        return User.deleteOne(conditionObject).exec();
+    },
 
-    this.update = (conditionObject, properies) => {
-        return UserClass.update(conditionObject, {$set: properies}).exec();
+    update: (conditionObject, properies) => {
+        return User.update(conditionObject, {$set: properies}).exec();
     }
-}
-
-module.exports = new User();
+};
