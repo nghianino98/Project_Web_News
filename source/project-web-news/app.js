@@ -21,9 +21,6 @@ var app = express();
 // Tạo kết nối tới database
 require('./utils/db.connection');
 
-// Thêm các kịch bản đăng nhập đăng ký passport
-require('./config/passport');
-
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
 app.engine('.hbs', expressHbs({
@@ -45,8 +42,7 @@ app.use(session({
   cookie: {maxAge: 180 * 60 * 1000} // Phút * giây * mili giây
 }));
 app.use(flash());
-app.use(passport.initialize());
-app.use(passport.session());
+require('./middleware/passport')(app);
 app.use(express.static(path.join(__dirname, 'public')));
 
 app.use((req, res, next) => {

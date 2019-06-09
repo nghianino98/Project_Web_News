@@ -21,8 +21,7 @@ router.get('/confirm/:token', (req, res, next) => {
     try {
         const decode = jwt.decode(token, 'fit-hcmus');
 
-        User.update({_id: decode.id}, {$set: {isConfirm: true}})
-            .exec()
+        User.update({_id: decode.id}, {isConfirm: true})
             .then(result => {
                 const token = jwt.sign({
                     email: decode.email,
