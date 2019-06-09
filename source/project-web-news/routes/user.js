@@ -48,11 +48,22 @@ router.get('/profile', checkAuth, (req, res, next) => {
         pseudonym: req.user.pseudonym
     }
 
+    var titleForm = 'Thông tin người dùng';
+
+    if (user.role === 'admin') {
+        titleForm = 'Thông tin quản trị viên';
+    } else if (user.role === 'editor') {
+        titleForm = 'Thông tin biên tập viên';
+    } else if (user.role === 'writer') {
+        titleForm = 'Thông tin phóng viên';
+    }
+
     res.render('user/profile', {
         layout: 'admin-layout', 
         user: user, 
         isWriter: user.role === 'writer',
-        avatar: req.user.avatar
+        avatar: req.user.avatar,
+        titleForm: titleForm
     });
 });
 

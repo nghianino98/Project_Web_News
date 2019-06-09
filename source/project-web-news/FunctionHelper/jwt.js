@@ -17,7 +17,6 @@ module.exports = {
     },
 
     decodeJWT: (token, secret_key) => {
-        console.log(jwt.decode(token, secret_key));
         return jwt.decode(token, secret_key);
     }
 };
