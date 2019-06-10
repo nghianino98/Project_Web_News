@@ -10,6 +10,7 @@ router.use(checkRole.isAdmin);
 // Load avatar của user
 router.use((req, res, next) => {
     res.locals.avatar = req.user.avatar;
+    res.locals.userName = req.user.userName;
     next();
 });
 

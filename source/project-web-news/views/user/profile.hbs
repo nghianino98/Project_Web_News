@@ -5,54 +5,68 @@
                 <h4>{{titleForm}}</h4>
             </div>
             <div class="card-body">
-                <div class="row">
-                    <div class="col-md-3">
-                         <img alt="User Pic" src="{{avatar}}" class="img-thumbnail">
-                    </div>
-                    <div class="col-md-8">
-                         <div class="form-group row" ondblclick="onDoubleClickEmail()">
-                            <label for="name" class="col-md-3 m-1 align-self-center" ><strong>Tên</strong></label>
-                            <input type="text" name="name" id="name" value="{{user.userName}}" readonly class="form-control col align-self-center">
+                <form action="/user/profile" method="POST">
+                    <div class="row">
+                        <input type="text" id="_csrf" name="_csrf" value="{{csrfToken}}" hidden>
+                        <div class="col-md-3 col-12">
+                            <div class="row justify-content-center">
+                                <img id="avatar" alt="User Pic" src="{{avatar}}" class="img-thumbnail img-fluid">
+                                <div class="img-thumbnail" id="loading" hidden>
+                                    <div class="spinner-border" role="status"></div>
+                                </div>
+                                <input type="file" name="file" id="file" hidden>
+                            </div> 
+                            <div class="row justify-content-center">
+                            <button type="button" class="btn btn-sm btn-outline-warning fas fa-image m-1" onclick="handleChangeAvatar()"></button>
+                            <button id="save-avatar-btn" type="button" class="btn btn-sm btn-outline-success far fa-save m-1" onclick="handleSaveAvatar()" hidden></button>
+                            <button id="cancel-avatar-btn" type="button" class="btn btn-sm btn-outline-danger fas fa-window-close m-1" onclick="handleCancelChangeAvatar()" hidden></button>
+                            </div>
                         </div>
-                        {{# if isWriter}}
+                        <div class="col-md-8">
                             <div class="form-group row" ondblclick="onDoubleClickEmail()">
-                                <label for="pseudonym" class="col-md-3 m-1 align-self-center" ><strong>Bút danh</strong></label>
-                                <input type="text" name="pseudonym" id="pseudonym" value="{{user.pseudonym}}" readonly class="form-control col align-self-center">
+                                <label for="name" class="col-md-3 m-1 align-self-center" ><strong>Tên</strong></label>
+                                <input type="text" name="name" id="name" value="{{userName}}" readonly class="form-control col align-self-center">
                             </div>
-                        {{/if}}
-                        <div class="form-group row">
-                            <label for="email" class="col-md-3 m-1 align-self-center" ><strong>Email</strong></label>
-                            <input type="text" name="email" id="email" value="{{user.email}}" readonly class="form-control col align-self-center">
-                        </div>
-                        <div class="form-group row">
-                            <label for="role" class="col-md-3 m-1 align-items-center" ><strong>Vai trò</strong></label>
-                            <input type="text" name="role" id="role" value="{{user.role}}" readonly class="form-control col align-self-center">
-                        </div>
-                        <div class="form-group row">
-                            <label class="col-md-3 m-1 align-items-center" ><strong>Ngày sinh</strong></label>
-                            <div class="col">
-                                <select class="form-control" name="day" id="days">
-                                    <option>{{user.date}}</option>
-                                </select>
+                            {{# if isWriter}}
+                                <div class="form-group row" ondblclick="onDoubleClickEmail()">
+                                    <label for="pseudonym" class="col-md-3 m-1 align-self-center" ><strong>Bút danh</strong></label>
+                                    <input type="text" name="pseudonym" id="pseudonym" value="{{user.pseudonym}}" readonly class="form-control col align-self-center">
+                                </div>
+                            {{/if}}
+                            <div class="form-group row">
+                                <label for="email" class="col-md-3 m-1 align-self-center" ><strong>Email</strong></label>
+                                <input type="text" name="email" id="email" value="{{user.email}}" readonly class="form-control col align-self-center">
                             </div>
-                            <div class="col">
-                                <select class="form-control" name="month" id="months" >
-                                    <option>{{user.month}}</option>
-                                </select>
+                            <div class="form-group row">
+                                <label for="role" class="col-md-3 m-1 align-items-center" ><strong>Vai trò</strong></label>
+                                <input type="text" name="role" id="role" value="{{user.role}}" readonly class="form-control col align-self-center">
                             </div>
-                            <div class="col">
-                                <select class="form-control" name="year" id="{years}"  >
-                                    <option>{{user.year}}</option>
-                                </select>
+                            <div class="form-group row">
+                                <label class="col-md-3 m-1 align-items-center" ><strong>Ngày sinh</strong></label>
+                                <div class="col">
+                                    <select class="form-control p-1" name="day" id="days">
+                                        <option>{{user.date}}</option>
+                                    </select>
+                                </div>
+                                <div class="col">
+                                    <select class="form-control p-1" name="month" id="months" >
+                                        <option>{{user.month}}</option>
+                                    </select>
+                                </div>
+                                <div class="col">
+                                    <select class="form-control p-1" name="year" id="{years}"  >
+                                        <option>{{user.year}}</option>
+                                    </select>
+                                </div>
                             </div>
-                        </div>
-                        <div class="form-group row">
-                            <label for="phoneNumber" class="col-md-3 m-1 align-items-center" ><strong>Điện thoại</strong></label>
-                            <input type="text" name="phoneNumber" id="phoneNumber" value="{{user.phoneNumber}}" readonly class="form-control col align-self-center">
+                            <div class="form-group row">
+                                <label for="phoneNumber" class="col-md-3 m-1 align-items-center" ><strong>Điện thoại</strong></label>
+                                <input type="text" name="phoneNumber" id="phoneNumber" value="{{user.phoneNumber}}" readonly class="form-control col align-self-center">
+                            </div>
                         </div>
                     </div>
-                </div>
-               <button class="btn btn-primary float-right" onclick="handleUpdateInfo()">Cập nhật</button>
+                    <button class="btn btn-primary float-right" onclick="handleUpdateInfo()">Cập nhật</button>
+                </form>
             </div>
         </div>
     </div>

@@ -9,6 +9,7 @@ const checkAuth = require('../middleware/check-auth');
 const adminRouter = require('./admin');
 const editorRouter = require('./editor');
 const writerRouter = require('./writer');
+const profileRouter = require('./profile');
 
 const User = require('../models/user');
 
@@ -35,39 +36,8 @@ router.get('/confirm/:token', (req, res, next) => {
     }
 });
 
-router.get('/profile', checkAuth, (req, res, next) => {
-    const date = new Date(req.user.dob);
-    const user = {
-        userName: req.user.userName,
-        email: req.user.email,
-        role: req.user.role,
-        phoneNumber: req.user.phoneNumber,
-        date: date.getDate(),
-        month: date.getMonth() + 1,
-        year: date.getFullYear(),
-        pseudonym: req.user.pseudonym
-    }
-
-    var titleForm = 'Thông tin người dùng';
-
-    if (user.role === 'admin') {
-        titleForm = 'Thông tin quản trị viên';
-    } else if (user.role === 'editor') {
-        titleForm = 'Thông tin biên tập viên';
-    } else if (user.role === 'writer') {
-        titleForm = 'Thông tin phóng viên';
-    }
-
-    res.render('user/profile', {
-        layout: 'admin-layout', 
-        user: user, 
-        isWriter: user.role === 'writer',
-        avatar: req.user.avatar,
-        titleForm: titleForm
-    });
-});
-
 /* GET users listing. */
+router.use('/profile', checkAuth, profileRouter);
 router.use('/admin', checkAuth, adminRouter);
 router.use('/editor', checkAuth, editorRouter);
 router.use('/writer', checkAuth, writerRouter);
