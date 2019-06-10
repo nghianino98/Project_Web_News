@@ -3,7 +3,11 @@ const Schema = mongoose.Schema;
 
 var userSchema = Schema({
     userName: {type: String},
-    role: {type: String, default: 'guest'},
+    role: {
+        type: String,
+        enum: ['admin', 'writer', 'editor', 'subcriber' , 'guest'],
+        default: 'guest'
+    },
     email: {type: String, requied: true},
     password: {type: String, required: true},
     dob: {type: Date, requied: true},
@@ -13,12 +17,30 @@ var userSchema = Schema({
     gender: {type: Boolean},
     isConfirm: {type: Boolean, default: false},
     phoneNumber: {type: String},
-    avatar: {type: String, default:'/images/user.png'}
+    avatar: {type: String, default:'/images/user.png'},
+    status: {
+        type: String,
+        enum: ['Protected', 'Enabled', 'Banned'],
+        default: 'Enabled'
+    },
+    //For UI   
 });
 
 const User = mongoose.model('User', userSchema);
 
 module.exports = {
+
+    findAll:() =>{
+        return new Promise((resolve, reject) => {
+            User.find().exec((err, succ) => {
+                if (err)
+                    reject(err);
+                else
+                    resolve(succ);
+            })
+        });
+    },
+
     save: (entity, passwordHash) => {
         user = new User({
             email: entity.email,

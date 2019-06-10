@@ -3,13 +3,13 @@
     <div class="card-body">
       <div class="row">
         <div class="col-md-3 border-right">
-            
-            <h4><i class="fas fa-users"></i> Danh sách users</h4>
-            
-        </div>     
-        <!-- <div class="col">
+
+          <h4><i class="fas fa-users"></i> Danh sách users</h4>
+
+        </div>
+        <div class="col">
           <button type="button" class="btn btn-sm btn-primary">Thêm user <i class="fas fa-user-plus"></i></button>
-        </div>    -->
+        </div>
       </div>
       <!-- filter -->
       <div class="row align-items-center justify-content-center">
@@ -56,11 +56,11 @@
               <tr>
                 <th>
                   <div class="form-check-inline">
-                      <label class="form-check-label">
-                        <input type="checkbox" class="form-check-input" value="">
-                       </label>
-                   </div>
-                </th>  
+                    <label class="form-check-label">
+                      <input type="checkbox" class="form-check-input" value="">
+                    </label>
+                  </div>
+                </th>
                 <th>Avatar</th>
                 <th>Tên người dùng</th>
                 <th>Loại người dùng</th>
@@ -71,20 +71,23 @@
               </tr>
             </thead>
             <tbody>
+              {{#each userList}}
               <tr>
                 <td>
-                    <div class="form-check-inline">
-                      <label class="form-check-label">
-                        <input type="checkbox" class="form-check-input" value="">
-                       </label>
-                   </div>
-                </td>  
+                  <div class="form-check-inline">
+                    <label class="form-check-label">
+                      <input type="checkbox" class="form-check-input" value="">
+                    </label>
+                  </div>
+                </td>
                 <td><a href="#">
-                  <img class="avatar" src="/images/avatar_ironman.png" alt="Avatar" >
-                </a></td>
-                <td><small>Robert John Downey, Jr</small></td>
+                    {{!-- <img class="avatar" src="/images/avatar_ironman.png" alt="Avatar"> --}}
+                    <img class="avatar" src="{{avatar}}" alt="Avatar">
+                  </a></td>
+                {{!-- <td><small>Robert John Downey, Jr</small></td> --}}
+                <td><small>{{userName}}</small></td>
                 <td>
-                      <!-- <div class="form-group">
+                  <!-- <div class="form-group">
                               <select id="categories" class="form-control">
                                 <option selected>Loại user</option>
                                 <option>Độc giả</option>
@@ -93,16 +96,23 @@
                                 <option>Administrator</option>
                               </select>
                             </div> -->
-                            <select class="custom-select custom-select-sm">
-                                  <option selected>Open this select menu</option>
-                                  <option value="1" selected>Độc giả</option>
-                                  <option value="2">Writer</option>
-                                  <option value="3">Editor</option>
-                                  <option value="4">Administrator</option>
-                                </select>
+                  {{#if isModify}}
+                  <select class="custom-select custom-select-sm" {{#unless isSelectRole}}disabled{{/unless}}>
+                    {{!-- <option selected>Open this select menu</option> --}}
+                    <option value="1">Độc giả</option>
+                    <option value="2">Writer</option>
+                    <option value="3">Editor</option>
+                    <option value="4">Administrator</option>
+                    <option value="5">Guest</option>
+                  </select>
+                  {{else}}
+                   <select class="custom-select custom-select-sm" disabled>
+                    {{!-- <option selected>Open this select menu</option> --}}
+                    <option> {{role}} </option>
+                  {{/if}}
                 </td>
                 <td>
-                      <!-- <div class="form-group">
+                  <!-- <div class="form-group">
                               <select id="categories" class="form-control">
                                 <option selected>Chuyên mục</option>
                                 <option>Thể thao</option>
@@ -111,185 +121,186 @@
                                 <option>Công nghệ</option>
                               </select>
                             </div> -->
-                            <select class="custom-select custom-select-sm" disabled>
-                                  <option selected>Chuyên mục</option>
-                                  <option value="1">Thể thao</option>
-                                  <option value="2">Chính trị</option>
-                                  <option value="3">Xã hội</option>
-                                  <option value="4">Công nghệ</option>
-                                </select>
+                  <select class="custom-select custom-select-sm" disabled>
+                    <option selected>Chuyên mục</option>
+                    <option value="1">Thể thao</option>
+                    <option value="2">Chính trị</option>
+                    <option value="3">Xã hội</option>
+                    <option value="4">Công nghệ</option>
+                  </select>
                 </td>
                 <!-- <td><a href="#"><small>5</small></a></td> -->
-                <td> <i class="fa fa-user-clock"></i> Còn hạn </td>
+                <td> <i class="fa fa-user-clock"></i> {{status}} </td>
                 <td>
                   <!-- <a href="#"><i class="fa fa-eye" title="Xem chi tiết bài viết"></i></a> -->
-                  
+
                   <a href="#"><i class="fa fa-user-edit" title="Cập nhật thông tin"></i></a>
                   <a href="#"><i class="fa fa-calendar-plus" title="Gia hạn"></i></a>
                   <a href="#"><i class="fa fa-trash" title="Xóa bài viết"></i></a>
-                  
+
                 </td>
               </tr>
-              <tr>
+              {{/each}}
+              {{!-- <tr>
                 <td>
-                    <div class="form-check-inline">
-                      <label class="form-check-label">
-                        <input type="checkbox" class="form-check-input" value="">
-                       </label>
-                   </div>
-                </td>  
+                  <div class="form-check-inline">
+                    <label class="form-check-label">
+                      <input type="checkbox" class="form-check-input" value="">
+                    </label>
+                  </div>
+                </td>
                 <td><a href="#">
-                    <img class="avatar" src="/images/avatar_nghiatdh.png" alt="Avatar" >
+                    <img class="avatar" src="/images/avatar_nghiatdh.png" alt="Avatar">
                   </a></td>
                 <td><small>Tạ Đăng Hiếu Nghĩa</small></td>
                 <td>
-                      <select class="custom-select custom-select-sm">
-                              <option selected>Open this select menu</option>
-                              <option value="1">Độc giả</option>
-                              <option value="2">Writer</option>
-                              <option value="3" selected>Editor</option>
-                              <option value="4">Administrator</option>
-                            </select>
+                  <select class="custom-select custom-select-sm">
+                    <option selected>Open this select menu</option>
+                    <option value="1">Độc giả</option>
+                    <option value="2">Writer</option>
+                    <option value="3" selected>Editor</option>
+                    <option value="4">Administrator</option>
+                  </select>
                 </td>
                 <td>
-                      <select class="custom-select custom-select-sm" disabled>
-                              <option selected>Chuyên mục</option>
-                              <option value="1" >Thể thao</option>
-                              <option value="2">Chính trị</option>
-                              <option value="3">Xã hội</option>
-                              <option value="4">Công nghệ</option>
-                            </select>
+                  <select class="custom-select custom-select-sm" disabled>
+                    <option selected>Chuyên mục</option>
+                    <option value="1">Thể thao</option>
+                    <option value="2">Chính trị</option>
+                    <option value="3">Xã hội</option>
+                    <option value="4">Công nghệ</option>
+                  </select>
                 </td>
                 <!-- <td><a href="#"><small>5</small></a></td> -->
                 <td><i class="fa fa-user-shield"></i> Được bảo vệ </td>
                 <td>
                   <!-- <a href="#"><i class="fa fa-eye" title="Xem chi tiết bài viết"></i></a> -->
-                  
+
                   <a href="#"><i class="fa fa-user-edit" title="Cập nhật thông tin"></i></a>
                   <a href="#"><i class="fa fa-trash" title="Xóa bài viết"></i></a>
                 </td>
-              </tr>   
+              </tr>
               <tr>
-                  <td>
-                      <div class="form-check-inline">
-                        <label class="form-check-label">
-                          <input type="checkbox" class="form-check-input" value="">
-                         </label>
-                     </div>
-                  </td>  
-                  <td><a href="#">
-                      <img class="avatar" src="/images/avatar.png" alt="Avatar" >
-                    </a></td>
-                  <td><small>Nguyễn Ngọc Nghĩa</small></td>
-                  <td>
-                        <select class="custom-select custom-select-sm">
-                                <option selected>Open this select menu</option>
-                                <option value="1">Độc giả</option>
-                                <option value="2">Writer</option>
-                                <option value="3">Editor</option>
-                                <option value="4"selected>Administrator</option>
-                              </select>
-                  </td>
-                  <td>
-                        <select class="custom-select custom-select-sm" disabled>
-                                <option selected>Chuyên mục</option>
-                                <option value="1">Thể thao</option>
-                                <option value="2">Chính trị</option>
-                                <option value="3">Xã hội</option>
-                                <option value="4">Công nghệ</option>
-                              </select>
-                  </td>
-                  <!-- <td><a href="#"><small>5</small></a></td> -->
-                  <td><i class="fa fa-user-shield"></i> Được bảo vệ </td>
-                  <td>
-                    <!-- <a href="#"><i class="fa fa-eye" title="Xem chi tiết bài viết"></i></a> -->
-                   
-                    <a href="#"><i class="fa fa-user-edit" title="Cập nhật thông tin"></i></a>
-                    <a href="#"><i class="fa fa-trash" title="Xóa bài viết"></i></a>
-                  </td>
-                </tr>  
-                <tr>
-                    <td>
-                        <div class="form-check-inline">
-                          <label class="form-check-label">
-                            <input type="checkbox" class="form-check-input" value="">
-                           </label>
-                       </div>
-                    </td>  
-                    <td><a href="#">
-                        <img class="avatar" src="/images/avatar_dang.png" alt="Avatar" >
-                      </a></td>
-                    <td><small>Đặng Ngọc Nghĩa</small></td>
-                    <td>
-                          <select class="custom-select custom-select-sm">
-                                  <option >Open this select menu</option>
-                                  <option value="1">Độc giả</option>
-                                  <option value="2" selected>Writer</option>
-                                  <option value="3">Editor</option>
-                                  <option value="4">Administrator</option>
-                                </select>
-                    </td>
-                    <td>
-                          <select class="custom-select custom-select-sm">
-                                  <option selected>Chuyên mục</option>
-                                  <option value="1" >Thể thao</option>
-                                  <option value="2">Chính trị</option>
-                                  <option value="3">Xã hội</option>
-                                  <option value="4">Công nghệ</option>
-                                </select>
-                    </td>
-                    <!-- <td><a href="#"><small>5</small></a></td> -->
-                    <td><i class="fa fa-user-slash"></i> Bị chặn</td>
-                    <td>
-                      <!-- <a href="#"><i class="fa fa-eye" title="Xem chi tiết bài viết"></i></a> -->
-                      
-                      <a href="#"><i class="fa fa-user-edit" title="Cập nhật thông tin"></i></a>
-                      <a href="#"><i class="fa fa-trash" title="Xóa bài viết"></i></a>
-                    </td>
-                  </tr>
-                  <tr>
-                      <td>
-                          <!-- <div class="form-check-inline">
+                <td>
+                  <div class="form-check-inline">
+                    <label class="form-check-label">
+                      <input type="checkbox" class="form-check-input" value="">
+                    </label>
+                  </div>
+                </td>
+                <td><a href="#">
+                    <img class="avatar" src="/images/avatar.png" alt="Avatar">
+                  </a></td>
+                <td><small>Nguyễn Ngọc Nghĩa</small></td>
+                <td>
+                  <select class="custom-select custom-select-sm">
+                    <option selected>Open this select menu</option>
+                    <option value="1">Độc giả</option>
+                    <option value="2">Writer</option>
+                    <option value="3">Editor</option>
+                    <option value="4" selected>Administrator</option>
+                  </select>
+                </td>
+                <td>
+                  <select class="custom-select custom-select-sm" disabled>
+                    <option selected>Chuyên mục</option>
+                    <option value="1">Thể thao</option>
+                    <option value="2">Chính trị</option>
+                    <option value="3">Xã hội</option>
+                    <option value="4">Công nghệ</option>
+                  </select>
+                </td>
+                <!-- <td><a href="#"><small>5</small></a></td> -->
+                <td><i class="fa fa-user-shield"></i> Được bảo vệ </td>
+                <td>
+                  <!-- <a href="#"><i class="fa fa-eye" title="Xem chi tiết bài viết"></i></a> -->
+
+                  <a href="#"><i class="fa fa-user-edit" title="Cập nhật thông tin"></i></a>
+                  <a href="#"><i class="fa fa-trash" title="Xóa bài viết"></i></a>
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <div class="form-check-inline">
+                    <label class="form-check-label">
+                      <input type="checkbox" class="form-check-input" value="">
+                    </label>
+                  </div>
+                </td>
+                <td><a href="#">
+                    <img class="avatar" src="/images/avatar_dang.png" alt="Avatar">
+                  </a></td>
+                <td><small>Đặng Ngọc Nghĩa</small></td>
+                <td>
+                  <select class="custom-select custom-select-sm">
+                    <option>Open this select menu</option>
+                    <option value="1">Độc giả</option>
+                    <option value="2" selected>Writer</option>
+                    <option value="3">Editor</option>
+                    <option value="4">Administrator</option>
+                  </select>
+                </td>
+                <td>
+                  <select class="custom-select custom-select-sm">
+                    <option selected>Chuyên mục</option>
+                    <option value="1">Thể thao</option>
+                    <option value="2">Chính trị</option>
+                    <option value="3">Xã hội</option>
+                    <option value="4">Công nghệ</option>
+                  </select>
+                </td>
+                <!-- <td><a href="#"><small>5</small></a></td> -->
+                <td><i class="fa fa-user-slash"></i> Bị chặn</td>
+                <td>
+                  <!-- <a href="#"><i class="fa fa-eye" title="Xem chi tiết bài viết"></i></a> -->
+
+                  <a href="#"><i class="fa fa-user-edit" title="Cập nhật thông tin"></i></a>
+                  <a href="#"><i class="fa fa-trash" title="Xóa bài viết"></i></a>
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <!-- <div class="form-check-inline">
                             <label class="form-check-label">
                               <input type="checkbox" class="form-check-input" value="">
                              </label>
                          </div> -->
-                      </td>  
-                      <td><a href="#">
-                          <img class="avatar" src="/images/people_plus.png" alt="Avatar" >
-                        </a></td>
-                      <td><small><input type="text" class="form-control" id="name"></small></td>
-                      <td>
-                            <select class="custom-select custom-select-sm">
-                                    <option selected>Cấp quyền</option>
-                                    <option value="1">Độc giả</option>
-                                    <option value="2">Writer</option>
-                                    <option value="3">Editor</option>
-                                    <option value="4">Administrator</option>
-                                  </select>
-                      </td>
-                      <td>
-                            <select class="custom-select custom-select-sm" disabled>
-                                    <option selected>Chuyên mục</option>
-                                    <option value="1" >Thể thao</option>
-                                    <option value="2">Chính trị</option>
-                                    <option value="3">Xã hội</option>
-                                    <option value="4">Công nghệ</option>
-                                  </select>
-                      </td>
-                      <!-- <td><a href="#"><small>5</small></a></td> -->
-                      <td>
-                          <select class="custom-select custom-select-sm" disabled>
-                              <option selected>Trạng thái</option>
-                             
-                            </select> 
-                      </td>
-                      <td>
-                        <div class="col">
-                          <button type="button" class="btn btn-sm btn-primary"><i class="fas fa-user-plus"></i></button>
-                        </div>   
-                      </td>
-                    </tr>    
+                </td>
+                <td><a href="#">
+                    <img class="avatar" src="/images/people_plus.png" alt="Avatar">
+                  </a></td>
+                <td><small><input type="text" class="form-control" id="name"></small></td>
+                <td>
+                  <select class="custom-select custom-select-sm">
+                    <option selected>Cấp quyền</option>
+                    <option value="1">Độc giả</option>
+                    <option value="2">Writer</option>
+                    <option value="3">Editor</option>
+                    <option value="4">Administrator</option>
+                  </select>
+                </td>
+                <td>
+                  <select class="custom-select custom-select-sm" disabled>
+                    <option selected>Chuyên mục</option>
+                    <option value="1">Thể thao</option>
+                    <option value="2">Chính trị</option>
+                    <option value="3">Xã hội</option>
+                    <option value="4">Công nghệ</option>
+                  </select>
+                </td>
+                <!-- <td><a href="#"><small>5</small></a></td> -->
+                <td>
+                  <select class="custom-select custom-select-sm" disabled>
+                    <option selected>Trạng thái</option>
+
+                  </select>
+                </td>
+                <td>
+                  <div class="col">
+                    <button type="button" class="btn btn-sm btn-primary"><i class="fas fa-user-plus"></i></button>
+                  </div>
+                </td>
+              </tr> --}}
             </tbody>
           </table>
         </div>
