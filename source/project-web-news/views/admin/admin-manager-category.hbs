@@ -3,72 +3,65 @@
     <div class="card-body">
       <div class="row">
         <div class="col-md-4 border-right">
-            <h4>Danh sách chuyên mục</h4>
-        </div>     
+          <h4>Danh sách chuyên mục</h4>
+        </div>
         <div class="col">
-          <button type="button" class="btn btn-sm btn-primary" data-toggle="modal" data-target=".bd-example-modal-lg">Thêm chuyên mục</button>
-          
-          <div class="modal fade bd-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+          <button type="button" class="btn btn-sm btn-primary" data-toggle="modal"
+            data-target=".bd-example-modal-lg">Thêm chuyên mục</button>
+
+          <div class="modal fade bd-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel"
+            aria-hidden="true">
             <div class="modal-dialog modal-lg modal-dialog-centered">
               <div class="modal-content">
-                <form class="form-horizontal">
-                <fieldset>
-                <div class="modal-header">
-                    <legend>CHUYÊN MỤC</legend>
-                </div>
-                <div class="modal-body">
-                  <div class="text-right">        
-                    <div class="form-group row">
-                      <label class="col-md-3 col-form-label" for="category_name"><b>Tên chuyên mục</b></label>
-                      <div class="col-md-7">
-                        <input id="category_name" name="category_name" placeholder="Nhập vào tên chuyên mục" class="form-control input-md" required="" type="text">
+                <form action="/user/admin/manager-category" method="POST" class="form-horizontal">
+                  <fieldset>
+                    <div class="modal-header">
+                      <legend>CHUYÊN MỤC</legend>
+                    </div>
+                    <div class="modal-body">
+                      <div class="text-right">
+                        <div class="form-group row">
+                          <label class="col-md-3 col-form-label" for="category_name"><b>Tên chuyên mục</b></label>
+                          <div class="col-md-7">
+                            <input id="category_name" name="category_name" placeholder="Nhập vào tên chuyên mục"
+                              class="form-control input-md" required="" type="text">
+                          </div>
+                        </div>
+
+                        <!-- Select Basic -->
+                        <div class="form-group row">
+                          <label class="col-md-3 col-form-label" for="category_parent"><b>Chuyên mục cha</b></label>
+                          <div class="col-md-7">
+                            <select id="category_name_fr" name="category_parent" class="form-control">
+                              <option selected>Chọn làm chuyên mục cha</option>
+                              {{#each listCategorys}}
+                              <option>{{this.categoryName}}</option>
+                              {{/each}}
+                            </select>
+                          </div>
+                        </div>
+                        <input type="text" id="_csrf" name="_csrf" value="{{csrfToken}}" hidden>
                       </div>
                     </div>
-                    <!-- Text input-->
-                    <div class="form-group row">
-                      <label class="col-md-3 col-form-label" for="link"><b>Địa chỉ</b> </label>  
-                      <div class="col-md-7">
-                      <input id="modification_date" name="link" placeholder="VD: chuyen-muc" class="form-control input-md" required="" type="text">
-                        
-                      </div>
+                    <div class="modal-footer">
+                      <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                      <button type="submit" class="btn btn-primary">Submit</button>
                     </div>
-                    <div class="form-group row">
-                      <label class="col-md-3 col-form-label" for="description"><b>Mô tả</b></label>  
-                      <div class="col-md-7">
-                        <textarea class="form-control" id="description" name="description"></textarea>
-                       
-                      </div>
-                    </div>
-                    
-                    <!-- Select Basic -->
-                    <div class="form-group row">
-                      <label class="col-md-3 col-form-label" for="category_parent"><b>Chuyên mục cha</b></label>
-                      <div class="col-md-7">
-                        <select id="category_name_fr" name="category_parent" class="form-control">
-                        </select>
-                      </div>
-                    </div>
-                   
-                  </div>
-                </div>
-                <div class="modal-footer">
-                  <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                  <button id="" name="" class="btn btn-primary">Submit</button>
-                </div>
-                </fieldset>
+                  </fieldset>
                 </form>
               </div>
             </div>
-          </div>  
-        </div> 
+          </div>
+        </div>
       </div>
       <!-- filter -->
+
       <div class="row align-items-center justify-content-center">
         <div class="col pt-3">
           <div class="form-group">
             <select id="categories" class="form-control">
               <option selected>Tất cả chuyên mục</option>
-              <option>Tất cả chuyên mục cha</option>                  
+              <option>Tất cả chuyên mục cha</option>
             </select>
           </div>
         </div>
@@ -76,10 +69,9 @@
           <div class="form-group">
             <select id="tasg" class="form-control">
               <option selected>Tất cả chuyên mục con</option>
-              <option>Nông nghiệp</option>
-              <option>Kinh tế</option>
-              <option>Ẩm thực</option>
-              <option>Thể thao</option>
+              {{#each listCategorys}}
+              <option>{{this.categoryName}}</option>
+              {{/each}}
             </select>
           </div>
         </div>
@@ -90,116 +82,248 @@
       <!-- list posts -->
       <div class="row">
         <div class="col-md-12">
+          {{# if success}}
+          <div class="alert alert-success" role="alert">
+            <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+            <strong>Success!</strong>
+            {{messagesSuccess}}
+          </div>
+          {{/if}}
+          {{# if failure}}
+          <div class="alert alert-danger" role="alert">
+            <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+            <strong>Failure!</strong>
+            {{messagesFailure}}
+          </div>
+          {{/if}}
           <table class="table table-hover ">
             <thead class="bg-light ">
               <tr>
                 <th>
                   <div class="form-check-inline">
-                      <label class="form-check-label">
-                        <input type="checkbox" class="form-check-input" value="">
-                       </label>
-                   </div>
-                </th>  
+                    <label class="form-check-label">
+                      <input type="checkbox" class="form-check-input" value="">
+                    </label>
+                  </div>
+                </th>
                 <th>Tên chuyên mục</th>
-                <th>Địa chỉ</th>
-                <th><center>Mô tả</center></th>
-                <th><center>Chuyên mục cha</center></th>
-                <th><center>Chuyên mục con</center></th>
-                <th><center>Bài viết</center></th>
-                <th><center>Thao tác</center></th>
+                <th>
+                  <center>Chuyên mục cha</center>
+                </th>
+                <th>
+                  <center>Chuyên mục con</center>
+                </th>
+                <th>
+                  <center>Bài viết</center>
+                </th>
+                <th>
+                  <center>Thao tác</center>
+                </th>
               </tr>
             </thead>
             <tbody>
+              {{#each listCategorys}}
               <tr>
                 <td>
-                    <div class="form-check-inline">
-                      <label class="form-check-label">
-                        <input type="checkbox" class="form-check-input" value="">
-                       </label>
-                   </div>
-                </td>  
-                <td><a href="#">Thể thao</a></td>
-                <td><small>the-thao.html</small></td>
-                <td><small>Tin tức thể thao trên toàn thế giới</small></td>
-                <td><center><i class="far fa-check-square"></i></center>
-                 </td>
-                <td><center><a href="#"><small>5</small></a></center></td>
-                <td><a href="#"><center><small>25</small></center></a></td>
-                <td><center>
-                  <a href="#"><i class="fas fa-pencil-alt" title="Sửa chuyên mục"></i></a>
-                  <a href="#"><i class="fa fa-trash" title="Xóa chuyên mục"></i></a></center>
+                  <div class="form-check-inline">
+                    <label class="form-check-label">
+                      <input type="checkbox" class="form-check-input" value="">
+                    </label>
+                  </div>
+                </td>
+                <td><a href="#">{{this.categoryName}}</a></td>
+                <td>
+                  <center><i class="far fa-check-square"></i></center>
+                </td>
+                <td>
+                  <center><a href="#"><small>{{this.arrayOfCategorySub.length}}</small></a></center>
+                </td>
+                <td><a href="#">
+                    <center><small>{{this.arrayOfArticles.length}}</small></center>
+                  </a></td>
+                <td>
+
+                  <center><a href="#" id="{{this._id}}" title="{{this.categoryName}}" data-toggle="modal"
+                      data-target="#updateCategory" onclick="return update(id,title)"><i class="fas fa-pencil-alt"
+                        title="Sửa chuyên mục"></i></a>
+                    <a href="#" id="{{this._id}}" title="{{this.categoryName}}" data-toggle="modal" data-target="#deleteCategory" onclick="return deleteCategory(id,title)"><i class="fa fa-trash"
+                        title="Xóa chuyên mục"></i></a>
+
+                  </center>
+
                 </td>
               </tr>
-              <thead class="bg-light "> 
-                <tr>
-                  <td>
-                      <div class="form-check-inline">
-                        <label class="form-check-label">
-                          <input type="checkbox" class="form-check-input" value="">
-                         </label>
-                     </div>
-                  </td>  
-                  <td><a href="#">Bóng đá</a></td>
-                  <td><small>the-thao-bong-da.html</small></td>
-                  <td><small>Trận cầu đỉnh cao khắp thế giới</small></td>
-                  <td><center><!--<div class="form-check-inline">
-                        <label class="form-check-label">
-                          <input type="checkbox" class="form-check-input" value="" disabled="">
-                         </label>
-                     </div>--><small>Thể thao</small></center>
-                   </td>
-                  <td><center><a href="#"><small>-</small></a></center></td>
-                  <td><a href="#"><center><small>10</small></center></a></td>
-                  <td><center>
-                    <a href="#"><i class="fas fa-pencil-alt" title="Sửa chuyên mục"></i></a>
-                    <a href="#"><i class="fa fa-trash" title="Xóa chuyên mục"></i></a></center>
-                  </td>
-                </tr>
-              </thead>
+              {{!-- <thead class="bg-light ">
+                
+              </tr> --}}
+              {{/each}}
+              {{#each listCategorySub}}
               <tr>
                 <td>
-                    <div class="form-check-inline">
-                      <label class="form-check-label">
-                        <input type="checkbox" class="form-check-input" value="">
-                       </label>
-                   </div>
-                </td>  
-                <td><a href="#">Nông nghiệp</a></td>
-                <td><small>nong-nghiep.html</small></td>
-                <td><small>Tin tức nông nghiệp toàn quốc</small></td>
-                <td><center><i class="far fa-check-square"></i></center>
-                 </td>
-                <td><center><a href="#"><small>4</small></a></center></td>
-                <td><a href="#"><center><small>10</small></center></a></td>
-                <td><center>
-                  <a href="#"><i class="fas fa-pencil-alt" title="Sửa chuyên mục"></i></a>
-                  <a href="#"><i class="fa fa-trash" title="Xóa chuyên mục"></i></a></center>
+                  <div class="form-check-inline">
+                    <label class="form-check-label">
+                      <input type="checkbox" class="form-check-input" value="">
+                    </label>
+                  </div>
                 </td>
-              </tr>
-              <tr>
+                <td><a href="#">{{this.categoryName}}</a></td>
                 <td>
-                    <div class="form-check-inline">
-                      <label class="form-check-label">
-                        <input type="checkbox" class="form-check-input" value="">
-                       </label>
-                   </div>
-                </td>  
-                <td><a href="#">Kinh tế</a></td>
-                <td><small>kinh-te.html</small></td>
-                <td><small>Chuyển động kinh tế toàn cầu</small></td>
-                <td><center><i class="far fa-check-square"></i></center>
-                 </td>
-                <td><center><a href="#"><small>3</small></a></center></td>
-                <td><a href="#"><center><small>35</small></center></a></td>
-                <td><center>
-                  <a href="#"><i class="fas fa-pencil-alt" title="Sửa chuyên mục"></i></a>
-                  <a href="#"><i class="fa fa-trash" title="Xóa chuyên mục"></i></a></center>
+                  <center>{{this.categoryMain}}</center>
+                </td>
+                <td>
+                  <center><i class="far fa-check-square"></i></center>
+                </td>
+                <td><a href="#">
+                    <center><small>{{this.arrayOfArticles.length}}</small></center>
+                  </a></td>
+
+
+                <td>
+                  <center>
+                    <a href="#" id="{{this._id}}" title="{{this.categoryName}}" data-toggle="modal"
+                      data-target="#updateCategorySub" onclick="return updateCategorySub(id,title)"><i
+                        class="fas fa-pencil-alt" title="Sửa chuyên mục"></i></a>
+                    <a href="#" id="{{this._id}}" title="{{this.categoryName}}" data-toggle="modal" data-target="#deleteCategorySub" onclick="return deleteCategorySub(id,title)"><i class="fa fa-trash"
+                        title="Xóa chuyên mục"></i></a></center>
                 </td>
               </tr>
-                     
+              {{!-- <thead class="bg-light ">
+                
+              </tr> --}}
+              {{/each}}
             </tbody>
           </table>
+
         </div>
+        <!-- Modal sửa thư mục cha-->
+        <div class="modal fade" id="updateCategory" tabindex="-1" role="dialog" aria-labelledby="updateCategoryTitle"
+          aria-hidden="true">
+          <div class="modal-dialog modal-lg modal-dialog-centered">
+            <div class="modal-content">
+              <form action="/user/admin/manager-category/update" method="POST" name="frmUpdate" class="form-horizontal">
+                <fieldset>
+                  <div class="modal-header">
+                    <legend>CẬP NHẬT CHUYÊN MỤC </legend>
+                  </div>
+                  <div class="modal-body">
+                    <div class="text-right">
+                      <div class="form-group row">
+                        <label class="col-md-3 col-form-label" for="category_name_update"><b>Tên chuyên
+                            mục</b></label>
+                        <div class="col-md-8">
+                          <input id="category_name_update" name="category_name_update"
+                            placeholder="Nhập vào tên chuyên mục" class="form-control input-md" required="" type="text">
+                        </div>
+                      </div>
+                      <input type="text" id="_csrf" name="_csrf" value="{{csrfToken}}" hidden>
+                      <input type="text" id="categoryID_update" name="categoryID_update" hidden>
+                    </div>
+                  </div>
+                  <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    <button type="submit" class="btn btn-primary">Update</button>
+                  </div>
+                </fieldset>
+              </form>
+            </div>
+          </div>
+        </div>
+
+
+        <!-- Modal xóa thư mục cha-->
+        <div class="modal fade" id="deleteCategory" tabindex="-1" role="dialog" aria-labelledby="deleteCategoryTitle"
+          aria-hidden="true">
+          <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h5 class="modal-title" id="deleteCategoryTitle">Xóa chuyên mục</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                  <span aria-hidden="true">&times;</span>
+                </button>
+              </div>
+              <div class="modal-body">
+                <span id="content_delete"></span>
+              </div>
+              <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Đóng</button>
+                <a href="" id="deleteId" class="btn btn-primary"
+                  tabindex="-1" role="button">Xác nhận</a>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Modal sửa thư mục con-->
+        <div class="modal fade" id="updateCategorySub" tabindex="-1" role="dialog"
+          aria-labelledby="updateCategorySubTitle" aria-hidden="true">
+          <div class="modal-dialog modal-lg modal-dialog-centered">
+            <div class="modal-content">
+              <form action="/user/admin/manager-category/update/categorySub" method="POST" class="form-horizontal">
+                <fieldset>
+                  <div class="modal-header">
+                    <legend>CẬP NHẬT CHUYÊN MỤC</legend>
+                  </div>
+                  <div class="modal-body">
+                    <div class="text-right">
+                      <div class="form-group row">
+                        <label class="col-md-3 col-form-label" for="categorysub_name"><b>Tên chuyên
+                            mục</b></label>
+                        <div class="col-md-8">
+                          <input id="categorysub_name" name="categorysub_name" placeholder="Nhập vào tên chuyên mục"
+                            class="form-control input-md" required="" type="text" value="{{this.categoryName}}">
+                        </div>
+                      </div>
+
+                      <div class="form-group row">
+                        <label class="col-md-3 col-form-label" for="categorysub_parent"><b>Chuyên mục
+                            cha</b></label>
+                        <div class="col-md-8">
+                          <select id="categorysub_parent" name="categorysub_parent" class="form-control">
+                            {{#each listCategorys}}
+                            <option>{{this.categoryName}}</option>
+                            {{/each}}
+                          </select>
+                        </div>
+                      </div>
+                      <input type="text" id="_csrf" name="_csrf" value="{{csrfToken}}" hidden>
+                      <input type="text" id="categorySubID" name="categorySubID" value="5cff24707be28250e4bb0a32"
+                        hidden>
+                    </div>
+                  </div>
+                  <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    <button type="submit" class="btn btn-primary">Update</button>
+                  </div>
+                </fieldset>
+              </form>
+            </div>
+          </div>
+        </div>
+
+
+        <!-- Modal xóa chuyên mục con-->
+        <div class="modal fade" id="deleteCategorySub" tabindex="-1" role="dialog"
+          aria-labelledby="deleteCategorySubTitle" aria-hidden="true">
+          <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h5 class="modal-title" id="deleteCategorySubTitle">Xóa chuyên mục</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                  <span aria-hidden="true">&times;</span>
+                </button>
+              </div>
+              <div class="modal-body">
+                <span id="content_delete_sub"></span>
+              </div>
+              <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Đóng</button>
+                <a href="" id="deleteSubId" class="btn btn-primary"
+                  tabindex="-1" role="button">Xác nhận</a>
+              </div>
+            </div>
+          </div>
+        </div>
+
       </div>
     </div>
   </div>
