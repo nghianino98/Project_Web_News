@@ -34,13 +34,43 @@ router.get('/', (req, res, next) => {
         titleForm = 'Thông tin phóng viên';
     }
 
+    const messages = req.flash('error');
+
     res.render('user/profile', {
         layout: 'admin-layout', 
         user: user, 
         isWriter: user.role === 'writer',
         titleForm: titleForm,
-        csrfToken: req.csrfToken()
+        csrfToken: req.csrfToken(),
+        messages: messages,
+        hasError: messages.length > 0
     });
+});
+
+router.post('/', (req, res, next) => {
+    var propertiesUpdate = {
+        userName: req.body.userName,
+        dob: new Date(+req.body.year, +req.body.month - 1, +req.body.date),
+        phoneNumber: req.body.phoneNumber
+    };
+
+    if (req.body.pseudonym) {
+        propertiesUpdate.pseudonym = req.body.pseudonym;
+    }
+
+    User.update({_id: req.user.id}, propertiesUpdate)
+        .then((result) => {
+            req.user.userName = propertiesUpdate.userName;
+            req.user.dob = propertiesUpdate.dob;
+            req.user.phoneNumber = propertiesUpdate.phoneNumber;
+            req.user.pseudonym = propertiesUpdate.pseudonym;
+            const token = jwt.generateJWT(req.user, 'fit-hcmus', '1h');
+            res.cookie('Authorization', 'Bearer ' + token, {httpOnly: true});
+            res.redirect('/user/profile');
+        }).catch(err => {
+            req.flash('error', 'Cập nhật thông tin thất bại, thử lại sau.');
+            res.redirect('/user/profile');
+        });
 });
 
 router.post('/avatar', multer.single('file'), (req, res, next) => {

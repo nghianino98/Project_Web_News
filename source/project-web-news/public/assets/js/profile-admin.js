@@ -1,4 +1,9 @@
-var email = $('#email').val();
+var name = $('#name').val();
+var pseudonym = $('#pseudonym').val();
+var date = $('#date').val();
+var year = $('#year').val();
+var month = $('#month').val();
+var phoneNumber = $('#phoneNumber').val();
 var avatar = $('#avatar').attr('src');
 
 $('#file').change(handleChangeFile);
@@ -55,4 +60,36 @@ function handleCancelChangeAvatar() {
     $('#avatar').attr('src', avatar);
     $('#save-avatar-btn').prop('hidden', true);
     $('#cancel-avatar-btn').prop('hidden', true);
+}
+
+function handleUpdateInfo() {
+    $('#name').prop('readonly', false);
+    $('#date').prop('readonly', false);
+    $('#month').prop('readonly', false);
+    $('#year').prop('readonly', false);
+    $('#pseudonym').prop('readonly', false);
+    $('#phoneNumber').prop('readonly', false);
+    $('#update').prop('hidden', true);
+    $('#save').prop('hidden', false);
+    $('#cancel').prop('hidden', false);
+}
+
+function handleCancelUpateInfo() {
+
+    $('#name').val(name);
+    $('#date').val(date);
+    $('#month').val(month);
+    $('#year').val(year);
+    $('#pseudonym').val(pseudonym);
+    $('#phoneNumber').val(phoneNumber);
+    
+    $('#name').prop('readonly', true);
+    $('#date').prop('readonly', true);
+    $('#month').prop('readonly', true);
+    $('#year').prop('readonly', true);
+    $('#pseudonym').prop('readonly', true);
+    $('#phoneNumber').prop('readonly', true);
+    $('#update').prop('hidden', false);
+    $('#save').prop('hidden', true);
+    $('#cancel').prop('hidden', true);
 }
