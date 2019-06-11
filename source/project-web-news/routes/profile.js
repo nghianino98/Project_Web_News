@@ -4,6 +4,7 @@ const multer = require('../config/multer');
 const jwt = require('../FunctionHelper/jwt');
 const User = require('../models/user');
 const filebase = require('../FunctionHelper/firebase');
+const bcrypt = require('bcrypt');
 
 // Load avatar của user
 router.use((req, res, next) => {
@@ -37,7 +38,7 @@ router.get('/', (req, res, next) => {
     const messages = req.flash('error');
 
     res.render('user/profile', {
-        layout: 'admin-layout', 
+        layout: `${req.user.role}-layout`, 
         user: user, 
         isWriter: user.role === 'writer',
         titleForm: titleForm,
@@ -87,6 +88,54 @@ router.post('/avatar', multer.single('file'), (req, res, next) => {
                 });
         }).catch(err => {
             res.status(500).json({message: 'Cập nhật ảnh đại diện thất bại. Lỗi không xác định được ở server'});
+        });
+});
+
+router.get('/change-password', (req, res, next) => {
+    const messages = req.flash('error');
+    res.render('user/change-password', {
+        csrfToken: req.csrfToken(),
+        messages: messages, 
+        hasError: messages.length > 0,
+        layout: `${req.user.role}-layout`
+    });
+});
+
+router.post('/change-password', (req, res, next) => {
+    User.findById({_id: req.user.id})
+        .then(user => {
+            bcrypt.compare(req.body.oldPassword, user.password, (err, result) => {
+                if (err) {
+                    console.log(err);
+                    req.flash('error', 'Đổi mật khẩu thất bại, thử lại sau');
+                    return res.redirect('/user/profile/change-password');
+                } 
+
+                if (!result) {
+                    req.flash('error', 'Mật khẩu không đúng');
+                    return res.redirect('/user/profile/change-password');
+                }
+
+                bcrypt.hash(req.body.newPassword, 5, (err, hash) => {
+                    if (err) {
+                        console.log(err);
+                        req.flash('error', 'Đổi mật khẩu thất bại, thử lại sau');
+                        return res.redirect('/user/profile/change-password');
+                    }
+
+                    User.update({_id: user.id}, {password: hash})
+                        .then(result => {
+                            res.redirect('/user/profile');
+                        })
+                        .catch(err => {
+                            req.flash('error', 'Đổi mật khẩu thất bại, thử lại sau');
+                            res.redirect('/user/profile/change-password');
+                        });
+                    });
+            });
+        }).catch(err => {
+            req.flash('error', 'Đổi mật khẩu thất bại, thử lại sau');
+            res.redirect('/user/profile/change-password');
         });
 });
 

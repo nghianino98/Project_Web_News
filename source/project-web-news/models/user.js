@@ -6,7 +6,7 @@ var userSchema = Schema({
     role: {
         type: String,
         enum: ['admin', 'writer', 'editor', 'subcriber' , 'guest'],
-        default: 'guest'
+        default: 'subcriber'
     },
     email: {type: String, requied: true},
     account: {type: String},
@@ -18,7 +18,7 @@ var userSchema = Schema({
     gender: {type: Boolean},
     isConfirm: {type: Boolean, default: false},
     phoneNumber: {type: String},
-    avatar: {type: String, default:'/images/user.png'},
+    avatar: {type: String, default:'/images/user.jpg'},
     status: {
         type: String,
         enum: ['Protected', 'Enabled', 'Banned'],
@@ -57,7 +57,7 @@ module.exports = {
     },
 
     findById: (id) => {
-        return User.find({_id: id}).exec();
+        return User.findOne({_id: id}).exec();
     },
 
     findOneByAccount: (account) => {
