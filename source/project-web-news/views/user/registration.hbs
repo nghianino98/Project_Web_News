@@ -19,18 +19,30 @@
                     <a href="/user/login" class="float-right btn btn-outline-primary mt-1">Đăng nhập</a>
                     <h4 class="card-title mt-2">Đăng ký</h4>
                 </header>
-                {{# if hasError}}
+                {{# if hasError }}
                     <div class="alert alert-danger" role="alert">
-                        {{# each messages}}
+                        {{# each messages }}
                             {{this}}</br>
                         {{/each}}
                     </div>
-                {{/if}}
+                {{ else }}
+                    {{# if isSuccess }}
+                        <div class="alert alert-success" role="alert">
+                            {{# each success }}
+                                {{this}}</br>
+                            {{/ each }}
+                        </div>
+                    {{/ if }}
+                {{/ if }}
                 <article class="card-body">
                     <form action="/user/register" method="POST">
                         <div class="form-group">
+                            <label for="name">Tài khoản</label>   
+                            <input id="account" name="account" type="text" class="form-control" placeholder="" autofocus>
+                        </div> <!-- form-group end.// -->
+                        <div class="form-group">
                             <label for="name">Họ và tên</label>   
-                            <input id="name" name="name" type="text" class="form-control" placeholder="" autofocus>
+                            <input id="name" name="name" type="text" class="form-control" placeholder="">
                         </div> <!-- form-group end.// -->
                         <div class="form-group">
                             <label for="txtPhone">Số điện thoại</label>   
@@ -64,10 +76,6 @@
                             <input class="form-check-input" type="radio" name="gender" value="false">
                             <span class="form-check-label"> Nữ</span>
                             </label>
-                        </div> <!-- form-group end.// -->
-                        <div class="form-group">
-                        <label for="txtAddress">Địa chỉ</label>
-                        <input id="txtAddress" type="text" class="form-control">
                         </div> <!-- form-group end.// -->
                         <div class="form-group">
                             <label for="txtPassword">Mật khẩu</label>

@@ -76,7 +76,14 @@ router.post('/login', notLoggedIn, passport.authenticate('local.login', {
 // Lấy view đăng ký
 router.get('/register',notLoggedIn, (req, res, next) => {
     const messages = req.flash('error');
-    res.render('user/registration', {csrfToken: req.csrfToken(), messages: messages, hasError: messages.length > 0});
+    const success = req.flash('success');
+    res.render('user/registration', {
+        csrfToken: req.csrfToken(),
+        messages: messages,
+        hasError: messages.length > 0,
+        success: success,
+        isSuccess: success.length > 0
+    });
 });
 
 // Xử lí đăng ký
@@ -85,7 +92,7 @@ router.post('/register', notLoggedIn, passport.authenticate('local.signup', {
     failureRedirect: '/user/register',
     failureFlash: true
 }),  (req, res, next) => {
-    req.flash('error', 'Đăng ký thành công. Mời bạn kiểm tra email để xác thực tài khoảng');
+    req.flash('success', 'Đăng ký thành công. Mời bạn kiểm tra email để xác thực tài khoản');
     res.redirect('/user/register');
 });
 

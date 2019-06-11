@@ -9,6 +9,7 @@ var userSchema = Schema({
         default: 'guest'
     },
     email: {type: String, requied: true},
+    account: {type: String},
     password: {type: String, required: true},
     dob: {type: Date, requied: true},
     TimeRemaining: {type: Date},
@@ -43,6 +44,7 @@ module.exports = {
 
     save: (entity, passwordHash) => {
         user = new User({
+            account: entity.account,
             email: entity.email,
             password: passwordHash,
             userName: entity.name,
@@ -56,6 +58,10 @@ module.exports = {
 
     findById: (id) => {
         return User.find({_id: id}).exec();
+    },
+
+    findOneByAccount: (account) => {
+        return User.findOne({account: account}).exec();
     },
 
     findOneByEmail: (email) => {
