@@ -2,7 +2,9 @@ const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
 var categorySchema = Schema({
-    categoryName: {type: String},
+    categoryName: {
+        type: String
+    },
     arrayOfArticles: [Schema.Types.ObjectId],
     arrayOfCategorySub: [Schema.Types.ObjectId]
 })
@@ -21,8 +23,7 @@ module.exports = {
             obj.save((err, succ) => {
                 if (err) {
                     reject(err);
-                }
-                else {
+                } else {
                     resolve(succ);
                 }
             })
@@ -38,12 +39,12 @@ module.exports = {
             })
         });
     },
-    
+
     findByCategoryName: (category) => {
         return new Promise((resolve, reject) => {
             categoryMain.findOne({
                 "categoryName": category
-             }).exec((err, succ) => {
+            }).exec((err, succ) => {
                 if (err)
                     reject(err);
                 else
@@ -74,9 +75,13 @@ module.exports = {
         });
     },
 
-    findByIdAndUpdate: (id,category_name) => {
+    findByIdAndUpdate: (id, category_name) => {
         return new Promise((resolve, reject) => {
-            categoryMain.findByIdAndUpdate(id,{$set:{categoryName:category_name}}).exec((err, succ) => {
+            categoryMain.findByIdAndUpdate(id, {
+                $set: {
+                    categoryName: category_name
+                }
+            }).exec((err, succ) => {
                 if (err)
                     reject(err);
                 else

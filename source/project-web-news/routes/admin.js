@@ -43,7 +43,7 @@ router.get('/confirm-posts', (req, res, next) => {
 
 router.get('/manager-category', (req, res, next) => {
     categoryMain.find().then(listCategorys => {
-            
+
             categorySub.find().then(listCategorySub => {
 
                 // listCategorySub.forEach(element => {
@@ -138,9 +138,9 @@ router.post('/manager-category', (req, res, next) => {
     } else {
 
         categoryMain.findByCategoryName(entity.category_parent)
-            .then(succ => {              
+            .then(succ => {
                 const category_parentID = succ._id;
-                categorySub.add(entity,category_parentID)
+                categorySub.add(entity, category_parentID)
                     .then(succ => {
                         //console.log(entity);
                         const messagesSuccess = "Đã thêm chuyên mục con \" " + succ.categoryName + " \" vào chuyên mục \" " + entity.category_parent + " \" thành công !";
@@ -249,7 +249,8 @@ router.post('/manager-category/update/categorySub', (req, res, next) => {
     categoryMain.findByCategoryName(entity.categorysub_parent)
         .then(succ => {
 
-            categorySub.findByIdAndUpdate(entity.categorySubID, entity.categorysub_name,entity.categorysub_parent)
+            const category_parentID = succ._id;
+            categorySub.findByIdAndUpdate(entity.categorySubID, entity.categorysub_name, entity.categorysub_parent, category_parentID)
                 .then(succ => {
                     categoryMain.find().then(listCategorys => {
                         //console.log(listCategorys.length);
