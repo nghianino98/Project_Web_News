@@ -1,0 +1,24 @@
+<div class="card">
+    <header class="card-header">
+        <h4 class="card-title mt-2">Quên mật khẩu</h4>
+    </header>
+    {{# if hasError }}
+        <div class="alert alert-danger" role="alert">
+            {{# each messages }}
+                {{this}}</br>
+            {{/each}}
+        </div>
+    {{/ if }}
+    <article class="card-body">
+        <form action="/user/forget-pw-step1" method="POST">
+            <div class="form-group">
+                <label for="account">Tài khoản</label>   
+                <input id="account" name="account" type="text" class="form-control" placeholder="" autofocus required>
+            </div> <!-- form-group end.// -->
+            <input type="text" id="_csrf" name="_csrf" value="{{csrfToken}}" hidden>
+            <div class="form-group text-center">
+                <button type="submit" class="btn btn-primary">Xác nhận</button>
+            </div> <!-- form-group// -->                                     
+        </form>
+    </article> <!-- card-body end .// -->
+</div> <!-- card.// -->

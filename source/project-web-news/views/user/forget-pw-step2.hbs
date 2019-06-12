@@ -1,0 +1,37 @@
+<div class="card">
+    <header class="card-header">
+        <h4 class="card-title mt-2">Quên mật khẩu</h4>
+    </header>
+    {{# if hasError }}
+        <div class="alert alert-danger" role="alert">
+            {{# each messages }}
+                {{this}}</br>
+            {{/each}}
+        </div>
+    {{/ if }}
+    <article class="card-body">
+        <form action="/user/forget-pw-step2" method="POST" onsubmit="return handleChangePassword(this);">
+            <h5 class="card-title mt-2">Mời bạn kiểm tra email (bao gồm hộp thư rác) để lấy mã OTP</h5>
+            <div class="form-group">
+                <label for="token">Mã OTP</label>   
+                <input name="token" type="text" class="form-control" autofocus required>
+            </div> <!-- form-group end.// -->
+            <div class="form-group">
+                <label for="newPassword">Mật khẩu mới</label>   
+                <input id="newPassword" name="newPassword" type="password" class="form-control" required>
+            </div> <!-- form-group end.// -->
+            <div class="form-group">
+                <label for="retype">Nhập lại mật khẩu</label>   
+                <input id="retype" name="retype" type="password" class="form-control"  required>
+            </div> <!-- form-group end.// -->
+            <input type="text" name="secret" value="{{secret}}" hidden>
+            <input type="text" name="account" value="{{account}}" hidden>
+            <input type="text" id="_csrf" name="_csrf" value="{{csrfToken}}" hidden>
+            <div class="form-group text-center">
+                <button type="submit" class="btn btn-primary">Xác nhận</button>
+            </div> <!-- form-group// -->                                     
+        </form>
+    </article> <!-- card-body end .// -->
+</div> <!-- card.// -->
+
+<script src="/assets/js/forget-password.js"></script>

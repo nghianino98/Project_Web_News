@@ -84,7 +84,7 @@ router.post('/avatar', multer.single('file'), (req, res, next) => {
                     res.cookie('Authorization', 'Bearer ' + token, {httpOnly: true});
                     res.status(200).json({avatar: result});
                 }).catch(err => {
-                    throw err;
+                    res.status(500).json({message: 'Cập nhật ảnh đại diện thất bại. Lỗi không xác định được ở server'});
                 });
         }).catch(err => {
             res.status(500).json({message: 'Cập nhật ảnh đại diện thất bại. Lỗi không xác định được ở server'});
