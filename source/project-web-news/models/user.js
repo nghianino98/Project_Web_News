@@ -6,9 +6,10 @@ var userSchema = Schema({
     role: {
         type: String,
         enum: ['admin', 'writer', 'editor', 'subcriber' , 'guest'],
-        default: 'guest'
+        default: 'subcriber'
     },
     email: {type: String, requied: true},
+    account: {type: String},
     password: {type: String, required: true},
     dob: {type: Date, requied: true},
     TimeRemaining: {type: Date},
@@ -17,7 +18,7 @@ var userSchema = Schema({
     gender: {type: Boolean},
     isConfirm: {type: Boolean, default: false},
     phoneNumber: {type: String},
-    avatar: {type: String, default:'/images/user.png'},
+    avatar: {type: String, default:'/images/user.jpg'},
     status: {
         type: String,
         enum: ['Protected', 'Enabled', 'Banned'],
@@ -43,6 +44,7 @@ module.exports = {
 
     save: (entity, passwordHash) => {
         user = new User({
+            account: entity.account,
             email: entity.email,
             password: passwordHash,
             userName: entity.name,
@@ -55,7 +57,11 @@ module.exports = {
     },
 
     findById: (id) => {
-        return User.find({_id: id}).exec();
+        return User.findOne({_id: id}).exec();
+    },
+
+    findOneByAccount: (account) => {
+        return User.findOne({account: account}).exec();
     },
 
     findOneByEmail: (email) => {

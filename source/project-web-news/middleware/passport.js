@@ -18,11 +18,11 @@ module.exports = (app) => {
 
     // Kịch bản đăng ký thông thường
     passport.use('local.signup', new LocalStrategy({
-        usernameField: 'email',
+        usernameField: 'account',
         passwordField: 'password',
         passReqToCallback: true
-    }, (req, email, password, done) => {
-        User.findOneByEmail(email)
+    }, (req, account, password, done) => {
+        User.findOneByAccount(account)
             .then(user => {
                 if (user) {
                     return done (null, false, {message: 'Địa chỉ email đã tồn tại'});
@@ -40,15 +40,13 @@ module.exports = (app) => {
                                 User.deleteOne({_id: result._id, isConfirm: false})
                             }, 15 * 60 * 1000);
 
-                            // Tạo mã xác nhận
                             const token = jwt.generateJWT(result, 'fit-hcmus', 15 * 60);
-
                             const url = `localhost:3000/user/confirm/${token}`;
 
                             // Cấu hình thư gửi
                             const mailOptions = {
                                 from: '"NewsFeed" <test@test.com>', // sender address
-                                to: email, // list of receivers
+                                to: req.body.email, // list of receivers
                                 subject: "Xác thực email",
                                 text: 'Click vào link sau để xác thực tài khoản tại trang web NewsFeed',
                                 html: `<a href="${url}">${url}</a>`
@@ -75,11 +73,11 @@ module.exports = (app) => {
 
     // Kịch bản đăng nhập thông thường
     passport.use('local.login', new LocalStrategy({
-        usernameField: 'email',
+        usernameField: 'account',
         passwordField: 'password',
         passReqToCallback: true
-    }, (req, email, password, done) => {
-        User.findOneByEmail(email)
+    }, (req, account, password, done) => {
+        User.findOneByAccount(account)
             .then(user => {
                 if (!user) {
                     return done(null, false, {message: 'Địa chỉ email không tồn tại'});
@@ -99,7 +97,7 @@ module.exports = (app) => {
                     }
                    
                     return done(null, user);
-            });
+                });
             })
             .catch(err => {
                 done(err);
