@@ -22,12 +22,12 @@ module.exports = {
         });
     },
 
-    sendOTPViaMail: (email, expiresIn, OTP) => {
+    sendOTPViaMail: (email, expiresIn, OTP, subject) => {
         // Cấu hình thư gửi
         const mailOptions = {
             from: '"NewsFeed" <newsfeed.notification.k16@gmail.com>', // sender address
             to: email, // list of receivers
-            subject: "Quên mật khẩu",
+            subject: subject,
             html: `Mã OTP của bạn là <strong>${OTP}</strong> (chỉ tồn tại trong ${expiresIn} phút)`
         };
 

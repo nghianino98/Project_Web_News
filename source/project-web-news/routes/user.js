@@ -98,6 +98,7 @@ router.post('/register', notLoggedIn, passport.authenticate('local.signup', {
     res.redirect('/user/register');
 });
 
+// Xử lí quên mật khẩu
 router.get('/forget-password', notLoggedIn, (req, res, next) => {
     const messages = req.flash('error');
     res.render('user/forget-pw-step1', {
@@ -118,9 +119,8 @@ router.post('/forget-pw-step1', notLoggedIn, (req, res, next) => {
 
             const verifyObject = topt.getVerifyObject();
             req.session.fpw= true;
-            topt.sendOTPViaMail(user.email, 5, verifyObject.token)
+            topt.sendOTPViaMail(user.email, 5, verifyObject.token, 'Quên mật khẩu')
                 .then(() => {
-                    console.log(verifyObject);
                     res.render('user/forget-pw-step2', {
                         layout: 'forget-layout',
                         secret: verifyObject.secret,
@@ -157,7 +157,8 @@ router.post('/forget-pw-step2', notLoggedIn, (req, res, next) => {
             secret: req.body.secret,
             csrfToken: req.body._csrf,
             messages: ['Mã OTP không chính xác'],
-            hasError: true
+            hasError: true,
+            account: req.body.account
         });
     }
 
@@ -178,8 +179,6 @@ router.post('/forget-pw-step2', notLoggedIn, (req, res, next) => {
             res.redirect('/user/login');
         })
     });
-
-    
 });
 
 module.exports = router;

@@ -5,6 +5,7 @@ const jwt = require('../FunctionHelper/jwt');
 const User = require('../models/user');
 const filebase = require('../FunctionHelper/firebase');
 const bcrypt = require('bcrypt');
+const topt = require('../FunctionHelper/totp');
 
 // Load avatar của user
 router.use((req, res, next) => {
@@ -137,6 +138,63 @@ router.post('/change-password', (req, res, next) => {
             req.flash('error', 'Đổi mật khẩu thất bại, thử lại sau');
             res.redirect('/user/profile/change-password');
         });
+});
+
+router.get('/change-email', (req, res, next) => {
+    const messages = req.flash('error');
+    const verifyObject = topt.getVerifyObject();
+    req.session.fpw= true;
+
+    topt.sendOTPViaMail(req.user.email, 5, verifyObject.token, 'Đổi email')
+        .then(() => {
+            res.render('user/change-email', {
+                layout: `${req.user.role}-layout`,
+                secret: verifyObject.secret,
+                csrfToken: req.csrfToken(),
+                messages: messages, 
+                hasError: messages.length > 0
+            });
+        }).catch(err => {
+            req.flash('error', 'Có lỗi xãy ra, vui lòng thử lại sau.');
+            res.redirect('/user/profile');
+        });
+});
+
+router.post('/change-email', (req, res, next) => {
+    if (!req.session.fpw) {
+        return res.render('user/change-email', {
+            layout: `${req.user.role}-layout`,
+            secret: req.body.secret,
+            csrfToken: req.body._csrf,
+            messages: ['Mã OTP không chính xác'],
+            hasError: true
+        });
+    }
+
+    const result = topt.verify(req.body.token, req.body.secret, 5);
+
+    if (!result) {
+        return res.render('user/change-email', {
+            layout: `${req.user.role}-layout`,
+            secret: req.body.secret,
+            csrfToken: req.body._csrf,
+            messages: ['Mã OTP không chính xác'],
+            hasError: true
+        });
+    }
+
+    User.update({_id: req.user.id}, {email: req.body.newEmail})
+        .then(result => {
+            req.session.fpw = null;
+            req.user.email = req.body.newEmail;
+            const token = jwt.generateJWT(req.user, 'fit-hcmus', '1h');
+            res.cookie('Authorization', 'Bearer ' + token, {httpOnly: true});
+            res.redirect('/user/profile');
+        }).catch(err => {
+            req.flash('error', 'Đổi email thất bại, vui lòng thử lại sau.');
+            req.session.fpw = null;
+            res.redirect('/user/profile');
+        })
 });
 
 module.exports = router;
