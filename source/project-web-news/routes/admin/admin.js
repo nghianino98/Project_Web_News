@@ -1,13 +1,14 @@
 const express = require('express');
 const router = express.Router();
-const checkRole = require('../middleware/check-role');
+const checkRole = require('../../middleware/check-role');
 const csrf = require('csurf');
 const csurfProtection = csrf();
 
 
-const admin = require('../models/user');
-const categoryMain = require('../models/categoryMain');
-const categorySub = require('../models/categorySub');
+const admin = require('../../models/user');
+const categoryMain = require('../../models/categoryMain');
+const categorySub = require('../../models/categorySub');
+const managerUserRouter = require('./manager-user');
 
 // Kiểm tra nếu là admin mới cho qua
 router.use(checkRole.isAdmin);
@@ -68,23 +69,7 @@ router.get('/manager-tag', (req, res, next) => {
     });
 });
 
-router.get('/manager-user', (req, res, next) => {
-
-    admin.findAll().then(succ => {
-            // console.log(succ);
-            res.render('admin/adminusers', {
-                isModify: false,
-                userList: succ,
-                layout: 'admin-layout',
-                title: 'Admin | Quản lí người dùng'
-            });
-        })
-        .catch(err => {
-            console.log(err);
-        });
-
-    // res.render('admin/adminusers', {layout: 'admin-layout', title: 'Admin | Quản lí người dùng'});
-});
+router.use('/manager-user', managerUserRouter);
 
 
 router.post('/manager-category', (req, res, next) => {

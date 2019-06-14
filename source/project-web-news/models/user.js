@@ -5,15 +5,15 @@ var userSchema = Schema({
     userName: {type: String},
     role: {
         type: String,
-        enum: ['admin', 'writer', 'editor', 'subcriber' , 'guest'],
-        default: 'subcriber'
+        enum: ['admin', 'writer', 'editor', 'subscriber' , 'guest'],
+        default: 'subscriber'
     },
     email: {type: String, requied: true},
     account: {type: String},
     password: {type: String, required: true},
     dob: {type: Date, requied: true},
-    TimeRemaining: {type: Date},
-    CategoryEditor: [{type: String}],
+    expire: {type: Date, default: new Date().setDate(new Date().getDate() + 7)},
+    CategoryEditor: [{type: Schema.Types.ObjectId, ref: 'CategorySubs'}],
     pseudonym: {type: String, default: 'anonymous'},
     gender: {type: Boolean},
     isConfirm: {type: Boolean, default: false},
@@ -74,5 +74,9 @@ module.exports = {
 
     update: (conditionObject, properies) => {
         return User.update(conditionObject, {$set: properies}).exec();
+    },
+
+    findAllExceptId: (id) => {
+        return User.find({_id: {$nin: id}}).exec();
     }
 };
