@@ -232,7 +232,7 @@ router.post('/manager-category/update', (req, res, next) => {
 
 router.get('/manager-category/delete/categorysub/:id', (req, res, next) => {
     console.log(req.params.id);
-    categorySub.findByIdAndDelete(req.params.id)
+    categorySub.findByIdAndDeletePre(req.params.id)
         .then(succ => {
             res.redirect('/user/admin/manager-category');
         })

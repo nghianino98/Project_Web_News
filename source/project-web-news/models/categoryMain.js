@@ -75,6 +75,38 @@ module.exports = {
         });
     },
 
+    // findByIdAndDeletePre: (id) => {
+    //     return new Promise((resolve, reject) => {
+    //         categoryMain.findByIdAndDelete(id).exec((err, succ) => {
+    //             if (err)
+    //                 reject(err);
+    //             else
+    //                 resolve(succ);
+    //         })
+    //     });
+    // },
+
+    findByIdAndDeleteSub: (mainID, subID) =>{
+        return new Promise((resolve, reject)=>{
+            categoryMain.findById(mainID).exec((err, succ)=>{
+                if(err)
+                    reject(err);
+                else{
+                    succ.arrayOfCategorySub.splice(succ.arrayOfCategorySub.indexOf(subID),1);
+                    succ.save((err, succ) => {
+                        if (err) {
+                            reject(err);
+                        } else {
+                            resolve(succ);
+                        }
+                    })
+                    resolve(succ);
+                }
+            })
+        })
+    },
+
+
     findByIdAndUpdate: (id, category_name) => {
         return new Promise((resolve, reject) => {
             categoryMain.findByIdAndUpdate(id, {
@@ -88,6 +120,28 @@ module.exports = {
                     resolve(succ);
             })
         });
+    },
+
+    //Thêm chuyên mục con
+    addCategorySub: (mainID, subID) =>{
+        return new Promise((resolve, reject)=>{
+            categoryMain.findById(mainID).exec((err,succ)=>{
+                if (err)
+                    reject(err);
+                else {
+                    let objectCateMain = succ;
+                    console.log("object Main"+objectCateMain);
+                    objectCateMain.arrayOfCategorySub.push(subID);
+                    objectCateMain.save((err, succ) => {
+                        if (err) {
+                            reject(err);
+                        } else {
+                            resolve(succ);
+                        }
+                    })
+                }  
+            })
+        })
     }
 
 }

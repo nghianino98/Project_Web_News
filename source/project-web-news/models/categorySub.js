@@ -1,6 +1,8 @@
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
+const categoryMain = require('../models/categoryMain');
+
 var categorySubSchema = Schema({
     categoryName: {
         type: String
@@ -29,7 +31,16 @@ module.exports = {
                 if (err) {
                     reject(err);
                 } else {
-                    resolve(succ);
+                    // resolve(succ);
+                    let subCateId = succ._id;
+                    categoryMain.addCategorySub(id,subCateId).then(succ=>{
+                        console.log(succ);
+                        resolve(succ);
+                    })
+                    .catch(err=>{
+                        console.log(err);
+                        reject(err);
+                    })
                 }
             })
         });
@@ -53,6 +64,29 @@ module.exports = {
                 else
                     resolve(succ);
             })
+        });
+    },
+
+
+    findByIdAndDeletePre: (id) => {
+        return new Promise((resolve, reject) => {
+                categorySub.findById(id).exec((err,succ)=>{
+                    if(err)
+                        reject(err);
+                    else{
+                        categoryMain.findByIdAndDeleteSub(succ.categoryMainID,id).then(succ=>{
+                            categorySub.findByIdAndDelete(id).exec((err, succ) => {
+                                if (err)
+                                    reject(err);
+                                else
+                                    resolve(succ);
+                            })
+                        })
+                        .catch(err=>{
+                            console.log(err);
+                        })
+                    }
+                })
         });
     },
 
