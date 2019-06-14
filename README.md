@@ -56,12 +56,12 @@ Phase I - Back-end Database
 - [ ] CRUD News 
 - [ ] CRUD Users 
 ### 2. Các tính năng chung cho các phân hệ người dùng
-- [ ] Đăng nhập ( `Nguyen` )
+- [x] Đăng nhập ( `Nguyen` )
   - Tự cài đặt
   - Hoặc sử dụng `passportjs` (http://www.passportjs.org)
   - _Khuyến khích_ cài đặt thêm chức năng đăng nhập qua Google, Facebook, Twitter, Github, ...
 
-- [ ] Cập nhật thông tin cá nhân ( `Nguyen` )
+- [x] Cập nhật thông tin cá nhân ( `Nguyen` )
   - Họ tên
   - Bút danh (trong trường hợp là `writer`)
   - Email liên lạc
@@ -75,20 +75,20 @@ Phase I - Back-end Database
 
 ### 3. Phân hệ phóng viên - `writer`
 
-- [ ] Đăng bài viết ( `Ta` )
+- [x] Đăng bài viết ( `Ta` )
   - Hỗ trợ `WYSIWYG`
     - ckeditor (https://ckeditor.com)
     - quilljs (https://quilljs.com)
   - Hỗ trợ upload hình ảnh & link YouTube trong bài viết
   - Khi đăng bài, phóng viên chỉ nhập tiêu đề, tóm tắt, nội dung, chuyên mục & gán nhãn cho bài viết
 
-- [ ] Xem danh sách bài viết (do phóng viên viết) ( `Dang` )
+- [x] Xem danh sách bài viết (do phóng viên viết) ( `Ta` )
   - Đã được duyệt & chờ xuất bản
   - Đã xuất bản
   - Bị từ chối
   - Chưa được duyệt
 
-- [ ] Hiệu chỉnh bài viết ( `Dang` )
+- [x] Hiệu chỉnh bài viết ( `Ta` )
   - Chi được phép hiệu chỉnh các bài viết `bị từ chối` hoặc `chưa được duyệt`
 
 Phase II - Bussiness ( Deadline 9/6 )
@@ -120,7 +120,7 @@ Lưu ý:
     - slideshow
     - carousel
 
-### Xem danh sách bài viết ( `Ta` )
+### Xem danh sách bài viết ( `Dang` )
   - Theo chuyên mục category
   - Theo nhãn tag
   - Có phân trang
@@ -192,5 +192,7 @@ Sử dụng kỹ thuật Full-text search
 
 Phase III (Deadline 18/6)
 ===
+
+Hoàn thiện các tính năng
 
 ## Ghi chú

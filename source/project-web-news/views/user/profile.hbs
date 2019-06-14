@@ -1,6 +1,6 @@
 <div class="container-fluid">
     <div class="col-md-10 offset-md-1">
-        <div class="card" style="min-width: 44rem;">
+        <div class="card">
             {{# if hasError }}
                 <div class="alert alert-danger" role="alert">
                     {{# each messages }}
@@ -12,13 +12,12 @@
                 <h4>{{titleForm}}</h4>
             </div>
             <div class="card-body">
-                <form action="/user/admin/manager-user/profile" method="POST" onsubmit="return validateForm();">
+                <form action="/user/profile" method="POST">
                     <div class="row">
                         <input type="text" id="_csrf" name="_csrf" value="{{csrfToken}}" hidden>
-                        <input type="text" id="id" name="id" value="{{user._id}}" hidden>
                         <div class="col-md-3 col-12">
                             <div class="row justify-content-center">
-                                <img id="avatar" alt="User Pic" src="{{user.avatar}}" class="img-thumbnail img-fluid">
+                                <img id="avatar" alt="User Pic" src="{{avatar}}" class="img-thumbnail img-fluid">
                                 <div class="img-thumbnail" id="loading" hidden>
                                     <div class="spinner-border" role="status"></div>
                                 </div>
@@ -33,95 +32,49 @@
                         <div class="col-md-8">
                             <div class="form-group row">
                                 <label for="name" class="col-md-3 m-1 align-self-center" ><strong>Tên</strong></label>
-                                <input type="text" name="userName" id="name" value="{{user.userName}}" required readonly class="form-control col align-self-center">
+                                <input type="text" name="userName" id="name" value="{{userName}}" readonly class="form-control col align-self-center">
                             </div>
                             {{# if isWriter}}
                                 <div class="form-group row">
                                     <label for="pseudonym" class="col-md-3 m-1 align-self-center" ><strong>Bút danh</strong></label>
-                                    <input type="text" name="pseudonym" id="pseudonym" value="{{user.pseudonym}}" required readonly class="form-control col align-self-center">
+                                    <input type="text" name="pseudonym" id="pseudonym" value="{{user.pseudonym}}" readonly class="form-control col align-self-center">
                                 </div>
                             {{/if}}
                             <div class="form-group row">
                                 <label for="email" class="col-md-3 m-1 align-self-center" ><strong>Email</strong></label>
-                                <input id="email" name="email" type="text" value="{{user.email}}" required readonly class="form-control col align-self-center">
+                                <input type="text" value="{{user.email}}" readonly class="form-control col align-self-center">
                             </div>
                             <div class="form-group row">
                                 <label for="role" class="col-md-3 m-1 align-items-center" ><strong>Vai trò</strong></label>
-                                <select class="form-control col align-self-center" name="role" id="role" disabled>
-                                    {{# each roles }}
-                                        <option value="{{this.role}}" {{# if this.selected }}selected{{/if}}>{{this.role}}</option>
-                                    {{/ each }}
-                                </select>
-                                
+                                <input type="text" value="{{user.role}}" readonly class="form-control col align-self-center">
                             </div>
                             <div class="form-group row">
                                 <label class="col-md-3 m-1 align-items-center" ><strong>Ngày sinh (dd/mm/yyyy)</strong></label>
                                 <div class="col align-self-center">
-                                    <input type="text" name="date" id="date" value="{{user.date}}" required readonly class="form-control">
+                                    <input type="text" name="date" id="date" value="{{user.date}}" readonly class="form-control">
                                 </div>
                                 <div class="col align-self-center">
-                                    <input type="text" name="month" id="month" value="{{user.month}}"required readonly class="form-control">
+                                    <input type="text" name="month" id="month" value="{{user.month}}" readonly class="form-control">
                                 </div>
                                 <div class="col align-self-center">
-                                    <input type="text" name="year" id="year" value="{{user.year}}"required readonly class="form-control">
+                                    <input type="text" name="year" id="year" value="{{user.year}}" readonly class="form-control">
                                 </div>
                             </div>
                             <div class="form-group row">
                                 <label for="phoneNumber" class="col-md-3 m-1 align-items-center" ><strong>Điện thoại</strong></label>
                                 <input type="text" name="phoneNumber" id="phoneNumber" value="{{user.phoneNumber}}" readonly class="form-control col align-self-center">
                             </div>
-                            {{# if isEditor }}
-                                 <div class="form-group row">
-                                    <label for="categories" class="col-md-3 m-1 align-items-center" ><strong>Danh mục</strong></label>
-                                    <input type="text"  id="categories" value="danh mục" readonly class="form-control col align-self-center">
-                                </div>
-                            {{/ if }}
                         </div>
                     </div>
                     <button type="button" id="update" class="btn btn-sm btn-primary float-right m-2" onclick="handleUpdateInfo()">Cập nhật</button>
                     <button type="submit" id="save" class="btn btn-sm btn-success float-right m-2" hidden>Lưu</button>
                     <button type="button" id="cancel" class="btn btn-sm btn-danger float-right m-2" onclick="handleCancelUpateInfo()" hidden>Hủy</button>
-<<<<<<< HEAD
-                    <button type="button" class="btn btn-sm btn-primary float-left m-2" onclick="openChangePwModel()">Đổi mật khẩu</a>
-=======
                     <a href="/user/profile/change-password" role="button" class="btn btn-sm btn-primary float-left m-2" onclick="">Đổi mật khẩu</a>
->>>>>>> master
+                    <a href="/user/profile/change-email" role="button" class="btn btn-sm btn-primary float-left m-2" onclick="">Đổi email</a>
                 </form>
             </div>
         </div>
     </div>
 </div>
 
-<<<<<<< HEAD
-<div class="modal" tabindex="-1" role="dialog" id="changePwModel">
-    <div class="modal-dialog" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title">Đổi mật khẩu người dùng</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-            <div class="modal-body">
-                <form action="/user/admin/manager-user/profile/change-password" method="POST" onsubmit="return handleChangePassword(this);" id="changePwForm">
-                    <div class="form-group">
-                        <label for="newPassword">Mật khẩu mới</label>   
-                        <input id="newPassword" name="newPassword" type="password" class="form-control" required>
-                    </div> <!-- form-group end.// -->
-                    <div class="form-group">
-                        <label for="retype">Nhập lại mật khẩu</label>   
-                        <input id="retype" type="password" class="form-control" required>
-                    </div> <!-- form-group end.// -->                      
-                </form>
-            </div>
-            <div class="modal-footer">
-                <button type="button" id="cancelChangePw" class="btn btn-danger" data-dismiss="modal">Đóng</button>
-                <button type="button" id="savePw" class="btn btn-success" onclick="handleChangePassword()" >Xác nhận</button>
-            </div>
-        </div>
-    </div>
-</div>
-
-=======
->>>>>>> master
-<script src="/assets/js/manager-user.js"></script>
+<script src="/assets/js/profile-admin.js"></script>

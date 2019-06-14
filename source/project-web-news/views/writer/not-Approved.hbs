@@ -3,7 +3,7 @@
     <div class="card-body">
       <div class="row">
         <div class="col-md-3 border-right">
-            <h4>Chưa được duyệt</h4>
+            <h5>Danh sách bài viết chưa được duyệt</h5>
         </div>
         <div class="col">
           <button type="button" class="btn btn-sm btn-primary">Thêm bài viết</button>
@@ -51,15 +51,17 @@
                    </div>
                 </th>  
                 <th>Title</th>
-                <th>Author</th>
+                {{!-- <th>Author</th> --}}
                 <th>Categories</th>
                 <th>Tags</th>
                 <th>Comments</th>
-                <th>Date</th>
+                <th>Ngày viết</th>
                 <th>Edit</th>
               </tr>
             </thead>
             <tbody>
+              {{#each listArticles}}
+              {{!-- Aritcle --}}
               <tr>
                 <td>
                     <div class="form-check-inline">
@@ -68,38 +70,20 @@
                        </label>
                    </div>
                 </td>  
-                <td><a href="#"><small>Johnyahua</small></a></td>
-                <td><small>Doe</small></td>
-                <td><small>john@example.com</small></td>
-                <td><small>Admin</small></td>
-                <td><a href="#"><small>5</small></a></td>
-                <td><small>Published 2018/05/21</small></td>
+                <td><a href="#"><small>{{this.title}}</small></a></td>
+                {{!-- <td><small>{{writerName}}</small></td> --}}
+                <td><small>{{this.categoryMain}} / {{this.categorySub}}</small></td>
+                <td><small>{{this.arrayOfTags.length}}</small></td>
+                <td><a href="#"><small>{{this.comments.length}}</small></a></td>
+                <td><small>{{this.writeDate}}</small></td>
                 <td>
                     <a href="#"><i class="fa fa-pencil-square-o"></i></a>
                     <a href="#"><i class="fa fa-eye"></i></a>
                     <a href="#"><i class="fa fa-trash"></i></a>
                 </td>
               </tr>
-              <tr>
-                <td>
-                    <div class="form-check-inline">
-                      <label class="form-check-label">
-                        <input type="checkbox" class="form-check-input" value="">
-                       </label>
-                   </div>
-                </td>  
-                <td><a href="#"><small>Johnyahua</small></a></td>
-                <td><small>Doe</small></td>
-                <td><small>john@example.com</small></td>
-                <td><small>Admin</small></td>
-                <td><a href="#"><small>5</small></a></td>
-                <td><small>Published 2018/05/21</small></td>
-                <td>
-                    <a href="#"><i class="fa fa-pencil-square-o"></i></a>
-                    <a href="#"><i class="fa fa-eye"></i></a>
-                    <a href="#"><i class="fa fa-trash"></i></a>
-                </td>
-              </tr>         
+              {{!-- Aritcle End --}}
+              {{/each}}
             </tbody>
           </table>
         </div>

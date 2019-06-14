@@ -44,6 +44,7 @@ function handleSaveAvatar() {
         },
         body: data
     }).then(res => {
+<<<<<<< HEAD
         if (res.status == 200) {
             alert('Cập nhật ảnh đại diện thành công');
             return res.json();
@@ -53,6 +54,14 @@ function handleSaveAvatar() {
     }).then(data => {
         avatar = data.avatar;
         $('#avatar').attr('src', data.avatar);
+=======
+        return res.json();
+    }).then(data => {
+        console.log(data);
+        avatar = data.avatar;
+        $('#avatar').attr('src', data.avatar);
+        alert('Cập nhật ảnh đại diện thành công');
+>>>>>>> master
     }).catch(err => {
         alert('Cập nhật ảnh đại diện thất bại. Thử lại sau');
     }).finally(() => {
@@ -170,6 +179,7 @@ function validateEmail() {
     }
 
     return true;
+<<<<<<< HEAD
 }
 
 function validatePassword() {
@@ -234,4 +244,6 @@ function handleChangePassword() {
         $('#newPassword').val(null);
         $('#retype').val(null);
     })
+=======
+>>>>>>> master
 }

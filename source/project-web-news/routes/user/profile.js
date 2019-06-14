@@ -112,6 +112,10 @@ router.post('/change-password', (req, res, next) => {
         .then(user => {
             bcrypt.compare(req.body.oldPassword, user.password, (err, result) => {
                 if (err) {
+<<<<<<< HEAD
+=======
+                    console.log(err);
+>>>>>>> master
                     req.flash('error', 'Đổi mật khẩu thất bại, thử lại sau');
                     return res.redirect('/user/profile/change-password');
                 } 
@@ -123,6 +127,10 @@ router.post('/change-password', (req, res, next) => {
 
                 bcrypt.hash(req.body.newPassword, 5, (err, hash) => {
                     if (err) {
+<<<<<<< HEAD
+=======
+                        console.log(err);
+>>>>>>> master
                         req.flash('error', 'Đổi mật khẩu thất bại, thử lại sau');
                         return res.redirect('/user/profile/change-password');
                     }

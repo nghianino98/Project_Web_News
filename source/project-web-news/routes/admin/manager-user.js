@@ -37,6 +37,7 @@ router.get('/profile/:id', (req, res, next) => {
 
     User.findById(id)
         .then(user => {
+<<<<<<< HEAD
             if (!user) {
                 var err = new Error();
                 err.status = 404;
@@ -44,6 +45,8 @@ router.get('/profile/:id', (req, res, next) => {
                 return next(err);
             }
 
+=======
+>>>>>>> master
             const date = new Date(user.dob);
             user.date = date.getDate();
             user.month = date.getMonth() + 1;
@@ -105,6 +108,7 @@ router.post('/profile/avatar', multer.single('file'), (req, res, next) => {
         });
 });
 
+<<<<<<< HEAD
 // POST /user/admin/manager-user/profile/change-password
 router.post('/profile/change-password', (req, res, next) => {
     bcrypt.hash(req.body.newPassword, 5, (err, hash) => {
@@ -122,4 +126,6 @@ router.post('/profile/change-password', (req, res, next) => {
         });
 });
 
+=======
+>>>>>>> master
 module.exports = router;

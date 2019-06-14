@@ -13,15 +13,13 @@ const validator = require('express-validator');
 const MongoStore = require('connect-mongo')(session);
 
 var indexRouter = require('./routes/index');
-var usersRouter = require('./routes/user');
+var usersRouter = require('./routes/user/user');
+
 
 var app = express();
 
 // Tạo kết nối tới database
 require('./utils/db.connection');
-
-// Thêm các kịch bản đăng nhập đăng ký passport
-require('./config/passport');
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
@@ -44,8 +42,7 @@ app.use(session({
   cookie: {maxAge: 180 * 60 * 1000} // Phút * giây * mili giây
 }));
 app.use(flash());
-app.use(passport.initialize());
-app.use(passport.session());
+require('./middleware/passport')(app);
 app.use(express.static(path.join(__dirname, 'public')));
 
 app.use((req, res, next) => {
@@ -71,7 +68,6 @@ app.use(function(err, req, res, next) {
   // set locals, only providing error in development
   res.locals.message = err.message;
   res.locals.error = req.app.get('env') === 'development' ? err : {};
-
   // render the error page
   res.status(err.status || 500);
   res.render('404', {status: err.status, message: err.message});

@@ -1,0 +1,58 @@
+<div class="col-md-6 offset-md-3 col-12 card">
+    <header class="card-header">
+        <h4 class="card-title mt-2">Đổi email</h4>
+    </header>
+    {{# if hasError }}
+        <div class="alert alert-danger" role="alert">
+            {{# each messages }}
+                {{this}}</br>
+            {{/each}}
+        </div>
+    {{/ if }}
+    <article class="card-body">
+        <form action="/user/profile/change-email" method="POST" onsubmit="return handleChangeEmail(this);">
+            <h5 class="card-title mt-2">Mời bạn kiểm tra email (bao gồm hộp thư rác) để lấy mã OTP</h5>
+            <div class="form-group">
+                <label for="token">Mã OTP</label>   
+                <input id="token" name="token" type="text" class="form-control" required autofocus>
+            </div> <!-- form-group end.// -->
+            <div class="form-group">
+                <label for="newEmail">Email mới</label>   
+                <input id="newEmail" name="newEmail" type="text" class="form-control" required>
+            </div> <!-- form-group end.// -->
+            <div class="form-group">
+                <label for="retype">Nhập lại email</label>   
+                <input id="retype" type="text" class="form-control" required>
+            </div> <!-- form-group end.// -->
+            <input type="text" name="secret" value="{{secret}}" hidden>
+            <input type="text" id="_csrf" name="_csrf" value="{{csrfToken}}" hidden>
+            <div class="form-group text-center">
+                <button id="changeEmail" type="submit" class="btn btn-primary float-center">Xác nhận</button>
+            </div> <!-- form-group// -->                                     
+        </form>
+    </article> <!-- card-body end .// -->
+</div> <!-- card.// -->
+
+<script type="text/javascript">
+    function handleChangeEmail(form) {
+        const $changeEmail = $('#changeEmail');
+        $changeEmail.prop('disabled', true);
+
+        const newEmail = $('#newEmail').val();
+        const retype = $('#retype').val();
+        const parttern = /[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?/;
+        if (!parttern.test(newEmail)){
+            $changeEmail.prop('disabled', false);
+            alert('Email không hợp lệ');
+            return false;
+        }
+
+        if (newEmail !== retype) {
+            $changeEmail.prop('disabled', false);
+            alert('Email nhập lại không chính xác');
+            return false;
+        } 
+
+        return true;
+    }
+</script>
