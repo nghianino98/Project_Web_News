@@ -55,15 +55,32 @@ router.get('/profile/:id', (req, res, next) => {
                 roles: role.generateArray()
             });
         }).catch(err => {
-            err.status = 404;
-            err.message = 'Không tìm thấy người dùng';
+            err.status = 500;
             next(err);
         })
 });
 
 // POST /user/admin/manager-admin/profile
 router.post('/profile', (req, res, next) => {
-    
+    var propertiesUpdate = {
+        userName: req.body.userName,
+        dob: new Date(+req.body.year, +req.body.month - 1, +req.body.date),
+        phoneNumber: req.body.phoneNumber,
+        email: req.body.email,
+        role: req.body.role
+    };
+
+    if (req.body.pseudonym) {
+        propertiesUpdate.pseudonym = req.body.pseudonym;
+    }
+
+    User.update({_id: req.body.id}, propertiesUpdate)
+        .then(result => {
+            res.redirect(`/user/admin/manager-user/profile/${req.body.id}`);
+        }).catch(err => {
+            req.flash('error', 'Cập nhật thông tin thất bại, thử lại sau.');
+            res.redirect(`/user/admin/manager-user/profile/${req.body.id}`);
+        });
 });
 
 // POST /user/admin/manager-admin/profile/avatar

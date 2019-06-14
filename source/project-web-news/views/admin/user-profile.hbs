@@ -12,7 +12,7 @@
                 <h4>{{titleForm}}</h4>
             </div>
             <div class="card-body">
-                <form action="/user/manager-user/profile" method="POST" onsubmit="return validateForm();">
+                <form action="/user/admin/manager-user/profile" method="POST" onsubmit="return validateForm();">
                     <div class="row">
                         <input type="text" id="_csrf" name="_csrf" value="{{csrfToken}}" hidden>
                         <input type="text" id="id" name="id" value="{{user._id}}" hidden>
@@ -43,11 +43,11 @@
                             {{/if}}
                             <div class="form-group row">
                                 <label for="email" class="col-md-3 m-1 align-self-center" ><strong>Email</strong></label>
-                                <input id="email" type="text" value="{{user.email}}" required readonly class="form-control col align-self-center">
+                                <input id="email" name="email" type="text" value="{{user.email}}" required readonly class="form-control col align-self-center">
                             </div>
                             <div class="form-group row">
                                 <label for="role" class="col-md-3 m-1 align-items-center" ><strong>Vai trò</strong></label>
-                                <select class="form-control col align-self-center" id="role" disabled>
+                                <select class="form-control col align-self-center" name="role" id="role" disabled>
                                     {{# each roles }}
                                         <option value="{{this.role}}" {{# if this.selected }}selected{{/if}}>{{this.role}}</option>
                                     {{/ each }}
@@ -72,8 +72,8 @@
                             </div>
                             {{# if isEditor }}
                                  <div class="form-group row">
-                                    <label for="categories" class="col-md-3 m-1 align-items-center" ><strong>Điện thoại</strong></label>
-                                    <input type="text" name="categories" id="categories" value="{{user.phoneNumber}}" readonly class="form-control col align-self-center">
+                                    <label for="categories" class="col-md-3 m-1 align-items-center" ><strong>Danh mục</strong></label>
+                                    <input type="text"  id="categories" value="danh mục" readonly class="form-control col align-self-center">
                                 </div>
                             {{/ if }}
                         </div>
