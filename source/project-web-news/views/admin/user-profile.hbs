@@ -81,8 +81,37 @@
                     <button type="button" id="update" class="btn btn-sm btn-primary float-right m-2" onclick="handleUpdateInfo()">Cập nhật</button>
                     <button type="submit" id="save" class="btn btn-sm btn-success float-right m-2" hidden>Lưu</button>
                     <button type="button" id="cancel" class="btn btn-sm btn-danger float-right m-2" onclick="handleCancelUpateInfo()" hidden>Hủy</button>
-                    <a href="/user/profile/change-password" role="button" class="btn btn-sm btn-primary float-left m-2" onclick="">Đổi mật khẩu</a>
+                    <button type="button" class="btn btn-sm btn-primary float-left m-2" onclick="openChangePwModel()">Đổi mật khẩu</a>
                 </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal" tabindex="-1" role="dialog" id="changePwModel">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Đổi mật khẩu người dùng</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form action="/user/admin/manager-user/profile/change-password" method="POST" onsubmit="return handleChangePassword(this);" id="changePwForm">
+                    <div class="form-group">
+                        <label for="newPassword">Mật khẩu mới</label>   
+                        <input id="newPassword" name="newPassword" type="password" class="form-control" required>
+                    </div> <!-- form-group end.// -->
+                    <div class="form-group">
+                        <label for="retype">Nhập lại mật khẩu</label>   
+                        <input id="retype" type="password" class="form-control" required>
+                    </div> <!-- form-group end.// -->                      
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" id="cancelChangePw" class="btn btn-danger" data-dismiss="modal">Đóng</button>
+                <button type="button" id="savePw" class="btn btn-success" onclick="handleChangePassword()" >Xác nhận</button>
             </div>
         </div>
     </div>

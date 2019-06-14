@@ -37,6 +37,13 @@ router.get('/profile/:id', (req, res, next) => {
 
     User.findById(id)
         .then(user => {
+            if (!user) {
+                var err = new Error();
+                err.status = 404;
+                err.message = 'Không tìm thấy user';
+                return next(err);
+            }
+
             const date = new Date(user.dob);
             user.date = date.getDate();
             user.month = date.getMonth() + 1;
@@ -95,6 +102,23 @@ router.post('/profile/avatar', multer.single('file'), (req, res, next) => {
                 });
         }).catch(err => {
             res.status(500).json({message: 'Cập nhật ảnh đại diện thất bại. Lỗi không xác định được ở server'});
+        });
+});
+
+// POST /user/admin/manager-user/profile/change-password
+router.post('/profile/change-password', (req, res, next) => {
+    bcrypt.hash(req.body.newPassword, 5, (err, hash) => {
+        if (err) {
+            return res.status(500).json({message: 'Something wrong!!!'});
+        }
+        
+        User.update({_id: req.body.id}, {password: hash})
+            .then(result => {
+                res.status(200).json({message: "success"});
+            })
+            .catch(err => {
+                res.status(500).json({message: 'Something wrong!!!'});
+            });
         });
 });
 

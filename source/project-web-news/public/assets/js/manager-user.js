@@ -44,12 +44,13 @@ function handleSaveAvatar() {
         },
         body: data
     }).then(res => {
-        return res.json();
+        if (res.status == 200) {
+            alert('Cập nhật ảnh đại diện thành công');
+            return res.json();
+        } 
     }).then(data => {
-        console.log(data);
         avatar = data.avatar;
         $('#avatar').attr('src', data.avatar);
-        alert('Cập nhật ảnh đại diện thành công');
     }).catch(err => {
         alert('Cập nhật ảnh đại diện thất bại. Thử lại sau');
     }).finally(() => {
@@ -167,4 +168,68 @@ function validateEmail() {
     }
 
     return true;
+}
+
+function validatePassword() {
+    const $changePassword = $('#changePassword');
+    $changePassword.prop('disabled', true);
+
+    const newPassword = $('#newPassword').val();
+    const retype = $('#retype').val();
+    const parttern = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])\w{4,15}$/;
+
+    if (!parttern.test(newPassword)){
+        $changePassword.prop('disabled', false);
+        alert('Mật khẩu phải 4-15 ký tự bao gồm : [a-z], [A-Z], [0-9], _ và có ít nhất 1 ký tự hoa, 1 ký tự thường, 1 ký tự số.');
+        return false;
+    }
+
+    if (newPassword !== retype) {
+        $changePassword.prop('disabled', false);
+        alert('Mật khẩu nhập lại không chính xác');
+        return false;
+    } 
+
+    return true;
+}
+
+function openChangePwModel() {
+    $('#changePwModel').modal();
+}
+
+function handleChangePassword() {
+    if (!validatePassword()) {
+        return false;
+    }
+
+    $('#savePw').prop('disabled', true);
+    $('#cancelChangePw').prop('disabled', true);
+    var data = {
+        id:  $('#id').val(),
+        newPassword: $('#newPassword').val()
+    };
+
+    fetch('/user/admin/manager-user/profile/change-password', {
+        method: 'POST',
+        credentials: 'same-origin',
+        headers: {
+            'Content-Type': 'application/json; charset=utf-8',
+            'CSRF-Token': $('#_csrf').val() // <-- is the csrf token as a header
+        },
+        body: JSON.stringify(data)
+    }).then(res => {
+        if (res.status === 200) {
+            alert('Đổi mật khẩu thành công');
+        } else {
+            alert('Thay đổi mật khẩu thất bại thử lại. Thử lại sau');
+        }
+    }).catch(err => {
+        alert('Thay đổi mật khẩu thất bại thử lại. Thử lại sau');
+    }).finally(() => {
+        $('#savePw').prop('disabled', false);
+        $('#cancelChangePw').prop('disabled', false);
+        $('#cancelChangePw').click();
+        $('#newPassword').val(null);
+        $('#retype').val(null);
+    })
 }

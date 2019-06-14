@@ -41,13 +41,16 @@ function handleSaveAvatar() {
         },
         body: data
     }).then(res => {
-        return res.json();
+        if (res.status == 200) {
+            alert('Cập nhật ảnh đại diện thành công');
+            return res.json();
+        } else {
+            alert('Cập nhật ảnh đại diện thất bại. Thử lại sau');
+        }
     }).then(data => {
-        console.log(data);
         avatar = data.avatar;
         $('#avatar').attr('src', data.avatar);
         $('#avatar-sidebar').attr('src', data.avatar);
-        alert('Cập nhật ảnh đại diện thành công');
     }).catch(err => {
         alert('Cập nhật ảnh đại diện thất bại. Thử lại sau');
     }).finally(() => {
