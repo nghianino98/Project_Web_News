@@ -8,7 +8,7 @@ const checkAuth = require('../../middleware/check-auth');
 const topt = require('../../FunctionHelper/totp');
 const bcrypt = require('bcrypt');
 
-const adminRouter = require('../admin');
+const adminRouter = require('../admin/admin');
 const editorRouter = require('../editor');
 const writerRouter = require('../writer');
 const profileRouter = require('./profile');

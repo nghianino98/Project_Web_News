@@ -1,13 +1,13 @@
 const express = require('express');
 const router = express.Router();
-const checkRole = require('../middleware/check-role');
+const checkRole = require('../../middleware/check-role');
 const csrf = require('csurf');
 const csurfProtection = csrf();
 
 
-const admin = require('../models/user');
-const categoryMain = require('../models/categoryMain');
-const categorySub = require('../models/categorySub');
+const admin = require('../../models/user');
+const categoryMain = require('../../models/categoryMain');
+const categorySub = require('../../models/categorySub');
 const managerUserRouter = require('./manager-user');
 
 // Kiểm tra nếu là admin mới cho qua
