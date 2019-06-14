@@ -11,15 +11,15 @@ const categorySub = require('../../models/categorySub');
 
 // GET /user/admin/manager-user
 router.get('/', (req, res, next) => {
-    const errors = flash('error');
-    const success = flash('success');
+    const errors = req.flash('error');
+    const success = req.flash('success');
     User.findAllExceptId(req.user.id).then(succ => {
             res.render('admin/adminusers', {
                 isModify: false,
                 userList: succ,
                 layout: 'admin-layout',
                 title: 'Admin | Quản lí người dùng',
-                errors: error,
+                errors: errors,
                 hasError: errors.length > 0,
                 success: success,
                 hasSuccess: success.length > 0
