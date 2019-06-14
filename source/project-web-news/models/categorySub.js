@@ -8,13 +8,15 @@ var categorySubSchema = Schema({
         type: String
     },
     arrayOfArticles: [Schema.Types.ObjectId],
-    categoryMain: {
-        type: String
-    },
-    categoryMainID: Schema.Types.ObjectId
+    categoryMainID: {
+        type: Schema.Types.ObjectId,
+        ref: 'CategoryMains',
+        require: true
+    }
 })
 
 const categorySub = mongoose.model('CategorySubs', categorySubSchema);
+
 
 module.exports = {
     add: (entity, id) => {
@@ -23,7 +25,6 @@ module.exports = {
             var obj = new categorySub({
                 categoryName: entity.category_name,
                 arrayOfArticles: [],
-                categoryMain: entity.category_parent,
                 categoryMainID: id
             })
 
@@ -33,26 +34,30 @@ module.exports = {
                 } else {
                     // resolve(succ);
                     let subCateId = succ._id;
-                    categoryMain.addCategorySub(id,subCateId).then(succ=>{
-                        console.log(succ);
-                        resolve(succ);
-                    })
-                    .catch(err=>{
-                        console.log(err);
-                        reject(err);
-                    })
+                    categoryMain.addCategorySub(id, subCateId).then(succ => {
+                            console.log(succ);
+                            resolve(succ);
+                        })
+                        .catch(err => {
+                            console.log(err);
+                            reject(err);
+                        })
                 }
             })
         });
     },
     find: () => {
         return new Promise((resolve, reject) => {
-            categorySub.find().exec((err, succ) => {
-                if (err)
-                    reject(err);
-                else
-                    resolve(succ);
-            })
+            categorySub.find()
+                //.select('categoryName')
+                .populate('categoryMainID', 'categoryName')
+                .exec((err, succ) => {
+                    if (err)
+                        reject(err);
+                    else
+                        resolve(succ);
+                    //console.log(succ);
+                })
         });
     },
 
@@ -67,14 +72,28 @@ module.exports = {
         });
     },
 
+    deleteCategoryMain: (id) => {
+        return new Promise((resolve, reject) => {
+            categorySub.findByIdAndUpdate(id, {
+                $set: {
+                    categoryMainID: null
+                }
+            }).exec((err, succ) => {
+                if (err)
+                    reject(err);
+                else
+                    resolve(succ);
+            })
+        });
+    },
 
     findByIdAndDeletePre: (id) => {
         return new Promise((resolve, reject) => {
-                categorySub.findById(id).exec((err,succ)=>{
-                    if(err)
-                        reject(err);
-                    else{
-                        categoryMain.findByIdAndDeleteSub(succ.categoryMainID,id).then(succ=>{
+            categorySub.findById(id).exec((err, succ) => {
+                if (err)
+                    reject(err);
+                else {
+                    categoryMain.findByIdAndDeleteSub(succ.categoryMainID, id).then(succ => {
                             categorySub.findByIdAndDelete(id).exec((err, succ) => {
                                 if (err)
                                     reject(err);
@@ -82,27 +101,101 @@ module.exports = {
                                     resolve(succ);
                             })
                         })
-                        .catch(err=>{
+                        .catch(err => {
                             console.log(err);
                         })
-                    }
-                })
+                }
+            })
         });
     },
 
-    findByIdAndUpdate: (id, category_name, category_parent, categoryparentId) => {
+    findByIdAndUpdate: (id, category_name, categoryparentId) => {
         return new Promise((resolve, reject) => {
-            categorySub.findByIdAndUpdate(id, {
-                $set: {
-                    categoryName: category_name,
-                    categoryMain: category_parent,
-                    categoryMainID: categoryparentId
-                }
-            }).exec((err, succ) => {
+
+            categorySub.findById(id).exec((err, succ) => {
                 if (err)
                     reject(err);
-                else
+                else {
+
+                    let oldCategoryMain = succ.categoryMainID;
+                    if (oldCategoryMain === null) {
+
+                        if (categoryparentId !== null) {
+                            //Thêm chuyên mục con vào chuyên mục mới
+                            categoryMain.addCategorySub(categoryparentId, id).then(succ => {
+                                    resolve(succ);
+                                })
+                                .catch(err => {
+                                    reject(err);
+                                })
+
+                            categorySub.findByIdAndUpdate(id, {
+                                $set: {
+                                    categoryName: category_name,
+                                    categoryMainID: categoryparentId
+                                }
+                            }).exec((err, succ) => {
+                                if (err)
+                                    reject(err);
+                                else
+                                    resolve(succ);
+                            });
+                        } else {
+                            categorySub.findByIdAndUpdate(id, {
+                                $set: {
+                                    categoryName: category_name,
+                                }
+                            }).exec((err, succ) => {
+                                if (err)
+                                    reject(err);
+                                else
+                                    resolve(succ);
+                            });
+                        }
+                    } else if (oldCategoryMain.toString() === categoryparentId.toString()) {
+                        categorySub.findByIdAndUpdate(id, {
+                            $set: {
+                                categoryName: category_name,
+                            }
+                        }).exec((err, succ) => {
+                            if (err)
+                                reject(err);
+                            else
+                                resolve(succ);
+                        });
+
+                    } else {
+                        //Thêm chuyên mục con vào chuyên mục mới
+                        categoryMain.addCategorySub(categoryparentId, id).then(succ => {
+                                resolve(succ);
+                            })
+                            .catch(err => {
+                                reject(err);
+                            })
+
+                        //Xóa chuyên mục con trong chuyên mục cha cũ
+                        categoryMain.findByIdAndDeleteSub(oldCategoryMain, id).then(succ => {
+                                resolve(succ);
+                            })
+                            .catch(err => {
+                                reject(err);
+                            })
+
+                        categorySub.findByIdAndUpdate(id, {
+                            $set: {
+                                categoryName: category_name,
+                                categoryMainID: categoryparentId
+                            }
+                        }).exec((err, succ) => {
+                            if (err)
+                                reject(err);
+                            else
+                                resolve(succ);
+                        });
+                    }
+
                     resolve(succ);
+                }
             })
         });
     }

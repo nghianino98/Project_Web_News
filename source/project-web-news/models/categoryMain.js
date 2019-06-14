@@ -75,31 +75,48 @@ module.exports = {
         });
     },
 
-    // findByIdAndDeletePre: (id) => {
-    //     return new Promise((resolve, reject) => {
-    //         categoryMain.findByIdAndDelete(id).exec((err, succ) => {
-    //             if (err)
-    //                 reject(err);
-    //             else
-    //                 resolve(succ);
-    //         })
-    //     });
-    // },
-
-    findByIdAndDeleteSub: (mainID, subID) =>{
-        return new Promise((resolve, reject)=>{
-            categoryMain.findById(mainID).exec((err, succ)=>{
-                if(err)
+    findByIdAndDeletePre: (id) => {
+        return new Promise((resolve, reject) => {
+            categoryMain.findById(id).exec((err, succ) => {
+                if (err)
                     reject(err);
-                else{
-                    succ.arrayOfCategorySub.splice(succ.arrayOfCategorySub.indexOf(subID),1);
-                    succ.save((err, succ) => {
-                        if (err) {
+                else {
+                    console.log(succ.arrayOfCategorySub);
+
+                    succ.arrayOfCategorySub.forEach(element => {
+                        categorySub = require('../models/categorySub');
+                        categorySub.deleteCategoryMain(element);
+                    });
+
+                    categoryMain.findByIdAndDelete(id).exec((err, succ) => {
+                        if (err)
                             reject(err);
-                        } else {
+                        else
                             resolve(succ);
-                        }
-                    })
+                    });
+                };
+            })
+        });
+    },
+
+    findByIdAndDeleteSub: (mainID, subID) => {
+        return new Promise((resolve, reject) => {
+            categoryMain.findById(mainID).exec((err, succ) => {
+                if (err)
+                    reject(err);
+                else {
+                    if (succ !== null) {
+                        succ.arrayOfCategorySub.splice(succ.arrayOfCategorySub.indexOf(subID), 1);
+
+                        succ.save((err, succ) => {
+                            if (err) {
+                                reject(err);
+                            } else {
+                                resolve(succ);
+                            }
+                        })
+                    }
+
                     resolve(succ);
                 }
             })
@@ -123,14 +140,14 @@ module.exports = {
     },
 
     //Thêm chuyên mục con
-    addCategorySub: (mainID, subID) =>{
-        return new Promise((resolve, reject)=>{
-            categoryMain.findById(mainID).exec((err,succ)=>{
+    addCategorySub: (mainID, subID) => {
+        return new Promise((resolve, reject) => {
+            categoryMain.findById(mainID).exec((err, succ) => {
                 if (err)
                     reject(err);
                 else {
                     let objectCateMain = succ;
-                    console.log("object Main"+objectCateMain);
+                    //console.log("object Main" + objectCateMain);
                     objectCateMain.arrayOfCategorySub.push(subID);
                     objectCateMain.save((err, succ) => {
                         if (err) {
@@ -139,7 +156,7 @@ module.exports = {
                             resolve(succ);
                         }
                     })
-                }  
+                }
             })
         })
     }

@@ -45,16 +45,7 @@ router.get('/manager-category', (req, res, next) => {
     categoryMain.find().then(listCategorys => {
 
             categorySub.find().then(listCategorySub => {
-
-                // listCategorySub.forEach(element => {
-                //     categoryMain.findById(element.categoryMain)
-                //         .then(succ => {
-                //             console.log(succ.categoryName);
-                //             element.categoryMain = succ.categoryName;                                                      
-                //         });
-                // });
-
-                // console.log(listCategorySub);
+                //console.log(listCategorySub);
 
                 res.render('admin/admin-manager-category', {
                     layout: 'admin-layout',
@@ -104,7 +95,7 @@ router.post('/manager-category', (req, res, next) => {
     if (entity.category_parent === "Chọn làm chuyên mục cha") {
         categoryMain.add(entity)
             .then(succ => {
-                console.log(entity);
+                //console.log(entity);
                 const messagesSuccess = "Đã thêm chuyên mục \" " + succ.categoryName + " \" thành công";
                 categoryMain.find().then(listCategorys => {
 
@@ -142,8 +133,8 @@ router.post('/manager-category', (req, res, next) => {
                 const category_parentID = succ._id;
                 categorySub.add(entity, category_parentID)
                     .then(succ => {
-                        //console.log(entity);
-                        const messagesSuccess = "Đã thêm chuyên mục con \" " + succ.categoryName + " \" vào chuyên mục \" " + entity.category_parent + " \" thành công !";
+
+                        const messagesSuccess = "Đã thêm chuyên mục con \" " + entity.category_name + " \" vào chuyên mục \" " + entity.category_parent + " \" thành công !";
                         categoryMain.find().then(listCategorys => {
                             categorySub.find().then(listCategorySub => {
 
@@ -182,7 +173,7 @@ router.post('/manager-category', (req, res, next) => {
 
 router.get('/manager-category/delete/category/:id', (req, res, next) => {
     console.log(req.params.id);
-    categoryMain.findByIdAndDelete(req.params.id)
+    categoryMain.findByIdAndDeletePre(req.params.id)
         .then(succ => {
             res.redirect('/user/admin/manager-category');
         })
@@ -244,44 +235,22 @@ router.get('/manager-category/delete/categorysub/:id', (req, res, next) => {
 router.post('/manager-category/update/categorySub', (req, res, next) => {
 
     var entity = req.body;
-    //console.log(entity);
+
 
     categoryMain.findByCategoryName(entity.categorysub_parent)
         .then(succ => {
-
-            const category_parentID = succ._id;
-            categorySub.findByIdAndUpdate(entity.categorySubID, entity.categorysub_name, entity.categorysub_parent, category_parentID)
+            let category_parentID
+            if (succ !== null) {
+                category_parentID = succ._id;
+            } else {
+                category_parentID = null;
+            }
+            categorySub.findByIdAndUpdate(entity.categorySubID, entity.categorysub_name, category_parentID)
                 .then(succ => {
-                    categoryMain.find().then(listCategorys => {
-                        //console.log(listCategorys.length);
-                        categorySub.find().then(listCategorySub => {
-
-                            const messagesSuccess = "Cập nhật chuyên mục thành công !";
-
-                            res.render('admin/admin-manager-category', {
-                                layout: 'admin-layout',
-                                csrfToken: req.csrfToken(),
-                                title: 'Admin | Quản lí chuyên mục',
-                                messagesSuccess: messagesSuccess,
-                                success: true,
-                                failure: false,
-                                listCategorys: listCategorys,
-                                listCategorySub: listCategorySub
-                            });
-                        });
-                    })
+                    res.redirect('/user/admin/manager-category');
                 })
                 .catch(err => {
                     console.log(err);
-                    const messagesFailure = err;
-                    res.render('admin/admin-manager-category', {
-                        layout: 'admin-layout',
-                        title: 'Error | Admin Manager category ',
-                        csrfToken: req.csrfToken(),
-                        messagesFailure: messagesFailure,
-                        failure: true,
-                        success: false
-                    });
                 });
         });
 });

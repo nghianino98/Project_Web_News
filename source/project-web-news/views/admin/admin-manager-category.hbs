@@ -169,7 +169,7 @@
                 </td>
                 <td><a href="#">{{this.categoryName}}</a></td>
                 <td>
-                  <center>{{this.categoryMain}}</center>
+                  <center>{{this.categoryMainID.categoryName}}</center>
                 </td>
                 <td>
                   <center><i class="far fa-check-square"></i></center>
@@ -254,7 +254,7 @@
           </div>
         </div>
 
-        <!-- Modal sửa thư mục con-->
+        <!-- Modal sửa chuyên mục con-->
         <div class="modal fade" id="updateCategorySub" tabindex="-1" role="dialog"
           aria-labelledby="updateCategorySubTitle" aria-hidden="true">
           <div class="modal-dialog modal-lg modal-dialog-centered">
@@ -271,7 +271,7 @@
                             mục</b></label>
                         <div class="col-md-8">
                           <input id="categorysub_name" name="categorysub_name" placeholder="Nhập vào tên chuyên mục"
-                            class="form-control input-md" required="" type="text" value="{{this.categoryName}}">
+                            class="form-control input-md" required="" type="text">
                         </div>
                       </div>
 
@@ -287,8 +287,7 @@
                         </div>
                       </div>
                       <input type="text" id="_csrf" name="_csrf" value="{{csrfToken}}" hidden>
-                      <input type="text" id="categorySubID" name="categorySubID" value="5cff24707be28250e4bb0a32"
-                        hidden>
+                      <input type="text" id="categorySubID" name="categorySubID" hidden>
                     </div>
                   </div>
                   <div class="modal-footer">
