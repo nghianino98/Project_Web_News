@@ -1,19 +1,19 @@
 var express = require('express');
 var router = express.Router();
 const passport = require('passport');
-const jwt = require('../FunctionHelper/jwt');
+const jwt = require('../../FunctionHelper/jwt');
 const csrf = require('csurf');
 const csurfProtection = csrf();
-const checkAuth = require('../middleware/check-auth');
-const topt = require('../FunctionHelper/totp');
+const checkAuth = require('../../middleware/check-auth');
+const topt = require('../../FunctionHelper/totp');
 const bcrypt = require('bcrypt');
 
-const adminRouter = require('./admin');
-const editorRouter = require('./editor');
-const writerRouter = require('./writer');
+const adminRouter = require('../admin');
+const editorRouter = require('../editor');
+const writerRouter = require('../writer');
 const profileRouter = require('./profile');
 
-const User = require('../models/user');
+const User = require('../../models/user');
 
 // Thêm middle ware chống tấn công CSRF
 router.use(csurfProtection);

@@ -42,6 +42,21 @@
             </select>
           </div>
         </div>
+        {{# if hasError }}
+            <div class="alert alert-danger" role="alert">
+                {{# each errors }}
+                    {{ this }}</br>
+                {{/ each }}
+            </div>
+        {{ else }}
+          {{# if hasSuccess }}
+            <div class="alert alert-success" role="alert">
+                {{# each success }}
+                    {{ this }}</br>
+                {{/ each }}
+            </div>
+          {{/ if }}
+        {{/ if }}
         <div class="col-md-3">
           <button type="button" class="btn btn-primary btn-block"><i class="fas fa-filter"></i> Lọc</button>
         </div>
@@ -100,7 +115,7 @@
                 <td>
                   <a href="/user/admin/manager-user/profile/{{this._id}}"><i class="fa fa-eye" title="Xem thông tin chi tiết"></i></a>
                   <a href="#"><i class="fa fa-calendar-plus" title="Gia hạn"></i></a>
-                  <a href="#"><i class="fa fa-trash" title="Xóa bài viết"></i></a>
+                  <a href="#"><i class="fa fa-trash" title="Xóa người dùng"></i></a>
                 </td>
               </tr>
               {{/each}}

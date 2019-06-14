@@ -6,7 +6,7 @@ var month = $('#month').val();
 var phoneNumber = $('#phoneNumber').val();
 var avatar = $('#avatar').attr('src');
 var email = $('#email').val();
-var role = $('#role').children()
+var role = $('#role').children('option:selected').val();
 
 $('#file').change(handleChangeFile);
 
@@ -34,6 +34,7 @@ function handleSaveAvatar() {
     $('#cancel-avatar-btn').prop('disabled', true);
     var data = new FormData();
     data.append('file', $('#file').prop('files')[0]);
+    data.append('id', $('#id').val());
 
     fetch('/user/admin/manager-user/profile/avatar', {
         method: 'POST',
@@ -48,7 +49,6 @@ function handleSaveAvatar() {
         console.log(data);
         avatar = data.avatar;
         $('#avatar').attr('src', data.avatar);
-        $('#avatar-sidebar').attr('src', data.avatar);
         alert('Cập nhật ảnh đại diện thành công');
     }).catch(err => {
         alert('Cập nhật ảnh đại diện thất bại. Thử lại sau');
@@ -71,6 +71,8 @@ function handleUpdateInfo() {
     $('#year').prop('readonly', false);
     $('#pseudonym').prop('readonly', false);
     $('#phoneNumber').prop('readonly', false);
+    $('#email').prop('readonly', false);
+    $('#role').prop('disabled', false);
     $('#update').prop('hidden', true);
     $('#save').prop('hidden', false);
     $('#cancel').prop('hidden', false);
@@ -84,6 +86,8 @@ function handleCancelUpateInfo() {
     $('#year').val(year);
     $('#pseudonym').val(pseudonym);
     $('#phoneNumber').val(phoneNumber);
+    $('#email').val(email);
+    $('#role').val(role);
     
     $('#name').prop('readonly', true);
     $('#date').prop('readonly', true);
@@ -91,7 +95,76 @@ function handleCancelUpateInfo() {
     $('#year').prop('readonly', true);
     $('#pseudonym').prop('readonly', true);
     $('#phoneNumber').prop('readonly', true);
+    $('#email').prop('readonly', true);
+    $('#role').prop('disabled', true);
     $('#update').prop('hidden', false);
     $('#save').prop('hidden', true);
     $('#cancel').prop('hidden', true);
+}
+
+function validateForm() {
+    if(!validateEmail()) {
+        return false;
+    }
+
+    if (!validateDate()) {
+        return false;
+    }
+
+    return true;
+}
+
+function validateDate() {
+    const dd = +$('#date').val();
+    const mm = +$('#month').val();
+    const yy = +$('#year').val();
+
+    if (isNaN(dd) || isNaN(mm) || isNaN(yy)) {
+        alert('Ngày sinh không hợp lệ');
+        return false;
+    }
+    // Create list of days of a month [assume there is no leap year by default]
+    var ListofDays = [31,28,31,30,31,30,31,31,30,31,30,31];
+
+    if (mm < 1 || mm > 12) {
+        alert('Ngày sinh không hợp lệ');
+        return false;
+    }
+
+    if (mm !== 2) {
+        if (dd>ListofDays[mm-1]) {
+            alert('Ngày sinh không hợp lệ');
+            return false;
+        }
+    } else {
+        var lyear = false;
+
+        if ( !((yy % 4) && (yy % 100)) || !(yy % 400)) {
+            lyear = true;
+        }
+
+        if ((lyear == false) && ((dd > 28) || (dd < 1))) {
+            alert('Thời gian không hợp lệ');
+            return false;
+        }
+    
+        if (dd < 1 || dd > 29) {
+            alert('Thời gian không hợp lệ');
+            return false;
+        }
+    }
+
+    return true;
+}
+
+function validateEmail() {
+    const email = $('#email').val();
+    const parttern = /[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?/;
+    
+    if (!parttern.test(email)){
+        alert('Email không hợp lệ');
+        return false;
+    }
+
+    return true;
 }

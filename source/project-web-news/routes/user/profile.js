@@ -1,11 +1,11 @@
 const express = require('express');
 const router = express.Router();
-const multer = require('../config/multer');
-const jwt = require('../FunctionHelper/jwt');
-const User = require('../models/user');
-const filebase = require('../FunctionHelper/firebase');
+const multer = require('../../config/multer');
+const jwt = require('../../FunctionHelper/jwt');
+const User = require('../../models/user');
+const filebase = require('../../FunctionHelper/firebase');
 const bcrypt = require('bcrypt');
-const topt = require('../FunctionHelper/totp');
+const topt = require('../../FunctionHelper/totp');
 
 // Load avatar của user
 router.use((req, res, next) => {
@@ -14,6 +14,7 @@ router.use((req, res, next) => {
     next();
 });
 
+// GET /user/profile
 router.get('/', (req, res, next) => {
     const date = new Date(req.user.dob);
     const user = {
@@ -49,6 +50,7 @@ router.get('/', (req, res, next) => {
     });
 });
 
+// POST /user/profile
 router.post('/', (req, res, next) => {
     var propertiesUpdate = {
         userName: req.body.userName,
@@ -75,6 +77,7 @@ router.post('/', (req, res, next) => {
         });
 });
 
+// POST /user/profile/avatar
 router.post('/avatar', multer.single('file'), (req, res, next) => {
     filebase.uploadImageToStorage(req.file)
         .then(result => {
@@ -92,6 +95,7 @@ router.post('/avatar', multer.single('file'), (req, res, next) => {
         });
 });
 
+// GET /user/profile/change-password
 router.get('/change-password', (req, res, next) => {
     const messages = req.flash('error');
     res.render('user/change-password', {
@@ -102,6 +106,7 @@ router.get('/change-password', (req, res, next) => {
     });
 });
 
+// POST /user/profile/change-password
 router.post('/change-password', (req, res, next) => {
     User.findById({_id: req.user.id})
         .then(user => {
@@ -140,6 +145,7 @@ router.post('/change-password', (req, res, next) => {
         });
 });
 
+// GET /user/profile/change-email
 router.get('/change-email', (req, res, next) => {
     const messages = req.flash('error');
     const verifyObject = topt.getVerifyObject();
@@ -160,6 +166,7 @@ router.get('/change-email', (req, res, next) => {
         });
 });
 
+// POST /user/profile/change-email
 router.post('/change-email', (req, res, next) => {
     if (!req.session.fpw) {
         return res.render('user/change-email', {
