@@ -7,6 +7,7 @@ var phoneNumber = $('#phoneNumber').val();
 var avatar = $('#avatar').attr('src');
 var email = $('#email').val();
 var role = $('#role').children('option:selected').val();
+var categories = $('#categoryEditor').val();
 
 $('#file').change(handleChangeFile);
 
@@ -74,9 +75,12 @@ function handleUpdateInfo() {
     $('#phoneNumber').prop('readonly', false);
     $('#email').prop('readonly', false);
     $('#role').prop('disabled', false);
+
     $('#update').prop('hidden', true);
     $('#save').prop('hidden', false);
+    $('#save').prop('disabled', false);
     $('#cancel').prop('hidden', false);
+    $('#cancel').prop('disabled', false);
 }
 
 function handleCancelUpateInfo() {
@@ -89,6 +93,8 @@ function handleCancelUpateInfo() {
     $('#phoneNumber').val(phoneNumber);
     $('#email').val(email);
     $('#role').val(role);
+    $('#categoryEditor').val(categories);
+    console.log($('#categoryEditor').val());
     
     $('#name').prop('readonly', true);
     $('#date').prop('readonly', true);
@@ -98,9 +104,12 @@ function handleCancelUpateInfo() {
     $('#phoneNumber').prop('readonly', true);
     $('#email').prop('readonly', true);
     $('#role').prop('disabled', true);
+
     $('#update').prop('hidden', false);
     $('#save').prop('hidden', true);
     $('#cancel').prop('hidden', true);
+    $('#save').prop('disabled', true);
+    $('#cancel').prop('disabled', true);
 }
 
 function validateForm() {

@@ -19,6 +19,14 @@ const categorySub = mongoose.model('CategorySubs', categorySubSchema);
 
 
 module.exports = {
+    findAllExcept: (ids) => {
+        return categorySub.find({_id: {$nin: id}}).exec();
+    },
+
+    findAll: () => {
+        return categorySub.find().exec();
+    },
+    
     add: (entity, id) => {
         return new Promise((resolve, reject) => {
 
