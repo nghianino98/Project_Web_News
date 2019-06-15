@@ -19,6 +19,18 @@ const categorySub = mongoose.model('CategorySubs', categorySubSchema);
 
 
 module.exports = {
+
+    // findDad: () =>{
+    //     return new Promise((resolve,reject)=>{
+    //         categorySub.findById().exec((err,succ)=>{
+    //             if(err)
+    //                 reject(err);
+    //             else(succ)
+    //                 resolve(succ);
+    //         })
+    //     })
+    // }
+
     add: (entity, id) => {
         return new Promise((resolve, reject) => {
 
@@ -60,6 +72,39 @@ module.exports = {
                 })
         });
     },
+
+    findDad: (id) => {
+        return new Promise((resolve, reject) => {
+            categorySub.findById({_id:id})
+                //.select('categoryName')
+                .populate('categoryMainID', 'categoryName')
+                .exec((err, succ) => {
+                    if (err)
+                        reject(err);
+                    else
+                        resolve(succ);
+                    //console.log(succ);
+                })
+        });
+    },
+
+
+    findAll: () => {
+        return new Promise((resolve, reject) => {
+            categorySub.find()
+                .exec((err, succ) => {
+                    if (err)
+                        reject(err);
+                    else
+                        resolve(succ);
+                    //console.log(succ);
+                })
+        });
+    },
+
+
+    
+
 
     findByIdAndDelete: (id) => {
         return new Promise((resolve, reject) => {
@@ -116,7 +161,7 @@ module.exports = {
                 if (err)
                     reject(err);
                 else {
-
+                    
                     let oldCategoryMain = succ.categoryMainID;
                     if (oldCategoryMain === null) {
 
