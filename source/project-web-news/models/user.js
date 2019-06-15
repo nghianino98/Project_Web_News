@@ -13,7 +13,7 @@ var userSchema = Schema({
     password: {type: String, required: true},
     dob: {type: Date, requied: true},
     expire: {type: Date, default: new Date().setDate(new Date().getDate() + 7)},
-    CategoryEditor: [{type: Schema.Types.ObjectId, ref: 'CategorySubs'}],
+    categoryEditor: [{type: Schema.Types.ObjectId, ref: 'CategorySubs'}],
     pseudonym: {type: String, default: 'anonymous'},
     gender: {type: Boolean},
     isConfirm: {type: Boolean, default: false},
@@ -30,6 +30,10 @@ var userSchema = Schema({
 const User = mongoose.model('User', userSchema);
 
 module.exports = {
+
+    getUserAndCategoryEditorById: (id) => {
+        return User.findOne({_id: id}).populate('categoryEditor', 'categoryName').exec();
+    },
 
     findAll:() =>{
         return new Promise((resolve, reject) => {
@@ -77,6 +81,6 @@ module.exports = {
     },
 
     findAllExceptId: (id) => {
-        return User.find({_id: {$nin: id}}).exec();
+        return User.find({_id: {$nin: id}}).populate('categoryEditor', 'categoryName').exec();
     }
 };

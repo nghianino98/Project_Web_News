@@ -7,7 +7,6 @@ const expressHbs = require('express-handlebars');
 const bodyParser = require('body-parser');
 const mongoose = require('mongoose');
 const session = require('express-session');
-const passport = require('passport');
 const flash = require('connect-flash');
 const validator = require('express-validator');
 const MongoStore = require('connect-mongo')(session);
@@ -25,7 +24,16 @@ require('./utils/db.connection');
 app.set('views', path.join(__dirname, 'views'));
 app.engine('.hbs', expressHbs({
   defaultLayout: 'layout',
-  extname: '.hbs'
+  extname: '.hbs',
+  helpers: {
+    if_equal: function(a, b, opts) {
+      if (a === b) { 
+        return opts.fn(this) 
+      } else { 
+        return opts.inverse(this) 
+      } 
+    }
+  }
 }));
 app.set('view engine', '.hbs');
 

@@ -7,6 +7,7 @@ var phoneNumber = $('#phoneNumber').val();
 var avatar = $('#avatar').attr('src');
 var email = $('#email').val();
 var role = $('#role').children('option:selected').val();
+var categories = $('#categoryEditor').val();
 
 $('#file').change(handleChangeFile);
 
@@ -74,9 +75,12 @@ function handleUpdateInfo() {
     $('#phoneNumber').prop('readonly', false);
     $('#email').prop('readonly', false);
     $('#role').prop('disabled', false);
+
     $('#update').prop('hidden', true);
     $('#save').prop('hidden', false);
+    $('#save').prop('disabled', false);
     $('#cancel').prop('hidden', false);
+    $('#cancel').prop('disabled', false);
 }
 
 function handleCancelUpateInfo() {
@@ -89,6 +93,8 @@ function handleCancelUpateInfo() {
     $('#phoneNumber').val(phoneNumber);
     $('#email').val(email);
     $('#role').val(role);
+    $('#categoryEditor').val(categories);
+    console.log($('#categoryEditor').val());
     
     $('#name').prop('readonly', true);
     $('#date').prop('readonly', true);
@@ -98,9 +104,12 @@ function handleCancelUpateInfo() {
     $('#phoneNumber').prop('readonly', true);
     $('#email').prop('readonly', true);
     $('#role').prop('disabled', true);
+
     $('#update').prop('hidden', false);
     $('#save').prop('hidden', true);
     $('#cancel').prop('hidden', true);
+    $('#save').prop('disabled', true);
+    $('#cancel').prop('disabled', true);
 }
 
 function validateForm() {
@@ -231,5 +240,63 @@ function handleChangePassword() {
         $('#cancelChangePw').click();
         $('#newPassword').val(null);
         $('#retype').val(null);
-    })
+    });
+}
+
+function validateAddTime() {
+    const number = +$('#time').val();
+
+    if (!Number.isInteger(number) || number < 1) {
+        alert('Số ngày phải là số nguyên và lớn hơn 0');
+        return false;
+    }
+
+    return true;
+}
+
+function openAddTimeModal(iduser,id, expire) {
+  //  console.log(expire);
+    $('#iduser').val(iduser);
+    $('#expire').val(expire);
+    $(`#${id}`).modal();
+}
+
+function handleAddTime() {
+    if (!validateAddTime()) {
+        return false;
+    }
+
+    $('#saveAddTime').prop('disabled', true);
+    $('#cancelAddTime').prop('disabled', true);
+    var expire = new Date($('#expire').val());
+    
+    expire.setDate(expire.getDate() + (+$('#time').val()));
+    console.log(expire);
+    var data = {
+        id:  $('#iduser').val(),
+        expire: expire
+    };
+
+    fetch('/user/admin/manager-user/add-time', {
+        method: 'POST',
+        credentials: 'same-origin',
+        headers: {
+            'Content-Type': 'application/json; charset=utf-8',
+            'CSRF-Token': $('#_csrf').val() // <-- is the csrf token as a header
+        },
+        body: JSON.stringify(data)
+    }).then(res => {
+        if (res.status === 200) {
+            alert('Gia hạn thành công.');
+        } else {
+            alert('Gia hạn thất bại, thử lại sau');
+        }
+    }).catch(err => {
+        alert('Gia hạn thất bại, thử lại sau');
+    }).finally(() => {
+        $('#saveAddTime').prop('disabled', false);
+        $('#cancelAddTime').prop('disabled', false);
+        $('#cancelAddTime').click();
+        $('#time').val(null);
+    });
 }

@@ -7,7 +7,7 @@ const Role = require('../../FunctionHelper/user-role');
 
 const User = require('../../models/user');
 const categoryMain = require('../../models/categoryMain');
-const categorySub = require('../../models/categorySub');
+const CategorySub = require('../../models/categorySub');
 
 // GET /user/admin/manager-user
 router.get('/', (req, res, next) => {
@@ -15,14 +15,16 @@ router.get('/', (req, res, next) => {
     const success = req.flash('success');
     User.findAllExceptId(req.user.id).then(succ => {
             res.render('admin/adminusers', {
-                isModify: false,
                 userList: succ,
                 layout: 'admin-layout',
                 title: 'Admin | Quản lí người dùng',
                 errors: errors,
                 hasError: errors.length > 0,
                 success: success,
-                hasSuccess: success.length > 0
+                hasSuccess: success.length > 0,
+                hasCustomCSS:true,
+                partial: function(){return 'manager-user-css';},
+                csrfToken: req.csrfToken()
             });
         })
         .catch(err => {
@@ -35,8 +37,9 @@ router.get('/profile/:id', (req, res, next) => {
     const id = req.params.id;
     const messages = req.flash('error');
 
-    User.findById(id)
-        .then(user => {
+    Promise.all([User.getUserAndCategoryEditorById(id), CategorySub.findAll()])
+        .then(result => {
+            const user = result[0];
             if (!user) {
                 var err = new Error();
                 err.status = 404;
@@ -44,27 +47,33 @@ router.get('/profile/:id', (req, res, next) => {
                 return next(err);
             }
 
+            const temp = user.categoryEditor.map(element => element.id);
+            const categories = result[1].filter(item => !temp.includes(item.id));
             const date = new Date(user.dob);
             user.date = date.getDate();
             user.month = date.getMonth() + 1;
             user.year = date.getFullYear();
+            user.expire = new Date(user.expire).toString();
             var role = new Role();
             role.enableRole(user.role);
             res.render('admin/user-profile', {
                 layout: 'admin-layout',
                 csrfToken: req.csrfToken(),
                 user: user,
+                categories: categories,
                 titleForm: 'Thông tin người dùng',
                 messages: messages,
                 hasError: messages.length > 0,
                 isWriter: user.role === 'writer',
                 isEditor: user.role === 'editor',
-                roles: role.generateArray()
+                roles: role.generateArray(),
+                hasCustomCSS: true,
+                partial: function() {return 'manager-user-css';}
+                
             });
         }).catch(err => {
-            err.status = 500;
             next(err);
-        })
+        });
 });
 
 // POST /user/admin/manager-admin/profile
@@ -74,12 +83,17 @@ router.post('/profile', (req, res, next) => {
         dob: new Date(+req.body.year, +req.body.month - 1, +req.body.date),
         phoneNumber: req.body.phoneNumber,
         email: req.body.email,
-        role: req.body.role
+        role: req.body.role,
     };
+   
 
     if (req.body.pseudonym) {
         propertiesUpdate.pseudonym = req.body.pseudonym;
     }
+
+    if (req.body.categoryEditor) {
+        propertiesUpdate.categoryEditor = req.body.categoryEditor;
+    };
 
     User.update({_id: req.body.id}, propertiesUpdate)
         .then(result => {
@@ -121,5 +135,17 @@ router.post('/profile/change-password', (req, res, next) => {
             });
         });
 });
+
+// POST /user/admin/manager-user/add-time
+router.post('/add-time', (req, res, next) => {
+    User.update({_id: req.body.id}, {expire: req.body.expire})
+        .then(result => {
+            res.status(200).json({message: 'success'});
+        }).catch(err => {
+            err.status = 500;
+            next(err);
+        });
+});
+
 
 module.exports = router;

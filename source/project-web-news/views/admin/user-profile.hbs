@@ -70,17 +70,33 @@
                                 <label for="phoneNumber" class="col-md-3 m-1 align-items-center" ><strong>Điện thoại</strong></label>
                                 <input type="text" name="phoneNumber" id="phoneNumber" value="{{user.phoneNumber}}" readonly class="form-control col align-self-center">
                             </div>
+                             {{# if_equal user.role "subscriber"}}
+                                <div class="form-group row">
+                                    <label class="col-md-3 m-1 align-self-center" ><strong>Thời gian hết hạn</strong></label>
+                                    <input type="text" id="expire" value="{{user.expire}}" required readonly class="form-control col align-self-center">
+                                </div>
+                            {{/if_equal}}
                             {{# if isEditor }}
                                  <div class="form-group row">
                                     <label for="categories" class="col-md-3 m-1 align-items-center" ><strong>Danh mục</strong></label>
-                                    <input type="text"  id="categories" value="danh mục" readonly class="form-control col align-self-center">
+                                    <div class="col align-self-center">
+                                        <select class="form-control chosen-select" multiple tabindex="4" name="categoryEditor" id="categoryEditor" data-placeholder="Không quán lí chuyên mục nào">
+                                            <option value=""></option>
+                                            {{# each categories }}
+                                                <option value="{{this._id}}">{{this.categoryName}}</option>
+                                            {{/ each }}
+                                            {{# each user.categoryEditor }}
+                                                <option value="{{this._id}}" selected>{{this.categoryName}}</option>
+                                            {{/ each }}
+                                        </select>
+                                    </div>
                                 </div>
                             {{/ if }}
                         </div>
                     </div>
                     <button type="button" id="update" class="btn btn-sm btn-primary float-right m-2" onclick="handleUpdateInfo()">Cập nhật</button>
-                    <button type="submit" id="save" class="btn btn-sm btn-success float-right m-2" hidden>Lưu</button>
-                    <button type="button" id="cancel" class="btn btn-sm btn-danger float-right m-2" onclick="handleCancelUpateInfo()" hidden>Hủy</button>
+                    <button type="submit" id="save" class="btn btn-sm btn-success float-right m-2" disabled hidden>Lưu</button>
+                    <button type="button" id="cancel" class="btn btn-sm btn-danger float-right m-2" disabled onclick="handleCancelUpateInfo()" hidden>Hủy</button>
                     <button type="button" class="btn btn-sm btn-primary float-left m-2" onclick="openChangePwModel()">Đổi mật khẩu</a>
                 </form>
             </div>
@@ -118,3 +134,6 @@
 </div>
 
 <script src="/assets/js/manager-user.js"></script>
+<script src="/javascript/chosen.jquery.min.js" type="text/javascript"></script>
+<script src="/javascript/prism.js" type="text/javascript" charset="utf-8"></script>
+<script src="/javascript/init.js" type="text/javascript" charset="utf-8"></script>
