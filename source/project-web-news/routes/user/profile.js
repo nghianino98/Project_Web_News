@@ -24,7 +24,8 @@ router.get('/', (req, res, next) => {
         date: date.getDate(),
         month: date.getMonth() + 1,
         year: date.getFullYear(),
-        pseudonym: req.user.pseudonym
+        pseudonym: req.user.pseudonym,
+        expire: new Date(req.user.expire).toString()
     }
 
     var titleForm = 'Thông tin người dùng';

@@ -64,6 +64,12 @@
                                 <label for="phoneNumber" class="col-md-3 m-1 align-items-center" ><strong>Điện thoại</strong></label>
                                 <input type="text" name="phoneNumber" id="phoneNumber" value="{{user.phoneNumber}}" readonly class="form-control col align-self-center">
                             </div>
+                            {{# if_equal user.role "subscriber"}}
+                                <div class="form-group row">
+                                    <label class="col-md-3 m-1 align-self-center" ><strong>Thời gian hết hạn</strong></label>
+                                    <input type="text" id="expire" value="{{user.expire}}" required readonly class="form-control col align-self-center">
+                                </div>
+                            {{/if_equal}}
                         </div>
                     </div>
                     <button type="button" id="update" class="btn btn-sm btn-primary float-right m-2" onclick="handleUpdateInfo()">Cập nhật</button>

@@ -10,7 +10,8 @@ module.exports = {
             userName: user.userName,
             dob: user.dob,
             phoneNumber: user.phoneNumber,
-            pseudonym: user.pseudonym
+            pseudonym: user.pseudonym,
+            expire: user.expire
         }, secret_key, {
             expiresIn: expiresIn
         });

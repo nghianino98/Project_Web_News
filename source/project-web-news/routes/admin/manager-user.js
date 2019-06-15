@@ -15,7 +15,6 @@ router.get('/', (req, res, next) => {
     const success = req.flash('success');
     User.findAllExceptId(req.user.id).then(succ => {
             res.render('admin/adminusers', {
-                isModify: false,
                 userList: succ,
                 layout: 'admin-layout',
                 title: 'Admin | Quản lí người dùng',
@@ -24,7 +23,8 @@ router.get('/', (req, res, next) => {
                 success: success,
                 hasSuccess: success.length > 0,
                 hasCustomCSS:true,
-                partial: function(){return 'manager-user-css';}
+                partial: function(){return 'manager-user-css';},
+                csrfToken: req.csrfToken()
             });
         })
         .catch(err => {
@@ -53,6 +53,7 @@ router.get('/profile/:id', (req, res, next) => {
             user.date = date.getDate();
             user.month = date.getMonth() + 1;
             user.year = date.getFullYear();
+            user.expire = new Date(user.expire).toString();
             var role = new Role();
             role.enableRole(user.role);
             res.render('admin/user-profile', {
@@ -132,6 +133,17 @@ router.post('/profile/change-password', (req, res, next) => {
             .catch(err => {
                 res.status(500).json({message: 'Something wrong!!!'});
             });
+        });
+});
+
+// POST /user/admin/manager-user/add-time
+router.post('/add-time', (req, res, next) => {
+    User.update({_id: req.body.id}, {expire: req.body.expire})
+        .then(result => {
+            res.status(200).json({message: 'success'});
+        }).catch(err => {
+            err.status = 500;
+            next(err);
         });
 });
 
