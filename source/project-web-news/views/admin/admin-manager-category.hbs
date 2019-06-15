@@ -35,7 +35,7 @@
                             <select id="category_name_fr" name="category_parent" class="form-control">
                               <option selected>Chọn làm chuyên mục cha</option>
                               {{#each listCategorys}}
-                              <option>{{this.categoryName}}</option>
+                              <option value={{_id}} >{{this.categoryName}}</option>
                               {{/each}}
                             </select>
                           </div>

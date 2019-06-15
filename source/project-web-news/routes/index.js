@@ -8,12 +8,20 @@ const categorySub = require('../models/categorySub');
 router.get('/', function(req, res, next) {
   categoryMain.find().then(succ=>{
     let listCateMain = succ;
-    console.log(listCateMain);
+
+    listCateMain.forEach(function(value){
+        console.log(value.populate("arrayOfCategorySub",""));
+    })
+    // console.log(listCateMain);
+    res.render('index', {
+       title: 'Express',
+      //  layout: 'news-layouts',
+       listCateMain: listCateMain });
   })
   .catch(err=>{
     console.log(err);
   })
-  res.render('index', { title: 'Express' });
+  
 });
 
 router.get('/single-page', (req, res, next) => {

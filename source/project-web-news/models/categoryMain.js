@@ -6,7 +6,7 @@ var categorySchema = Schema({
         type: String
     },
     arrayOfArticles: [Schema.Types.ObjectId],
-    arrayOfCategorySub: [Schema.Types.ObjectId]
+    arrayOfCategorySub: [{type:Schema.Types.ObjectId,ref:'CategorySubs',require: true}]
 })
 
 const categoryMain = mongoose.model('CategoryMains', categorySchema);

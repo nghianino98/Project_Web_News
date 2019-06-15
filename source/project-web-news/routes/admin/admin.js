@@ -112,14 +112,12 @@ router.post('/manager-category', (req, res, next) => {
                 });
             });
     } else {
-
-        categoryMain.findByCategoryName(entity.category_parent)
+        categoryMain.findById(entity.category_parent)
             .then(succ => {
                 const category_parentID = succ._id;
                 categorySub.add(entity, category_parentID)
                     .then(succ => {
-
-                        const messagesSuccess = "Đã thêm chuyên mục con \" " + entity.category_name + " \" vào chuyên mục \" " + entity.category_parent + " \" thành công !";
+                        const messagesSuccess = "Đã thêm chuyên mục con \" " + entity.category_name + " \" vào chuyên mục \" " + succ.populate('categoryMainID', 'categoryName').categoryName+ " \" thành công !";
                         categoryMain.find().then(listCategorys => {
                             categorySub.find().then(listCategorySub => {
 
