@@ -126,8 +126,8 @@
                 <th>Title</th>
                 <th>Author</th>
                 <th>Categories</th>
-                <th>Tags</th>
-                <th>Comments</th>
+                {{!-- <th>Tags</th> --}}
+                {{!-- <th>Comments</th> --}}
                 <th>Ngày viết</th>
                 {{#unless notEdit}}
                   <th>Edit</th>
@@ -146,16 +146,18 @@
                    </div>
                 </td>  
                 <td><a href="#"><small>{{this.title}}</small></a></td>
-                <td><small>{{this.writerName}}</small></td>
-                <td><small>{{this.categoryMain}} / {{this.categorySub}}</small></td>
-                <td><small>{{this.arrayOfTags.length}}</small></td>
-                <td><a href="#"><small>{{this.comments.length}}</small></a></td>
+                <td><small>{{this.writer.pseudonym}}</small></td>
+                <td><small>{{this.categoryMain.categoryName}} / {{this.categorySub.categoryName}}</small></td>
+
+                {{!-- <td><small>{{this.arrayOfTags.length}}</small></td> --}}
+                {{!-- <td><a href="#"><small>{{this.comments.length}}</small></a></td> --}}
                 <td><small>{{this.writeDate}}</small></td>
                 {{#unless ../notEdit}}
                   <td>
                     <a href="/user/admin/edit/{{this.id}}"><i class="fa fa-edit"></i></a>
-                    <a href="#"><i class="fa fa-eye"></i></a>
-                    <a href="#"><i class="fa fa-trash"></i></a>
+                    {{!-- <a href="#"><i class="fa fa-eye"></i></a> --}}
+                    {{!-- <a href="#"><i class="fa fa-trash"></i></a> --}}
+                    <button type="submit" class="btn btn-link" id="{{this.id}}" onclick="deleteArticle(this.id)"><i class="fa fa-trash" title="Xóa người dùng"></i></button>
                 </td>
                 {{/unless}}   
               </tr>

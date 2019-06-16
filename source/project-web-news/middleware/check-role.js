@@ -15,7 +15,7 @@ exports.isEditor = (req, res, next) =>{
 }
 
 exports.isWriter = (req, res, next) =>{
-    if (req.user.role === 'writer') {
+    if (req.user.role === 'writer' || req.user.role === 'admin') {
         return next();
     }
 

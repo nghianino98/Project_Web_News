@@ -333,6 +333,7 @@ function deleteUser(id) {
         },
         body: JSON.stringify(data)
     }).then(res => {
+        
         window.location.href = '/user/admin/manager-user';
     }).catch(err => {
         alert('Xóa thất bại, thử lại sau');

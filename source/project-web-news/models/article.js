@@ -6,7 +6,7 @@ var articleSchema = Schema({
     content: { type: String, required: true },
     abstract: { type: String, required: true },
     writeDate: { type: Date },
-    writer: Schema.Types.ObjectId,
+    writer: {type:Schema.Types.ObjectId, ref:"User"},
     editor: Schema.Types.ObjectId,
     // status: {type: Boolean },
     status: {
@@ -16,8 +16,8 @@ var articleSchema = Schema({
     },
     reasonForRefusing: { type: String },
     postDate: { type: Date },
-    categoryMain: {type:Schema.Types.ObjectId, ref: 'CategoryMains',  require: true},
-    categorySub: {type: Schema.Types.ObjectId, ref: 'CategorySubs' , require: true},
+    categoryMain: { type: Schema.Types.ObjectId, ref: 'CategoryMains', require: true },
+    categorySub: { type: Schema.Types.ObjectId, ref: 'CategorySubs', require: true },
     views: { type: Number, default: 0 },
     smallAvatar: { type: String, default: '/images/news_thumbnail2.jpg' },
     bigAvatar: { type: String, default: '/images/photograph_img2.jpg' },
@@ -38,34 +38,38 @@ module.exports = {
     find: (statusArticles, writerID) => {
         return new Promise((resolve, reject) => {
             baibao.find({ status: statusArticles, writer: writerID })
-            .populate('categoryMain','categoryName')
-            .populate('categorySub','categoryName')
-            .exec((err, succ) => {
-                if (err)
-                    reject(err);
-                else
-                    resolve(succ);
-            })
+                .populate('categoryMain', 'categoryName')
+                .populate('categorySub', 'categoryName')
+                .exec((err, succ) => {
+                    if (err)
+                        reject(err);
+                    else
+                        resolve(succ);
+                })
         });
     },
 
     findAll: () => {
         return new Promise((resolve, reject) => {
-            baibao.find().exec((err, succ) => {
-                if (err)
-                    reject(err);
-                else
-                    resolve(succ);
-            })
+            baibao.find()
+                .populate('categoryMain', 'categoryName')
+                .populate('categorySub', 'categoryName')
+                .populate('writer','pseudonym')
+                .exec((err, succ) => {
+                    if (err)
+                        reject(err);
+                    else
+                        resolve(succ);
+                })
         });
     },
 
     add: (entity, writer) => {
         return new Promise((resolve, reject) => {
-            let categoryMain;
-            categorySub.findDad(entity.categorySub).then(succ=>{ 
+
+            categorySub.findDad(entity.categorySub).then(succ => {
                 entity.categoryMain = succ.categoryMainID.id;
-                console.log("cateMain:"+categoryMain);
+                // console.log("cateMain:"+categoryMain);
                 var obj = new baibao({
                     title: entity.title,
                     content: entity.content,
@@ -85,10 +89,10 @@ module.exports = {
                     isPremiumArticle: entity.isPremiumArticle,      // Update
                     comment: entity.comment                         // Guest add
                 })
-    
+
                 // Tạo kết nối tới database
                 // let connection = require('../utils/db.connection');
-    
+
                 obj.save((err, succ) => {
                     if (err) {
                         reject(err);
@@ -98,9 +102,9 @@ module.exports = {
                     }
                 })
             })
-            .catch(err=>{
-                console.log(err);
-            })
+                .catch(err => {
+                    console.log(err);
+                })
 
         });
     },
@@ -116,38 +120,47 @@ module.exports = {
         });
     },
 
-    findByIdAndUpdate: (entity, writer)  => {
+    findByIdAndUpdate: (entity, writer) => {
         return new Promise((resolve, reject) => {
+            categorySub.findDad(entity.categorySub).then(succ => {
+                entity.categoryMain = succ.categoryMainID.id;
+                var obj = {
+                    title: entity.title,
+                    content: entity.content,
+                    abstract: entity.abstract,
+                    writeDate: entity.writeDate,
+                    writer: writer,
+                    editor: entity.editor,                          // Editor add
+                    status: "notApproved",
+                    reasonForRefusing: entity.reasonForRefusing,    // Editor add
+                    postDate: entity.postDate,                      // Editor add
+                    categoryMain: entity.categoryMain,              // Update
+                    categorySub: entity.categorySub,                // Update
+                    views: entity.views,                            // Guest add
+                    smallAvatar: entity.smallAvatar,                // Update
+                    bigAvatar: entity.bigAvatar,                    // Update
+                    arrayOfTags: entity.arrayOfTags,                // Update
+                    isPremiumArticle: entity.isPremiumArticle,      // Update
+                    comment: entity.comment                         // Guest add
+                };
 
-
-
-            var obj = {
-                title: entity.title,
-                content: entity.content,
-                abstract: entity.abstract,
-                writeDate: Date.now(),
-                writer: writer,
-                editor: entity.editor,                          // Editor add
-                status: "notApproved",
-                reasonForRefusing: entity.reasonForRefusing,    // Editor add
-                postDate: entity.postDate,                      // Editor add
-                categoryMain: entity.categoryMain,              // Update
-                categorySub: entity.categorySub,                // Update
-                views: entity.views,                            // Guest add
-                smallAvatar: entity.smallAvatar,                // Update
-                bigAvatar: entity.bigAvatar,                    // Update
-                arrayOfTags: entity.arrayOfTags,                // Update
-                isPremiumArticle: entity.isPremiumArticle,      // Update
-                comment: entity.comment                         // Guest add
-            };
-
-            baibao.findByIdAndUpdate(entity._articleID, obj).exec((err, succ) => {
-                if (err)
-                    reject(err);
-                else
-                    resolve(succ);
+                baibao.findByIdAndUpdate(entity._articleID, obj).exec((err, succ) => {
+                    if (err)
+                        reject(err);
+                    else {
+                        resolve(succ);
+                    }
+                })
             })
-        })
-    }
+                .catch(err => {
+                    console.log(err);
+                })
+
+        });
+    },
+
+    deleteOne: (conditionObject) => {
+        return baibao.deleteOne(conditionObject).exec();
+    },
 
 }

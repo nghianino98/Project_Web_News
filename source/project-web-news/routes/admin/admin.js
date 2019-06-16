@@ -23,10 +23,7 @@ router.use((req, res, next) => {
 
 // Lấy trang mặc định của admin
 router.get('/', (req, res, next) => {
-    res.render('admin/admin', {
-        layout: 'admin-layout',
-        title: 'Admin | Quản lí bài viết'
-    });
+    res.redirect('/user/admin/manager-category');
 });
 
 router.get('/add-posts', (req, res, next) => {
@@ -257,22 +254,29 @@ router.get('/manager-post', (req, res, next) => {
 });
 
 router.get('/edit/:id',(req,res,next)=>{
+    
     article.findById(req.params.id)
-    .then(succ => {
-        console.log(succ);
-        let topic = "Chỉnh sửa bài viết";
-        res.render('writer/writer', { admin: true , article: succ, topic: topic, layout: 'admin-layout', title: 'admin', csrfToken: req.csrfToken() });
-    })
-    .catch(err => {
-        console.log(err);
-        const messagesFailure = err;
-        res.render('writer/writer', { layout: 'admin-layout', title: 'admin', csrfToken: req.csrfToken(), messagesFailure: messagesFailure, failure: true, success: false });
-    });
+        .then(succ => {
+            categorySub.find().then(list=>{
+                console.log(succ);
+                let topic = "Chỉnh sửa bài viết";
+                res.render('writer/writer', { actionpost:"/user/admin/post", action:"/user/admin/edit", listCategory: list, article: succ, topic: topic, layout: 'admin-layout', title: 'writer', csrfToken: req.csrfToken() });
+            })
+            .catch(err=>{
+                console.log(err);
+            })
+        })
+        .catch(err => {
+            console.log(err);
+            const messagesFailure = err;
+            res.render('writer/writer', { actionpost:"/user/admin/post", action:"/user/admin/edit",layout: 'admin-layout', title: 'writer', csrfToken: req.csrfToken(), messagesFailure: messagesFailure, failure: true, success: false });
+        });
 });
 
 router.post('/edit', (req, res, next) => {
 
     var entity = req.body;
+
 
     var accountID = req.body.writerMain;
 
@@ -280,14 +284,27 @@ router.post('/edit', (req, res, next) => {
         .then(succ => {
             console.log(succ);
             const messagesSuccess = "Đã cập nhật bài có tiêu đề \" " + succ.title + " \" thành công";
-            res.render('writer/writer', { layout: 'admin-layout', title: 'admin', csrfToken: req.csrfToken(), messagesSuccess: messagesSuccess, success: true, failure: false });
+            res.render('writer/writer', {actionpost:"/user/admin/post", action:"/user/admin/edit",layout: 'admin-layout', title: 'admin', csrfToken: req.csrfToken(), messagesSuccess: messagesSuccess, success: true, failure: false });
         })
         .catch(err => {
             console.log(err);
             const messagesFailure = err;
-            res.render('writer/writer', { layout: 'admin-layout', title: 'admin', csrfToken: req.csrfToken(), messagesFailure: messagesFailure, failure: true, success: false });
+            res.render('writer/writer', { actionpost:"/user/admin/post", action:"/user/admin/edit",action:"/user/admin/edit",layout: 'admin-layout', title: 'admin', csrfToken: req.csrfToken(), messagesFailure: messagesFailure, failure: true, success: false });
         });
 
+});
+
+// DELETE user/admin/delete-article
+router.delete('/delete-article', (req, res, next) => {
+    console.log("call router delete");
+    article.deleteOne({_id: req.body.id})
+        .then(result => {
+            req.flash('success', 'Xóa bài viết thành công');
+            res.status(200).json({message: 'successful'});
+        }).catch(err => {
+            req.flash('error', 'Xóa bài viết thất bại, thử lại sau.');
+            res.status(500).json({message: 'Something wrong!'});
+        });
 });
 
 module.exports = router;

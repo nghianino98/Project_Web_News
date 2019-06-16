@@ -46,7 +46,7 @@
             {{messagesFailure}}
           </div>
           {{/if}}
-          <form style="min-width: 20rem;" id="articleContent" action="/user/writer/edit" method="POST">
+          <form style="min-width: 20rem;" id="articleContent" action="{{action}}" method="POST">
             <div class="form-group row">
               <label for="text" class="col-12 col-form-label">Tiêu đề bài viết</label>
               <div class="col-12">
@@ -70,7 +70,8 @@
             <input type="text" id="_csrf" name="_csrf" value="{{csrfToken}}" hidden>
             <input type="text" id="_articleID" name="_articleID" value="{{article._id}}" hidden>
             <input type="text" id="categoryMain" name="categoryMain" value="{{article.categoryMain}}" hidden>
-          </form>
+            <input type="text" id="writeDate" name="writeDate" value="{{article.writeDate}}" hidden>
+            <input type="text" id="writerMain" name="writerMain" value="{{article.writer}}" hidden>
         </div>
                 <div class="col-md-auto">
           <div class="card mb-3" style="max-width: 18rem;">
@@ -110,6 +111,7 @@
 
         </div>
       </div>
+      </form>
       {{/if}}
       {{#unless article}}
       <div class="row">
@@ -128,7 +130,7 @@
             {{messagesFailure}}
           </div>
           {{/if}}
-          <form style="min-width: 20rem;" id="articleContent" action="/user/writer/post" method="POST">
+          <form style="min-width: 20rem;" id="articleContent" action="{{actionpost}}" method="POST">
             <div class="form-group row">
               <label for="text" class="col-12 col-form-label">Tiêu đề bài viết</label>
               <div class="col-12">
@@ -163,7 +165,7 @@
                     {{!-- <option value="rabbit">Rabbit</option>
                     <option value="duck">Duck</option>
                     <option value="fish">Fish</option> --}}
-                    <option value="" selected>Chọn chuyên mục</option>
+                    <option value="{{article.categorySub}}" selected>Chọn chuyên mục</option>
                     {{#each listCategory}}
                       <option value="{{_id}}">{{categoryName}}</option>
                     {{/each}}
