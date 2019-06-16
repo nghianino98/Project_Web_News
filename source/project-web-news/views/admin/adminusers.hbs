@@ -119,7 +119,7 @@
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title">Đổi mật khẩu người dùng</h5>
+                <h5 class="modal-title">Gia hạn tài khoản đọc giả (subscriber)</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                 <span aria-hidden="true">&times;</span>
                 </button>
@@ -128,7 +128,7 @@
                 <form action="/user/admin/manager-user/add-time" method="POST" onsubmit="return validateAddTime();" id="addTimeForm">
                     <div class="form-group">
                         <label for="time">Số ngày</label>   
-                        <input id="time" name="time" type="number" class="form-control" required>
+                        <input id="time" name="time" type="number" class="form-control" value="7" required>
                         <input id="iduser" type="text" class="form-control" hidden>
                         <input id="expire" type="text" class="form-control" hidden>
                         <input id="_csrf" name="_csrf" value="{{csrfToken}}" hidden>
