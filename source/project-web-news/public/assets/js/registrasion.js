@@ -12,7 +12,7 @@ function isNumerKey(evt)
 
 function loadDays()
 {
-    var days = document.getElementById('days');
+    var days = document.getElementById('date');
     var opt = document.createElement('option');
     opt.innerHTML = "Ngày";
     opt.value = '-1';
@@ -29,7 +29,7 @@ function loadDays()
 
 function loadMonths()
 {
-    var months = document.getElementById('months');
+    var months = document.getElementById('month');
     var opt = document.createElement('option');
     opt.innerHTML = "Tháng"
     opt.value = '-1';
@@ -46,7 +46,7 @@ function loadMonths()
 
 function loadYears()
 {
-    var years = document.getElementById('years');
+    var years = document.getElementById('year');
     var opt = document.createElement('option');
     opt.innerHTML = "Năm";
     opt.value='-1';

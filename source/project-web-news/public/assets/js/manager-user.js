@@ -302,5 +302,13 @@ function handleAddTime() {
 }
 
 function validateAddUserForm() {
+    if(!validateEmail()) {
+        return false;
+    }
+
+    if (!validateDate()) {
+        return false;
+    }
+
     return validatePassword();
 }
