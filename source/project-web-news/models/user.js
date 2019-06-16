@@ -12,7 +12,7 @@ var userSchema = Schema({
     account: {type: String, requied: true},
     password: {type: String, required: true},
     dob: {type: Date, requied: true},
-    expire: {type: Date, default: new Date().setDate(new Date().getDate() + 7)},
+    expire: {type: Date},
     categoryEditor: [{type: Schema.Types.ObjectId, ref: 'CategorySubs'}],
     pseudonym: {type: String, default: 'anonymous'},
     gender: {type: Boolean},
@@ -56,6 +56,7 @@ module.exports = {
             dob: new Date(+entity.year, +entity.month - 1, +entity.day),
             gender: entity.gender,
             isConfirm: true,
+            expire: new Date().setDate(new Date().getDate() + 7)
         });
 
         return user.save();
@@ -70,6 +71,7 @@ module.exports = {
             phoneNumber: entity.phoneNumber,
             dob: new Date(+entity.year, +entity.month - 1, +entity.day),
             gender: entity.gender,
+            expire: new Date().setDate(new Date().getDate() + 7)
         });
 
         return user.save();
