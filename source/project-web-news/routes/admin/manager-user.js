@@ -147,5 +147,51 @@ router.post('/add-time', (req, res, next) => {
         });
 });
 
+// GET user/admin/manager-user/add-user
+router.get('/add-user', (req, res, next) => {
+    const messages = req.flash('error');
+    const success = req.flash('success');
+
+    res.render('admin/add-user', {
+        layout: 'admin-layout',
+        titleForm: 'Thêm tài khoản',
+        hasError: messages.length > 0,
+        messages: messages,
+        hasSuccess: success.length > 0,
+        success: success,
+        csrfToken: req.csrfToken()
+    });
+});
+
+// POST user/admin/manager-user/add-user
+router.post('/add-user', (req, res, next) => {
+    User.findOneByAccount(req.body.account)
+        .then(user => {
+            if (user) {
+                req.flash('error', 'Tài khoản đã tồn tại.');
+                return res.redirect('/user/admin/manager-user/add-user');
+            }
+
+            bcrypt.hash(req.body.password, 5, (err, hash) => {
+                if (err) {
+                    req.flash('error', 'Thêm tài khoản thất bại, thử lại sau');
+                    return res.redirect('/user/admin/manager-user/add-user');
+                }
+        
+                User.saveAccountIsConfirmed(req.body, hash)
+                    .then(result => {
+                        req.flash('success', 'Thêm tài khoản thành công');
+                        res.redirect('/user/admin/manager-user/add-user');
+                    }).catch(err => {
+                        console.log(err);
+                        req.flash('error', 'Thêm tài khoản thất bại, thử lại sau');
+                        res.redirect('/user/admin/manager-user/add-user');
+                    })
+            });
+        }).catch(err => {
+            req.flash('error', 'Thêm tài khoản thất bại, thử lại sau');
+            res.redirect('/user/admin/manager-user/add-user');
+        });
+});
 
 module.exports = router;

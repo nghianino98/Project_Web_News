@@ -300,3 +300,7 @@ function handleAddTime() {
         $('#time').val(null);
     });
 }
+
+function validateAddUserForm() {
+    return validatePassword();
+}

@@ -25,7 +25,7 @@ module.exports = (app) => {
         User.findOneByAccount(account)
             .then(user => {
                 if (user) {
-                    return done (null, false, {message: 'Địa chỉ email đã tồn tại'});
+                    return done (null, false, {message: 'Tài khoản đã tồn tại.'});
                 }
                 
                 bcrypt.hash(password, 5, (err, hash) => {
@@ -45,7 +45,7 @@ module.exports = (app) => {
 
                             // Cấu hình thư gửi
                             const mailOptions = {
-                                from: '"NewsFeed" <test@test.com>', // sender address
+                                from: '"NewsFeed" <newsfeed.notification.k16@gmail.com>', // sender address
                                 to: req.body.email, // list of receivers
                                 subject: "Xác thực email",
                                 text: 'Click vào link sau để xác thực tài khoản tại trang web NewsFeed',
@@ -80,7 +80,7 @@ module.exports = (app) => {
         User.findOneByAccount(account)
             .then(user => {
                 if (!user) {
-                    return done(null, false, {message: 'Địa chỉ email không tồn tại'});
+                    return done(null, false, {message: 'Tài khoản không tồn tại.'});
                 }
 
             bcrypt.compare(password, user.password, (err, result) => {
