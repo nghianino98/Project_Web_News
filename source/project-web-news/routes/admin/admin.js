@@ -9,6 +9,7 @@ const admin = require('../../models/user');
 const categoryMain = require('../../models/categoryMain');
 const categorySub = require('../../models/categorySub');
 const managerUserRouter = require('./manager-user');
+const article = require('../../models/article');
 
 // Kiểm tra nếu là admin mới cho qua
 router.use(checkRole.isAdmin);
@@ -236,6 +237,57 @@ router.post('/manager-category/update/categorySub', (req, res, next) => {
                     console.log(err);
                 });
         });
+});
+
+
+// Quản lý bài viết
+
+
+router.get('/manager-post', (req, res, next) => {
+
+    article.findAll().then(succ=>{
+        console.log(succ);
+        res.render('admin/admin-manager-post', { listArticles: succ ,layout: 'admin-layout', title: 'Admin | Quản lí bài viết',  csrfToken: req.csrfToken() });
+    })
+    .catch(err=>{
+        console.log(err);
+    })
+
+    
+});
+
+router.get('/edit/:id',(req,res,next)=>{
+    article.findById(req.params.id)
+    .then(succ => {
+        console.log(succ);
+        let topic = "Chỉnh sửa bài viết";
+        res.render('writer/writer', { admin: true , article: succ, topic: topic, layout: 'admin-layout', title: 'admin', csrfToken: req.csrfToken() });
+    })
+    .catch(err => {
+        console.log(err);
+        const messagesFailure = err;
+        res.render('writer/writer', { layout: 'admin-layout', title: 'admin', csrfToken: req.csrfToken(), messagesFailure: messagesFailure, failure: true, success: false });
+    });
+});
+
+router.post('/edit', (req, res, next) => {
+
+    var entity = req.body;
+
+    var accountID = req.body.writerMain;
+
+    article.findByIdAndUpdate(entity, accountID)
+        .then(succ => {
+            console.log(succ);
+            const messagesSuccess = "Đã cập nhật bài có tiêu đề \" " + succ.title + " \" thành công";
+            res.render('writer/writer', { layout: 'admin-layout', title: 'admin', csrfToken: req.csrfToken(), messagesSuccess: messagesSuccess, success: true, failure: false });
+        })
+        .catch(err => {
+            console.log(err);
+            const messagesFailure = err;
+            res.render('writer/writer', { layout: 'admin-layout', title: 'admin', csrfToken: req.csrfToken(), messagesFailure: messagesFailure, failure: true, success: false });
+        });
+
 });
 
 module.exports = router;

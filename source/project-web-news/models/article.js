@@ -46,6 +46,17 @@ module.exports = {
         });
     },
 
+    findAll: () => {
+        return new Promise((resolve, reject) => {
+            baibao.find().exec((err, succ) => {
+                if (err)
+                    reject(err);
+                else
+                    resolve(succ);
+            })
+        });
+    },
+
     add: (entity, writer) => {
         return new Promise((resolve, reject) => {
             let categoryMain;
