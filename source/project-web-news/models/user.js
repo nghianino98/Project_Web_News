@@ -9,7 +9,7 @@ var userSchema = Schema({
         default: 'subscriber'
     },
     email: {type: String, requied: true},
-    account: {type: String},
+    account: {type: String, requied: true},
     password: {type: String, required: true},
     dob: {type: Date, requied: true},
     expire: {type: Date, default: new Date().setDate(new Date().getDate() + 7)},
@@ -44,6 +44,21 @@ module.exports = {
                     resolve(succ);
             })
         });
+    },
+
+    saveAccountIsConfirmed: (entity, passwordHash) => {
+        user = new User({
+            account: entity.account,
+            email: entity.email,
+            password: passwordHash,
+            userName: entity.name,
+            phoneNumber: entity.phoneNumber,
+            dob: new Date(+entity.year, +entity.month - 1, +entity.day),
+            gender: entity.gender,
+            isConfirm: true,
+        });
+
+        return user.save();
     },
 
     save: (entity, passwordHash) => {

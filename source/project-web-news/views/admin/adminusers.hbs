@@ -6,7 +6,7 @@
           <h4><i class="fas fa-users"></i> Danh sách users</h4>
         </div>
         <div class="col">
-          <button type="button" class="btn btn-sm btn-primary">Thêm user <i class="fas fa-user-plus"></i></button>
+          <a href="/user/admin/manager-user/add-user" class="btn btn-sm btn-primary">Thêm user <i class="fas fa-user-plus"></i></a>
         </div>
       </div>
       <!-- filter -->
@@ -42,7 +42,11 @@
             </select>
           </div>
         </div>
-        {{# if hasError }}
+        <div class="col-md-3">
+          <button type="button" class="btn btn-primary btn-block"><i class="fas fa-filter"></i> Lọc</button>
+        </div>
+      </div> <!-- end filter-->
+       {{# if hasError }}
             <div class="alert alert-danger" role="alert">
                 {{# each errors }}
                     {{ this }}</br>
@@ -57,10 +61,6 @@
             </div>
           {{/ if }}
         {{/ if }}
-        <div class="col-md-3">
-          <button type="button" class="btn btn-primary btn-block"><i class="fas fa-filter"></i> Lọc</button>
-        </div>
-      </div> <!-- end filter-->
       <!-- list posts -->
       <div class="row">
         <div class="col-md-12">
@@ -103,7 +103,7 @@
                   {{# if_equal this.role "subscriber" }}
                     <button type="button" class="btn btn-link" id="{{this._id}}" onclick="openAddTimeModal(this.id, 'addTimeModal', '{{this.expire}}')"><i class="fa fa-calendar-plus" title="Gia hạn"></i></button>
                   {{/ if_equal }}
-                  <a href="#"><i class="fa fa-trash" title="Xóa người dùng"></i></a>
+                  <button type="submit" class="btn btn-link" id="{{this._id}}" onclick="deleteUser(this.id)"><i class="fa fa-trash" title="Xóa người dùng"></i></button>
                 </td>
               </tr>
               {{/each}}
@@ -131,7 +131,7 @@
                         <input id="time" name="time" type="number" class="form-control" required>
                         <input id="iduser" type="text" class="form-control" hidden>
                         <input id="expire" type="text" class="form-control" hidden>
-                        <input id="_csrf" value="{{csrfToken}}" hidden>
+                        <input id="_csrf" name="_csrf" value="{{csrfToken}}" hidden>
                     </div> <!-- form-group end.// -->              
                 </form>
             </div>
