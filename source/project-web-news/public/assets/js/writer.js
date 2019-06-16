@@ -44,9 +44,7 @@ function deleteArticle(id) {
   var data = {
       id:  id
   };
-  console.log($('#_csrf').val())
-
-    console.log("csrftest"+req.body._csrf);
+  console.log($('#_csrf').val());
 
   fetch('/user/admin/delete-article', {
       method: 'DELETE',
@@ -58,8 +56,9 @@ function deleteArticle(id) {
       body: JSON.stringify(data)
   }).then(res => {
       console.log("res"+res);
-      // window.location.href = '/user/admin/manager-post';
+      window.location.href = '/user/admin/manager-post';
   }).catch(err => {
+    console.log(err);
       alert('Xóa thất bại, thử lại sau');
   });
 }

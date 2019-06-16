@@ -20,6 +20,7 @@
     "express-session": "^1.16.1",
     "express-validator": "^5.3.1",
     "firebase": "^6.1.1",
+    "handlebars-intl": "^1.1.2",
     "hbs": "~4.0.4",
     "http-errors": "~1.6.3",
     "jsonwebtoken": "^8.5.1",

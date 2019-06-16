@@ -46,6 +46,21 @@
           <button type="button" class="btn btn-primary btn-block">Lọc</button>
         </div>
       </div> <!-- end filter-->
+             {{# if hasError }}
+            <div class="alert alert-danger" role="alert">
+                {{# each errors }}
+                    {{ this }}</br>
+                {{/ each }}
+            </div>
+        {{ else }}
+          {{# if hasSuccess }}
+            <div class="alert alert-success" role="alert">
+                {{# each success }}
+                    {{ this }}</br>
+                {{/ each }}
+            </div>
+          {{/ if }}
+        {{/ if }}
       <!-- list posts -->
       {{!-- <div class="row">
         <div class="col-md-12">
@@ -162,7 +177,7 @@
                 {{/unless}}   
               </tr>
               {{!-- <input type="text" id="articleID" name="_csrf" value="{{this._id}}" hidden> --}}
-              <input type="text" id="_csrf" name="_csrf" value="{{csrfToken}}" hidden>
+              {{!-- <input type="text" id="_csrf" name="_csrf" value="{{csrfToken}}" hidden> --}}
               {{!-- Aritcle End --}}
               {{else}}
               <div class="alert alert-danger" role="alert">
@@ -175,4 +190,7 @@
       </div>
     </div>
   </div>
+  <input type="text" id="_csrf" name="_csrf" value="{{csrfToken}}" hidden>
 </div>
+
+<script src="/assets/js/writer.js"></script>

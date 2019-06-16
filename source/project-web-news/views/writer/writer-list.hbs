@@ -77,7 +77,7 @@
                 <td><small>{{this.categoryMain.categoryName}} / {{this.categorySub.categoryName}}</small></td>
                 <td><small>{{this.arrayOfTags.length}}</small></td>
                 <td><a href="#"><small>{{this.comments.length}}</small></a></td>
-                <td><small>{{this.writeDate}}</small></td>
+                <td><small>{{../formatDate writeDate day="numeric" month="long" year="numeric"}}</small></td>
                 {{#unless ../notEdit}}
                   <td>
                     <a href="/user/writer/post/{{this.id}}"><i class="fa fa-edit"></i></a>
@@ -100,3 +100,5 @@
     </div>
   </div>
 </div>
+
+<script src="../../public/handlebars-intl/dist/handlebars-intl.min.js"></script>

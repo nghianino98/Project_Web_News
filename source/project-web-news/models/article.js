@@ -74,7 +74,7 @@ module.exports = {
                     title: entity.title,
                     content: entity.content,
                     abstract: entity.abstract,
-                    writeDate: Date.now(),
+                    writeDate:  new Date().toLocaleString(),
                     writer: writer,
                     editor: entity.editor,                          // Editor add
                     status: entity.status,

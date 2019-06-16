@@ -241,10 +241,15 @@ router.post('/manager-category/update/categorySub', (req, res, next) => {
 
 
 router.get('/manager-post', (req, res, next) => {
-
+    const errors = req.flash('error');
+    const success = req.flash('success');
     article.findAll().then(succ=>{
         console.log(succ);
-        res.render('admin/admin-manager-post', { listArticles: succ ,layout: 'admin-layout', title: 'Admin | Quản lí bài viết',  csrfToken: req.csrfToken() });
+        res.render('admin/admin-manager-post', { 
+            errors: errors,
+            hasError: errors.length > 0,
+            success: success,
+            hasSuccess: success.length > 0,listArticles: succ ,layout: 'admin-layout', title: 'Admin | Quản lí bài viết',  csrfToken: req.csrfToken() });
     })
     .catch(err=>{
         console.log(err);

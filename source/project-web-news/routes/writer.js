@@ -146,7 +146,7 @@ router.get('/notApproved', (req, res, next) => {
     article.find("notApproved", _writerID).then(listArticles => {
         let _writerName = req.user.userName;
         console.log(listArticles);
-        res.render('writer/writer-list', { topic: "Danh sách bài viết chưa được duyệt", layout: 'writer-layout', title: 'writer', listArticles: listArticles, writerName: _writerName });
+        res.render('writer/writer-list', {topic: "Danh sách bài viết chưa được duyệt", layout: 'writer-layout', title: 'writer', listArticles: listArticles, writerName: _writerName });
     })
         .catch(err => {
             console.log(err);
