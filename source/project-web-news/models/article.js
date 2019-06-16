@@ -16,8 +16,8 @@ var articleSchema = Schema({
     },
     reasonForRefusing: { type: String },
     postDate: { type: Date },
-    categoryMain: Schema.Types.ObjectId,
-    categorySub: Schema.Types.ObjectId,
+    categoryMain: {type:Schema.Types.ObjectId, ref: 'CategoryMains',  require: true},
+    categorySub: {type: Schema.Types.ObjectId, ref: 'CategorySubs' , require: true},
     views: { type: Number, default: 0 },
     smallAvatar: { type: String, default: '/images/news_thumbnail2.jpg' },
     bigAvatar: { type: String, default: '/images/photograph_img2.jpg' },
@@ -37,7 +37,10 @@ module.exports = {
 
     find: (statusArticles, writerID) => {
         return new Promise((resolve, reject) => {
-            baibao.find({ status: statusArticles, writer: writerID }).exec((err, succ) => {
+            baibao.find({ status: statusArticles, writer: writerID })
+            .populate('categoryMain','categoryName')
+            .populate('categorySub','categoryName')
+            .exec((err, succ) => {
                 if (err)
                     reject(err);
                 else
