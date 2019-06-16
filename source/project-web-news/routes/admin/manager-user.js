@@ -194,4 +194,16 @@ router.post('/add-user', (req, res, next) => {
         });
 });
 
+// DELETE user/admin/manager-user/delete-user 
+router.delete('/delete-user', (req, res, next) => {
+    User.deleteOne({_id: req.body.id})
+        .then(result => {
+            req.flash('success', 'Xóa người dùng thành công');
+            res.status(200).json({message: 'successful'});
+        }).catch(err => {
+            req.flash('error', 'Xóa người dùng thất bại, thử lại sau.');
+            res.status(500).json({message: 'Something wrong!'});
+        });
+});
+
 module.exports = router;
