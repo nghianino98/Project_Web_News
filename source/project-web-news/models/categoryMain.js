@@ -6,7 +6,8 @@ var categorySchema = Schema({
         type: String
     },
     arrayOfArticles: [Schema.Types.ObjectId],
-    arrayOfCategorySub: [{type:Schema.Types.ObjectId,ref:'CategorySubs',require: true}]
+    arrayOfCategorySub: [{ type: Schema.Types.ObjectId, ref: 'CategorySubs', require: true }],
+    // arrayOfCategorySubName:[{type: String, require: true}]
 })
 
 const categoryMain = mongoose.model('CategoryMains', categorySchema);
@@ -39,6 +40,29 @@ module.exports = {
             })
         });
     },
+
+    // findAndGetSub: ()=>{
+    //     return new Promise((resolve,reject)=>{
+    //         categoryMain.find()
+    //             .select('CategorySubs categoryName')
+    //     }
+        
+    // }
+
+    findSub: () => {
+        return new Promise((resolve, reject) => {
+            categoryMain.find()
+                //.select('categoryName')
+                .populate('arrayOfCategorySub', 'categoryName')
+                .exec((err, succ) => {
+                    if (err)
+                        reject(err);
+                    else
+                        resolve(succ);
+                })
+        })
+    },
+    
 
     findByCategoryName: (category) => {
         return new Promise((resolve, reject) => {
@@ -140,7 +164,7 @@ module.exports = {
     },
 
     //Thêm chuyên mục con
-    addCategorySub: (mainID, subID) => {
+    addCategorySub: (mainID, subID,subName) => {
         return new Promise((resolve, reject) => {
             categoryMain.findById(mainID).exec((err, succ) => {
                 if (err)
@@ -149,6 +173,7 @@ module.exports = {
                     let objectCateMain = succ;
                     //console.log("object Main" + objectCateMain);
                     objectCateMain.arrayOfCategorySub.push(subID);
+                    objectCateMain.arrayOfCategorySubName.push(subName);
                     objectCateMain.save((err, succ) => {
                         if (err) {
                             reject(err);

@@ -31,6 +31,7 @@ var articleSchema = Schema({
 // module.exports = mongoose.model('Article', articleSchema);
 
 const baibao = mongoose.model('Articles', articleSchema);
+const categorySub = require('./categorySub')
 
 module.exports = {
 
@@ -47,37 +48,46 @@ module.exports = {
 
     add: (entity, writer) => {
         return new Promise((resolve, reject) => {
-            var obj = new baibao({
-                title: entity.title,
-                content: entity.content,
-                abstract: entity.abstract,
-                writeDate: Date.now(),
-                writer: writer,
-                editor: entity.editor,                          // Editor add
-                status: entity.status,
-                reasonForRefusing: entity.reasonForRefusing,    // Editor add
-                postDate: entity.postDate,                      // Editor add
-                categoryMain: entity.categoryMain,              // Update
-                categorySub: entity.categorySub,                // Update
-                views: entity.views,                            // Guest add
-                smallAvatar: entity.smallAvatar,                // Update
-                bigAvatar: entity.bigAvatar,                    // Update
-                arrayOfTags: entity.arrayOfTags,                // Update
-                isPremiumArticle: entity.isPremiumArticle,      // Update
-                comment: entity.comment                         // Guest add
+            let categoryMain;
+            categorySub.findDad(entity.categorySub).then(succ=>{ 
+                entity.categoryMain = succ.categoryMainID.id;
+                console.log("cateMain:"+categoryMain);
+                var obj = new baibao({
+                    title: entity.title,
+                    content: entity.content,
+                    abstract: entity.abstract,
+                    writeDate: Date.now(),
+                    writer: writer,
+                    editor: entity.editor,                          // Editor add
+                    status: entity.status,
+                    reasonForRefusing: entity.reasonForRefusing,    // Editor add
+                    postDate: entity.postDate,                      // Editor add
+                    categoryMain: entity.categoryMain,              // Update
+                    categorySub: entity.categorySub,                // Update
+                    views: entity.views,                            // Guest add
+                    smallAvatar: entity.smallAvatar,                // Update
+                    bigAvatar: entity.bigAvatar,                    // Update
+                    arrayOfTags: entity.arrayOfTags,                // Update
+                    isPremiumArticle: entity.isPremiumArticle,      // Update
+                    comment: entity.comment                         // Guest add
+                })
+    
+                // Tạo kết nối tới database
+                // let connection = require('../utils/db.connection');
+    
+                obj.save((err, succ) => {
+                    if (err) {
+                        reject(err);
+                    }
+                    else {
+                        resolve(succ);
+                    }
+                })
+            })
+            .catch(err=>{
+                console.log(err);
             })
 
-            // Tạo kết nối tới database
-            // let connection = require('../utils/db.connection');
-
-            obj.save((err, succ) => {
-                if (err) {
-                    reject(err);
-                }
-                else {
-                    resolve(succ);
-                }
-            })
         });
     },
 
@@ -94,6 +104,8 @@ module.exports = {
 
     findByIdAndUpdate: (entity, writer)  => {
         return new Promise((resolve, reject) => {
+
+
 
             var obj = {
                 title: entity.title,

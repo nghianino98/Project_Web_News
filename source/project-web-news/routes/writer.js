@@ -3,6 +3,7 @@ const router = express.Router();
 const checkRole = require('../middleware/check-role');
 
 const article = require('../models/article');
+const categorySub = require('../models/categorySub')
 
 // Kiểm tra nếu là writer thì mới cho qua
 router.use(checkRole.isWriter);
@@ -14,20 +15,38 @@ router.use((req, res, next) => {
 });
 
 router.get('/', (req, res, next) => {
-    res.render('writer/writer', { topic: "Thêm bài viết", layout: 'writer-layout', title: 'writer', csrfToken: req.csrfToken() });
+    categorySub.find().then(succ=>{
+        console.log(succ);
+        res.render('writer/writer', { listCategory: succ, topic: "Thêm bài viết", layout: 'writer-layout', title: 'writer', csrfToken: req.csrfToken() });
+    })
+    .catch(err=>{
+        console.log(err);
+    })
 });
 
 router.get('/post', (req, res, next) => {
-        res.render('writer/writer', { topic: "Thêm bài viết", layout: 'writer-layout', title: 'writer', csrfToken: req.csrfToken() });
+    categorySub.find().then(succ=>{
+        console.log(succ);
+        res.render('writer/writer', { listCategory: succ, topic: "Thêm bài viết", layout: 'writer-layout', title: 'writer', csrfToken: req.csrfToken() });
+    })
+    .catch(err=>{
+        console.log(err);
+    })
 });
 
 router.get('/post/:id', (req, res, next) => {
     console.log(req.params.id);
+
     article.findById(req.params.id)
         .then(succ => {
-            console.log(succ);
-            let topic = "Chỉnh sửa bài viết";
-            res.render('writer/writer', { article: succ, topic: topic, layout: 'writer-layout', title: 'writer', csrfToken: req.csrfToken() });
+            categorySub.find().then(list=>{
+                console.log(succ);
+                let topic = "Chỉnh sửa bài viết";
+                res.render('writer/writer', { listCategory: list, article: succ, topic: topic, layout: 'writer-layout', title: 'writer', csrfToken: req.csrfToken() });
+            })
+            .catch(err=>{
+                console.log(err);
+            })
         })
         .catch(err => {
             console.log(err);
@@ -41,13 +60,11 @@ router.post('/post', (req, res, next) => {
     var entity = req.body;
     var accountID = req.user.id;
 
-    console.log(req.user.id);
-
     article.add(entity, accountID)
         .then(succ => {
             console.log(req.body);
             const messagesSuccess = "Đã đăng bài có tiêu đề \" " + succ.title + " \" thành công";
-            res.render('writer/writer', { layout: 'writer-layout', title: 'writer', csrfToken: req.csrfToken(), messagesSuccess: messagesSuccess, success: true, failure: false });
+            res.render('writer/writer', { topic: "Thêm bài viết" ,layout: 'writer-layout', title: 'writer', csrfToken: req.csrfToken(), messagesSuccess: messagesSuccess, success: true, failure: false });
         })
         .catch(err => {
             console.log(err);
