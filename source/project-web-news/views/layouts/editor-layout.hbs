@@ -11,6 +11,9 @@
     <link rel="stylesheet" href="/assets/bootstrap-4.1.3/css/bootstrap.min.css">
     <link href="https://use.fontawesome.com/releases/v5.0.6/css/all.css" rel="stylesheet">
     <link rel="stylesheet" href="/assets/css/writer.css">
+    {{# if hasCustomCSS }}
+        {{> (partial) }}
+    {{/ if }}
 </head>
 
 <body>
@@ -62,19 +65,19 @@
                 <span>Bài viết</span>
             </li>
             <li>
-                <a href="/user/editor">
+                <a href="/user/editor/waiting">
                     <i class="fas fa-pencil-alt"></i>
                     <span>Bài viết chờ duyệt</span>
                 </a>
             </li>
             <li>
-                <a href="/user/editor/confirm-posts">
+                <a href="/user/editor/confirmed">
                     <i class="fas fa-check"></i>
                     <span>Bài viết đã duyệt</span>
                 </a>
             </li>
             <li>
-                <a href="/user/editor/deny-posts">
+                <a href="/user/editor/deny">
                     <i class="fas fa-times-circle"></i>
                     <span>Bài viết bị từ chối</span>
                 </a>

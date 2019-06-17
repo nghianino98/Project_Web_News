@@ -70,6 +70,19 @@
                                     <input type="text" id="expire" value="{{user.expire}}" required readonly class="form-control col align-self-center">
                                 </div>
                             {{/if_equal}}
+                            {{# if_equal user.role "editor" }}
+                                <div class="form-group row">
+                                    <label for="categories" class="col-md-3 m-1 align-items-center" ><strong>Danh mục quản lí</strong></label>
+                                    <div class="col align-self-center">
+                                        <select class="form-control chosen-select" multiple tabindex="4" data-placeholder="Không quán lí chuyên mục nào" disabled>
+                                            <option value=""></option>
+                                            {{# each user.categoryEditor }}
+                                                <option value="{{this._id}}" selected>{{this.categoryName}}</option>
+                                            {{/ each }}
+                                        </select>
+                                    </div>
+                                </div>
+                            {{/ if_equal }}
                         </div>
                     </div>
                     <button type="button" id="update" class="btn btn-sm btn-primary float-right m-2" onclick="handleUpdateInfo()">Cập nhật</button>
@@ -84,3 +97,6 @@
 </div>
 
 <script src="/assets/js/profile-admin.js"></script>
+<script src="/javascript/chosen.jquery.min.js" type="text/javascript"></script>
+<script src="/javascript/prism.js" type="text/javascript" charset="utf-8"></script>
+<script src="/javascript/init.js" type="text/javascript" charset="utf-8"></script>

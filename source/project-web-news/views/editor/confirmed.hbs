@@ -1,0 +1,64 @@
+<div class="container-fluid">
+  <div class="card" style="min-width: 44rem;">
+    <div class="card-body">
+      <div class="row">
+        <div class="col-12">
+            <h4>{{title}}</h4>
+        </div>      
+      </div>
+      <!-- filter -->
+      <div class="row align-items-center justify-content-center">
+        <div class="col pt-3">
+          <div class="form-group">
+            <select id="categories" class="form-control">
+              <option selected>Tất cả chuyên mục</option>
+            </select>
+          </div>
+        </div>
+        <div class="col pt-3">
+          <div class="form-group">
+            <select id="tasg" class="form-control">
+              <option selected>Tất cả thẻ tag</option>
+            </select>
+          </div>
+        </div>
+        <div class="col-md-3">
+          <button type="button" class="btn btn-primary btn-block">Lọc</button>
+        </div>
+      </div> <!-- end filter-->
+      <!-- list posts -->
+      <div class="row">
+        <div class="col-md-12">
+          <table class="table table-hover ">
+            <thead class="bg-light ">
+              <tr>  
+                <th>Tiêu đề</th>
+                <th>Tác giả</th>
+                <th>Chuyên mục</th>
+                <th>Ngày viết</th>
+                <th>Thao tác</th>
+              </tr>
+            </thead>
+            <tbody>
+              {{#each listArticles}}
+              {{!-- Aritcle --}}
+              <tr> 
+                <td><a href="#"><small>{{this.title}}</small></a></td>
+                <td><small>{{this.writer.pseudonym}}</small></td>
+                <td><small>{{this.categoryMain.categoryName}} / {{this.categorySub.categoryName}}</small></td>
+                <td><small>{{formatDate writeDate day="numeric" month="long" year="numeric"}}</small></td>
+                <td><a href="#"><i class="fa fa-eye" title="xem chi tiết bài viết"></i></a></td>
+              </tr>
+              {{!-- Aritcle End --}}
+              {{else}}
+              <div class="alert alert-danger" role="alert">
+                <strong> Không có bài viết nào </strong>
+              </div>
+              {{/each}}
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

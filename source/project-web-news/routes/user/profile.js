@@ -16,39 +16,39 @@ router.use((req, res, next) => {
 
 // GET /user/profile
 router.get('/', (req, res, next) => {
-    const date = new Date(req.user.dob);
-    const user = {
-        email: req.user.email,
-        role: req.user.role,
-        phoneNumber: req.user.phoneNumber,
-        date: date.getDate(),
-        month: date.getMonth() + 1,
-        year: date.getFullYear(),
-        pseudonym: req.user.pseudonym,
-        expire: new Date(req.user.expire).toString()
-    }
-
     var titleForm = 'Thông tin người dùng';
-
-    if (user.role === 'admin') {
-        titleForm = 'Thông tin quản trị viên';
-    } else if (user.role === 'editor') {
-        titleForm = 'Thông tin biên tập viên';
-    } else if (user.role === 'writer') {
-        titleForm = 'Thông tin phóng viên';
-    }
-
     const messages = req.flash('error');
 
-    res.render('user/profile', {
-        layout: `${req.user.role}-layout`, 
-        user: user, 
-        isWriter: user.role === 'writer',
-        titleForm: titleForm,
-        csrfToken: req.csrfToken(),
-        messages: messages,
-        hasError: messages.length > 0
-    });
+    User.getUserAndCategoryEditorById(req.user.id)
+        .then(user => {
+            const date = new Date(req.user.dob);
+            user.date = date.getDate();
+            user.month = date.getMonth() + 1;
+            user.year = date.getFullYear();
+
+            if (user.role === 'admin') {
+                titleForm = 'Thông tin quản trị viên';
+            } else if (user.role === 'editor') {
+                titleForm = 'Thông tin biên tập viên';
+            } else if (user.role === 'writer') {
+                titleForm = 'Thông tin phóng viên';
+            }
+
+            res.render('user/profile', {
+                layout: `${req.user.role}-layout`, 
+                user: user, 
+                isWriter: user.role === 'writer',
+                titleForm: titleForm,
+                csrfToken: req.csrfToken(),
+                messages: messages,
+                hasError: messages.length > 0,
+                hasCustomCSS:true,
+                partial: function(){return 'manager-user-css';}
+            });
+        }).catch(err => {
+            err.status = 500;
+            next(err);
+        })
 });
 
 // POST /user/profile
