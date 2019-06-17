@@ -59,7 +59,7 @@
                 <li><a href="#">Giao thông</a></li>
                 <li><a href="#">Hồ sơ</a></li> --}}
                 {{#each arrayOfCategorySub}}
-                  <li><a href="/list-articles/category/{{_id}}">{{categoryName}}</a></li>
+                <li><a href="/list-articles/category/{{_id}}">{{categoryName}}</a></li>
                 {{/each}}
               </ul>
             </li>
@@ -116,15 +116,10 @@
         <div class="col-lg-12 col-md-12">
           <div class="latest_newsarea"> <span>Tin mới nhất</span>
             <ul id="ticker01" class="news_sticker">
-              <li><a href="#"><img src="images/news_thumbnail3.jpg" alt="">My First News Item</a></li>
-              <li><a href="#"><img src="images/news_thumbnail3.jpg" alt="">My Second News Item</a></li>
-              <li><a href="#"><img src="images/news_thumbnail3.jpg" alt="">My Third News Item</a></li>
-              <li><a href="#"><img src="images/news_thumbnail3.jpg" alt="">My Four News Item</a></li>
-              <li><a href="#"><img src="images/news_thumbnail3.jpg" alt="">My Five News Item</a></li>
-              <li><a href="#"><img src="images/news_thumbnail3.jpg" alt="">My Six News Item</a></li>
-              <li><a href="#"><img src="images/news_thumbnail3.jpg" alt="">My Seven News Item</a></li>
-              <li><a href="#"><img src="images/news_thumbnail3.jpg" alt="">My Eight News Item</a></li>
-              <li><a href="#"><img src="images/news_thumbnail2.jpg" alt="">My Nine News Item</a></li>
+              {{!-- <li><a href="#"><img src="images/news_thumbnail3.jpg" alt="">My First News Item</a></li> --}}
+              {{#each newestArticles}}
+              <li><a href="/single-page/{{_id}}"><img src="{{smallAvatar}}" alt=""> {{title}}</a></li>
+              {{/each}}
             </ul>
             <div class="social_area">
               <ul class="social_nav">
@@ -143,12 +138,46 @@
       </div>
     </section>
 
-    
+
     <section id="sliderSection">
       <div class="row">
         <div class="col-lg-8 col-md-8 col-sm-8">
           <div class="slick_slider">
-            <div class="single_iteam"> <a href="/single-page" class="pic-top-week"> <img
+
+            {{#each top4Articles}}
+            <div class="single_iteam"> <a href="/single-page/{{_id}}" class="pic-top-week"> <img src="{{bigAvatar}}"
+                  alt=""></a>
+              <div class="slider_top">
+                <h2><a href="/list-articles/category/{{categorySub._id}}"><i class="fas fa-ellipsis-v"></i>
+                    {{categorySub.categoryName}}</a></h2>
+              </div>
+              <div class="slider_article">
+
+                <h2>
+                  <a class="slider_tittle" href="/single-page/{{_id}}">
+
+                    <i class="fas fa-newspaper"></i> {{title}}
+                    </br>
+
+                    <span class="slider_tittle" title="" data-second=""> <i class="fas fa-clock"></i>
+                      {{formatDate writeDate day="numeric" month="long" year="numeric"}} </span>
+                    </br>
+                    <span class="slider_tittle" title="" data-second=""> <i class="fas fa-eye"></i> {{views}} lượt xem
+                    </span>
+                  </a>
+
+
+
+                </h2>
+
+                <!-- <p>
+                    Nếu thắng trong trận derby London trước West Ham, Tottenham sẽ bỏ rơi các đội còn lại trong cuộc đua top 4, khi ấy họ sẽ chắc suất top 3. Tuy nhiên, bất ngờ nổ ra ở sân vận động Tottenham Hotspurs, đội chủ nhà đã gục gã với kết quả 0-1. 
+                </p> -->
+
+              </div>
+            </div>
+            {{/each}}
+            {{!-- <div class="single_iteam"> <a href="/single-page" class="pic-top-week"> <img
                   src="images/left-pic-article.jpg" alt=""></a>
               <div class="slider_top">
                 <h2><a href="#"><i class="fas fa-ellipsis-v"></i> Thể thao</a></h2>
@@ -231,35 +260,7 @@
                 </p> -->
 
               </div>
-            </div>
-            <div class="single_iteam"> <a href="/single-page" class="pic-top-week"> <img
-                  src="images/left-pic-article.jpg" alt=""></a>
-              <div class="slider_top">
-                <h2><a href="#"><i class="fas fa-ellipsis-v"></i> Thể thao</a></h2>
-              </div>
-              <div class="slider_article">
-
-                <h2>
-                  <a class="slider_tittle" href="/single-page">
-
-                    <i class="fas fa-newspaper"></i> Thua đắng ở derby London, Tottenham lỡ cơ hội bứt phá top 3
-                    </br>
-
-                    <span class="slider_tittle" title="" data-second=""> <i class="fas fa-clock"></i> 05/05/2019
-                      14:31:55 </span>
-
-                  </a>
-
-
-
-                </h2>
-
-                <!-- <p>
-                    Nếu thắng trong trận derby London trước West Ham, Tottenham sẽ bỏ rơi các đội còn lại trong cuộc đua top 4, khi ấy họ sẽ chắc suất top 3. Tuy nhiên, bất ngờ nổ ra ở sân vận động Tottenham Hotspurs, đội chủ nhà đã gục gã với kết quả 0-1. 
-                </p> -->
-
-              </div>
-            </div>
+            </div> --}}
           </div>
         </div>
         <div class="col-lg-4 col-md-4 col-sm-4">
@@ -268,149 +269,26 @@
             <div class="latest_post_container">
               <div id="prev-button"><i class="fa fa-chevron-up"></i></div>
               <ul class="latest_postnav">
+
+                {{#each top10Articles}}
                 <li>
                   <div class="media-new">
-                    <a href="/single-page" class="media-left"> <img alt="" src="images/post_img1.jpg"> </a>
+                    <a href="/single-page/{{_id}}" class="media-left"> <img alt="" src="{{smallAvatar}}"> </a>
                     <div class="media-body-new">
                       <div class="title-mini">
-                        <a href="/single-page" class="catg_title"> Tin nóng 1</a>
+                        <a href="/single-page/{{_id}}" class="catg_title"> <strong>{{title}}</strong></a>
                       </div>
                       <div>
-                        <a href="" class=""></i> Chuyên mục - </a>
-                        <span class="" title="" data-second=""><i class="fas fa-clock"></i> Ngày đăng </span>
+                        <a href="/list-articles/category/{{categorySub._id}}" class="">
+                          {{categorySub.categoryName}} - </a>
+                        <span class="" title="" data-second=""><i class="fas fa-clock"></i>
+                          {{formatDate writeDate day="numeric" month="long" year="numeric"}} </span>
                       </div>
                     </div>
                   </div>
                 </li>
-                <li>
-                  <!-- <div class="media-new"> <a href="/single-page" class="media-left"> <img alt="" src="images/post_img1.jpg"> </a>
-                  <div class="media-body-new"> <a href="/single-page" class="catg_title"> Tin nóng 2</a> </div>
-                </div> -->
-                  <div class="media-new">
-                    <a href="/single-page" class="media-left"> <img alt="" src="images/post_img1.jpg"> </a>
-                    <div class="media-body-new">
-                      <div class="title-mini">
-                        <a href="/single-page" class="catg_title"> Tin nóng 2</a>
-                      </div>
-                      <div>
-                        <a href="" class="">Chuyên mục</a> -
-                        <span class="" title="" data-second=""> <i class="fas fa-clock"></i> Ngày đăng </span>
-                      </div>
-                    </div>
-                  </div>
-                </li>
-                <li>
-                  <div class="media-new">
-                    <a href="/single-page" class="media-left"> <img alt="" src="images/post_img1.jpg"> </a>
-                    <div class="media-body-new">
-                      <div class="title-mini">
-                        <a href="/single-page" class="catg_title"> Tin nóng 3</a>
-                      </div>
-                      <div>
-                        <a href="" class="">Chuyên mục</a> -
-                        <span class="" title="" data-second=""> <i class="fas fa-clock"></i> Ngày đăng </span>
-                      </div>
-                    </div>
-                  </div>
-                </li>
-                <li>
-                  <div class="media-new">
-                    <a href="/single-page" class="media-left"> <img alt="" src="images/post_img1.jpg"> </a>
-                    <div class="media-body-new">
-                      <div class="title-mini">
-                        <a href="/single-page" class="catg_title"> Tin nóng 4</a>
-                      </div>
-                      <div>
-                        <a href="" class="">Chuyên mục</a> -
-                        <span class="" title="" data-second=""> <i class="fas fa-clock"></i> Ngày đăng </span>
-                      </div>
-                    </div>
-                  </div>
-                </li>
-                <li>
-                  <div class="media-new">
-                    <a href="/single-page" class="media-left"> <img alt="" src="images/post_img1.jpg"> </a>
-                    <div class="media-body-new">
-                      <div class="title-mini">
-                        <a href="/single-page" class="catg_title"> Tin nóng 5</a>
-                      </div>
-                      <div>
-                        <a href="" class="">Chuyên mục</a> -
-                        <span class="" title="" data-second=""> <i class="fas fa-clock"></i> Ngày đăng </span>
-                      </div>
-                    </div>
-                  </div>
-                </li>
-                <li>
-                  <div class="media-new">
-                    <a href="/single-page" class="media-left"> <img alt="" src="images/post_img1.jpg"> </a>
-                    <div class="media-body-new">
-                      <div class="title-mini">
-                        <a href="/single-page" class="catg_title"> Tin nóng 6</a>
-                      </div>
-                      <div>
-                        <a href="" class="">Chuyên mục</a> -
-                        <span class="" title="" data-second=""> <i class="fas fa-clock"></i> Ngày đăng </span>
-                      </div>
-                    </div>
-                  </div>
-                </li>
-                <li>
-                  <div class="media-new">
-                    <a href="/single-page" class="media-left"> <img alt="" src="images/post_img1.jpg"> </a>
-                    <div class="media-body-new">
-                      <div class="title-mini">
-                        <a href="/single-page" class="catg_title"> Tin nóng 7</a>
-                      </div>
-                      <div>
-                        <a href="" class="">Chuyên mục</a> -
-                        <span class="" title="" data-second=""> <i class="fas fa-clock"></i> Ngày đăng </span>
-                      </div>
-                    </div>
-                  </div>
-                </li>
-                <li>
-                  <div class="media-new">
-                    <a href="/single-page" class="media-left"> <img alt="" src="images/post_img1.jpg"> </a>
-                    <div class="media-body-new">
-                      <div class="title-mini">
-                        <a href="/single-page" class="catg_title"> Tin nóng 8</a>
-                      </div>
-                      <div>
-                        <a href="" class="">Chuyên mục</a> -
-                        <span class="" title="" data-second=""> <i class="fas fa-clock"></i> Ngày đăng </span>
-                      </div>
-                    </div>
-                  </div>
-                </li>
-                <li>
-                  <div class="media-new">
-                    <a href="/single-page" class="media-left"> <img alt="" src="images/post_img1.jpg"> </a>
-                    <div class="media-body-new">
-                      <div class="title-mini">
-                        <a href="/single-page" class="catg_title"> Tin nóng 9</a>
-                      </div>
-                      <div>
-                        <a href="" class="">Chuyên mục</a> -
-                        <span class="" title="" data-second=""> <i class="fas fa-clock"></i> Ngày đăng </span>
-                      </div>
-                    </div>
-                  </div>
-                </li>
-                <li>
-                  <div class="media-new">
-                    <a href="/single-page" class="media-left"> <img alt="" src="images/post_img1.jpg"> </a>
-                    <div class="media-body-new">
-                      <div class="title-mini">
-                        <a href="/single-page" class="catg_title"> Tin nóng 10</a>
-                      </div>
-                      <div>
-                        <a href="" class="">Chuyên mục</a> -
-                        <span class="" title="" data-second=""> <i class="fas fa-clock"></i> Ngày đăng </span>
-                      </div>
-                    </div>
-                  </div>
-                </li>
+                {{/each}}
+
               </ul>
               <div id="next-button"><i class="fa  fa-chevron-down"></i></div>
             </div>
@@ -423,6 +301,7 @@
         <div class="col-lg-8 col-md-8 col-sm-8">
           <div class="left_content">
             <div class="fashion_technology_area">
+              {{#each Top10CategoryLeft }}
               <div class="fashion">
                 <div class="single_post_content">
                   <h2><span>Giao thông</span></h2>
@@ -463,6 +342,8 @@
                 </ul> -->
                 </div>
               </div>
+              {{/each}}
+              {{#each Top10CategoryRight}}
               <div class="technology">
                 <div class="single_post_content">
                   <h2><span>Công nghệ</span></h2>
@@ -502,150 +383,8 @@
                 </ul> -->
                 </div>
               </div>
-            </div>
-            <div class="fashion_technology_area">
-              <div class="fashion">
-                <div class="single_post_content">
-                  <h2><span>Bóng đá thế giới</span></h2>
-                  <ul class="business_catgnav wow fadeInDown">
-                    <li>
-                      <figure class="bsbig_fig"> <a href="/single-page" class="featured_img"> <img alt=""
-                            src="images/featured_img2.jpg"> <span class="overlay"></span> </a>
-                        <figcaption> <a href="/single-page">Bài mới nhất chuyên mục</a> </figcaption>
-                        <div>
-                          <a href="" class="">Chuyên mục</a> -
-                          <span class="" title="" data-second=""> <i class="fas fa-clock"></i> Ngày đăng </span>
-                        </div>
-                      </figure>
-                    </li>
-                  </ul>
-                </div>
-              </div>
-              <div class="technology">
-                <div class="single_post_content">
-                  <h2><span>Nông sản</span></h2>
-                  <ul class="business_catgnav">
-                    <li>
-                      <figure class="bsbig_fig wow fadeInDown"> <a href="/single-page" class="featured_img"> <img alt=""
-                            src="images/featured_img3.jpg"> <span class="overlay"></span> </a>
-                        <figcaption> <a href="/single-page">Bài mới nhất chuyên mục</a> </figcaption>
-                        <div>
-                          <a href="" class="">Chuyên mục</a> -
-                          <span class="" title="" data-second=""> <i class="fas fa-clock"></i> Ngày đăng </span>
-                        </div>
-                      </figure>
-                    </li>
-                  </ul>
-                </div>
-              </div>
-            </div>
-            <div class="fashion_technology_area">
-              <div class="fashion">
-                <div class="single_post_content">
-                  <h2><span>Khởi nghiệp</span></h2>
-                  <ul class="business_catgnav wow fadeInDown">
-                    <li>
-                      <figure class="bsbig_fig"> <a href="/single-page" class="featured_img"> <img alt=""
-                            src="images/featured_img2.jpg"> <span class="overlay"></span> </a>
-                        <figcaption> <a href="/single-page">Bài mới nhất chuyên mục</a> </figcaption>
-                        <div>
-                          <a href="" class="">Chuyên mục</a> -
-                          <span class="" title="" data-second=""> <i class="fas fa-clock"></i> Ngày đăng </span>
-                        </div>
-                      </figure>
-                    </li>
-                  </ul>
-                </div>
-              </div>
-              <div class="technology">
-                <div class="single_post_content">
-                  <h2><span>Điện tử tiêu dùng</span></h2>
-                  <ul class="business_catgnav">
-                    <li>
-                      <figure class="bsbig_fig wow fadeInDown"> <a href="/single-page" class="featured_img"> <img alt=""
-                            src="images/featured_img3.jpg"> <span class="overlay"></span> </a>
-                        <figcaption> <a href="/single-page">Bài mới nhất chuyên mục</a> </figcaption>
-                        <div>
-                          <a href="" class="">Chuyên mục</a> -
-                          <span class="" title="" data-second=""> <i class="fas fa-clock"></i> Ngày đăng </span>
-                        </div>
-                      </figure>
-                    </li>
-                  </ul>
-                </div>
-              </div>
-            </div>
-            <div class="fashion_technology_area">
-              <div class="fashion">
-                <div class="single_post_content">
-                  <h2><span>Thị trường công nghệ</span></h2>
-                  <ul class="business_catgnav wow fadeInDown">
-                    <li>
-                      <figure class="bsbig_fig"> <a href="/single-page" class="featured_img"> <img alt=""
-                            src="images/featured_img2.jpg"> <span class="overlay"></span> </a>
-                        <figcaption> <a href="/single-page">Bài mới nhất chuyên mục</a> </figcaption>
-                        <div>
-                          <a href="" class="">Chuyên mục</a> -
-                          <span class="" title="" data-second=""> <i class="fas fa-clock"></i> Ngày đăng </span>
-                        </div>
-                      </figure>
-                    </li>
-                  </ul>
-                </div>
-              </div>
-              <div class="technology">
-                <div class="single_post_content">
-                  <h2><span>Châu Á</span></h2>
-                  <ul class="business_catgnav">
-                    <li>
-                      <figure class="bsbig_fig wow fadeInDown"> <a href="/single-page" class="featured_img"> <img alt=""
-                            src="images/featured_img3.jpg"> <span class="overlay"></span> </a>
-                        <figcaption> <a href="/single-page">Bài mới nhất chuyên mục</a> </figcaption>
-                        <div>
-                          <a href="" class="">Chuyên mục</a> -
-                          <span class="" title="" data-second=""> <i class="fas fa-clock"></i> Ngày đăng </span>
-                        </div>
-                      </figure>
-                    </li>
-                  </ul>
-                </div>
-              </div>
-            </div>
-            <div class="fashion_technology_area">
-              <div class="fashion">
-                <div class="single_post_content">
-                  <h2><span>Môi trường</span></h2>
-                  <ul class="business_catgnav wow fadeInDown">
-                    <li>
-                      <figure class="bsbig_fig"> <a href="/single-page" class="featured_img"> <img alt=""
-                            src="images/featured_img2.jpg"> <span class="overlay"></span> </a>
-                        <figcaption> <a href="/single-page">Bài mới nhất chuyên mục</a> </figcaption>
-                        <div>
-                          <a href="" class="">Chuyên mục</a> -
-                          <span class="" title="" data-second=""> <i class="fas fa-clock"></i> Ngày đăng </span>
-                        </div>
-                      </figure>
-                    </li>
-                  </ul>
-                </div>
-              </div>
-              <div class="technology">
-                <div class="single_post_content">
-                  <h2><span>Thể thao thế giới</span></h2>
-                  <ul class="business_catgnav">
-                    <li>
-                      <figure class="bsbig_fig wow fadeInDown"> <a href="/single-page" class="featured_img"> <img alt=""
-                            src="images/featured_img3.jpg"> <span class="overlay"></span> </a>
-                        <figcaption> <a href="/single-page">Bài mới nhất chuyên mục</a> </figcaption>
-                        <div>
-                          <a href="" class="">Chuyên mục</a> -
-                          <span class="" title="" data-second=""> <i class="fas fa-clock"></i> Ngày đăng </span>
-                        </div>
-                      </figure>
-                    </li>
-                  </ul>
-                </div>
-              </div>
+              {{/each}}
+              
             </div>
             <!-- <div class="single_post_content">
             <h2><span>Photography</span></h2>
@@ -726,153 +465,24 @@
             <div class="single_sidebar">
               <h2><span>Tin mới nhất</span></h2>
               <ul class="spost_nav">
+                {{#each newestArticles}}
                 <li>
-                  <div class="media-new wow fadeInDown"> <a href="/single-page" class="media-left"> <img alt=""
-                        src="images/post_img1.jpg"> </a>
+                  <div class="media-new wow fadeInDown"> <a href="/single-page/{{_id}}" class="media-left"> <img alt=""
+                        src="{{smallAvatar}}"> </a>
                     <div class="media-body-new">
                       <div class="title-mini">
-                        <a href="/single-page" class="catg_title"> Tin mới 1</a>
+                        <a href="/single-page/{{_id}}" class="catg_title"> {{title}}</a>
                       </div>
                       <div>
-                        <a href="" class="">Chuyên mục</a> -
-                        <span class="" title="" data-second=""> <i class="fas fa-clock"></i> Ngày đăng </span>
+                        <a href="/list-articles/category/{{categorySub._id}}" class="">
+                          {{categorySub.categoryName}} - </a>
+                        <span class="" title="" data-second=""><i class="fas fa-clock"></i>
+                          {{formatDate writeDate day="numeric" month="long" year="numeric"}} </span>
                       </div>
                     </div>
                   </div>
                 </li>
-                <li>
-                  <!-- <div  class="media-new wow fadeInDown"> <a href="/single-page" class="media-left"> <img alt="" src="images/post_img2.jpg"> </a>
-                  <div class="media-body"> <a href="/single-page" class="catg_title"> Tin mới 2</a> </div>
-                </div> -->
-                  <div class="media-new wow fadeInDown"> <a href="/single-page" class="media-left"> <img alt=""
-                        src="images/post_img1.jpg"> </a>
-                    <div class="media-body-new">
-                      <div class="title-mini">
-                        <a href="/single-page" class="catg_title"> Tin mới 2</a>
-                      </div>
-                      <div>
-                        <a href="" class="">Chuyên mục</a> -
-                        <span class="" title="" data-second=""> <i class="fas fa-clock"></i> Ngày đăng </span>
-                      </div>
-                    </div>
-                  </div>
-                </li>
-                <li>
-                  <div class="media-new wow fadeInDown"> <a href="/single-page" class="media-left"> <img alt=""
-                        src="images/post_img1.jpg"> </a>
-                    <div class="media-body-new">
-                      <div class="title-mini">
-                        <a href="/single-page" class="catg_title"> Tin mới 3</a>
-                      </div>
-                      <div>
-                        <a href="" class="">Chuyên mục</a> -
-                        <span class="" title="" data-second=""> <i class="fas fa-clock"></i> Ngày đăng </span>
-                      </div>
-                    </div>
-                  </div>
-                </li>
-                <li>
-                  <div class="media-new wow fadeInDown"> <a href="/single-page" class="media-left"> <img alt=""
-                        src="images/post_img1.jpg"> </a>
-                    <div class="media-body-new">
-                      <div class="title-mini">
-                        <a href="/single-page" class="catg_title"> Tin mới 4</a>
-                      </div>
-                      <div>
-                        <a href="" class="">Chuyên mục</a> -
-                        <span class="" title="" data-second=""> <i class="fas fa-clock"></i> Ngày đăng </span>
-                      </div>
-                    </div>
-                  </div>
-                </li>
-                <li>
-                  <div class="media-new wow fadeInDown"> <a href="/single-page" class="media-left"> <img alt=""
-                        src="images/post_img1.jpg"> </a>
-                    <div class="media-body-new">
-                      <div class="title-mini">
-                        <a href="/single-page" class="catg_title"> Tin mới 5</a>
-                      </div>
-                      <div>
-                        <a href="" class="">Chuyên mục</a> -
-                        <span class="" title="" data-second=""> <i class="fas fa-clock"></i> Ngày đăng </span>
-                      </div>
-                    </div>
-                  </div>
-                </li>
-                <li>
-                  <div class="media-new wow fadeInDown"> <a href="/single-page" class="media-left"> <img alt=""
-                        src="images/post_img1.jpg"> </a>
-                    <div class="media-body-new">
-                      <div class="title-mini">
-                        <a href="/single-page" class="catg_title"> Tin mới 6</a>
-                      </div>
-                      <div>
-                        <a href="" class="">Chuyên mục</a> -
-                        <span class="" title="" data-second=""> <i class="fas fa-clock"></i> Ngày đăng </span>
-                      </div>
-                    </div>
-                  </div>
-                </li>
-                <li>
-                <li>
-                  <div class="media-new wow fadeInDown"> <a href="/single-page" class="media-left"> <img alt=""
-                        src="images/post_img1.jpg"> </a>
-                    <div class="media-body-new">
-                      <div class="title-mini">
-                        <a href="/single-page" class="catg_title"> Tin mới 7</a>
-                      </div>
-                      <div>
-                        <a href="" class="">Chuyên mục</a> -
-                        <span class="" title="" data-second=""> <i class="fas fa-clock"></i> Ngày đăng </span>
-                      </div>
-                    </div>
-                  </div>
-                </li>
-                <li>
-                <li>
-                  <div class="media-new wow fadeInDown"> <a href="/single-page" class="media-left"> <img alt=""
-                        src="images/post_img1.jpg"> </a>
-                    <div class="media-body-new">
-                      <div class="title-mini">
-                        <a href="/single-page" class="catg_title"> Tin mới 8</a>
-                      </div>
-                      <div>
-                        <a href="" class="">Chuyên mục</a> -
-                        <span class="" title="" data-second=""> <i class="fas fa-clock"></i> Ngày đăng </span>
-                      </div>
-                    </div>
-                  </div>
-                </li>
-                <li>
-                <li>
-                  <div class="media-new wow fadeInDown"> <a href="/single-page" class="media-left"> <img alt=""
-                        src="images/post_img1.jpg"> </a>
-                    <div class="media-body-new">
-                      <div class="title-mini">
-                        <a href="/single-page" class="catg_title"> Tin mới 9</a>
-                      </div>
-                      <div>
-                        <a href="" class="">Chuyên mục</a> -
-                        <span class="" title="" data-second=""> <i class="fas fa-clock"></i> Ngày đăng </span>
-                      </div>
-                    </div>
-                  </div>
-                </li>
-                <li>
-                <li>
-                  <div class="media-new wow fadeInDown"> <a href="/single-page" class="media-left"> <img alt=""
-                        src="images/post_img1.jpg"> </a>
-                    <div class="media-body-new">
-                      <div class="title-mini">
-                        <a href="/single-page" class="catg_title"> Tin mới 10</a>
-                      </div>
-                      <div>
-                        <a href="" class="">Chuyên mục</a> -
-                        <span class="" title="" data-second=""> <i class="fas fa-clock"></i> Ngày đăng </span>
-                      </div>
-                    </div>
-                  </div>
-                </li>
+                {{/each}}
               </ul>
             </div>
             <!-- <div class="single_sidebar">
@@ -1007,6 +617,8 @@
   <script src="assets/js/jquery.newsTicker.min.js"></script>
   <script src="assets/js/jquery.fancybox.pack.js"></script>
   <script src="assets/js/custom.js"></script>
+  <script src="handlebars/dist/handlebars.min.js"></script>
+  <script src="handlebars-intl/dist/handlebars-intl.min.js"></script>
 </body>
 
 </html>

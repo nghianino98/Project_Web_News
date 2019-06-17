@@ -6,7 +6,7 @@ var articleSchema = Schema({
     content: { type: String, required: true },
     abstract: { type: String, required: true },
     writeDate: { type: Date },
-    writer: {type:Schema.Types.ObjectId, ref:"User"},
+    writer: { type: Schema.Types.ObjectId, ref: "User" },
     editor: Schema.Types.ObjectId,
     // status: {type: Boolean },
     status: {
@@ -25,6 +25,7 @@ var articleSchema = Schema({
     isPremiumArticle: { type: String },
     comments: [JSON],
 })
+
 
 
 
@@ -54,7 +55,7 @@ module.exports = {
             baibao.find()
                 .populate('categoryMain', 'categoryName')
                 .populate('categorySub', 'categoryName')
-                .populate('writer','pseudonym')
+                .populate('writer', 'pseudonym')
                 .exec((err, succ) => {
                     if (err)
                         reject(err);
@@ -74,7 +75,7 @@ module.exports = {
                     title: entity.title,
                     content: entity.content,
                     abstract: entity.abstract,
-                    writeDate:  new Date().toLocaleString(),
+                    writeDate: new Date().toLocaleString(),
                     writer: writer,
                     editor: entity.editor,                          // Editor add
                     status: entity.status,
@@ -163,4 +164,115 @@ module.exports = {
         return baibao.deleteOne(conditionObject).exec();
     },
 
+    // Trang chủ
+    findTop10: () => {
+        return new Promise((resolve, reject) => {
+            baibao.find({
+                //filter   
+            },
+                ['_id', 'title', 'bigAvatar', 'smallAvatar', 'categorySub', 'writeDate', 'postDate', 'views'],
+                {
+                    skip: 0,
+                    limit: 10,
+                    sort: {
+                        views: -1
+                    }
+                })
+                .populate('categorySub', '_id categoryName')
+                .exec((err, succ) => {
+                    if (err)
+                        reject(err);
+                    else
+                        resolve(succ);
+                })
+        });
+    },
+
+    findBestInCate: (idCate) => {
+        return new Promise((resolve, reject) => {
+            baibao.find({
+                //filter
+                categorySub: idCate
+            },
+                ['_id', 'title', 'bigAvatar', 'smallAvatar', 'categorySub', 'writeDate', 'postDate', 'views'],
+                {
+                    skip: 0,
+                    limit: 1,
+                    sort: {
+                        views: -1
+                    }
+                })
+                .populate('categorySub', '_id categoryName')
+                .exec((err, succ) => {
+                    if (err) {
+                        console.log(err);
+                        reject(err);
+                    }
+                    else {
+                        console.log("article " + succ);
+                        resolve(succ);
+                    }
+                })
+        })
+    },
+
+    findTop10Category: () => {
+        return new Promise((resolve, reject) => {
+            let result = [];
+            categorySub.findTopCategory().then(listID => {
+                console.log("list ID" + listID);
+                
+                let i = 0;
+                for (i = 0; i < listID.length; i++) {
+                    baibao.findOne(
+                        { categorySub: listID[i] },
+                        ['_id', 'title', 'bigAvatar', 'smallAvatar', 'categorySub', 'writeDate', 'postDate', 'views'],
+                        {
+                            skip: 0,
+                            limit: 10,
+                            sort: {
+                                views: -1
+                            }
+                        }).populate('categorySub', '_id categoryName')
+                        .exec((err, succ) => {
+                            if (err)
+                                reject(err);
+                            else{
+                                console.log("one article"+succ);
+                                result.push(succ);
+                            } 
+                        })
+                }
+                
+            })
+                .catch(err => {
+                    console.log(err);
+                    reject(err);
+                })
+                resolve(result);
+        })
+    },
+
+    findNewest: () => {
+        return new Promise((resolve, reject) => {
+            baibao.find({
+                //filter   
+            },
+                ['_id', 'title', 'smallAvatar', 'categorySub', 'writeDate', 'postDate', 'views'],
+                {
+                    skip: 0,
+                    limit: 10,
+                    sort: {
+                        writeDate: -1
+                    }
+                })
+                .populate('categorySub', '_id categoryName')
+                .exec((err, succ) => {
+                    if (err)
+                        reject(err);
+                    else
+                        resolve(succ);
+                })
+        });
+    },
 }

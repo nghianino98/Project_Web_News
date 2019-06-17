@@ -69,6 +69,25 @@ module.exports = {
                 })
         });
     },
+    //Return ID catesub
+    findTopCategory:()=>{
+        return new Promise((resolve, reject) => {
+            categorySub.find({},
+                ['_id'],
+                {
+                    skip : 0,
+                    limit : 10,
+                }
+            )
+                .exec((err, arrayOfCate) => {
+                    if (err)
+                        reject(err);
+                    else
+                        resolve(arrayOfCate);
+                })
+        
+        });
+    },
 
     findDad: (id) => {
         return new Promise((resolve, reject) => {

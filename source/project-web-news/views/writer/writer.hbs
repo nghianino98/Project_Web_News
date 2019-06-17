@@ -32,7 +32,7 @@
       {{#if article}}
       <div class="row">
         <div class="col">
-          {{# if success}}
+          {{# if successold}}
           <div class="alert alert-success" role="alert">
             <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
             <strong>Success!</strong>
@@ -46,6 +46,23 @@
             {{messagesFailure}}
           </div>
           {{/if}}
+                      {{# if hasError }}
+                <div class="alert alert-danger" role="alert">
+                    <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+                    {{# each messages }}
+                        {{ this }}</br>
+                    {{/ each }}
+                </div>
+            {{ else }}
+                {{# if hasSuccess }}
+                    <div class="alert alert-success" role="alert">
+                      <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+                    {{# each success }}
+                        {{ this }}</br>
+                    {{/ each }}
+                </div>
+                {{/ if }}
+            {{/ if }}
           <form style="min-width: 20rem;" id="articleContent" action="{{action}}" method="POST">
             <div class="form-group row">
               <label for="text" class="col-12 col-form-label">Tiêu đề bài viết</label>
@@ -116,7 +133,7 @@
       {{#unless article}}
       <div class="row">
         <div class="col">
-          {{# if success}}
+          {{# if successold}}
           <div class="alert alert-success" role="alert">
             <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
             <strong>Success!</strong>
@@ -130,6 +147,25 @@
             {{messagesFailure}}
           </div>
           {{/if}}
+          {{# if hasError }}
+                <div class="alert alert-danger" role="alert">
+                  <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+                    {{# each messages }}
+                        {{ this }}</br>
+                    {{/ each }}
+                </div>
+            {{ else }}
+
+                {{# if hasSuccess }}
+                    <div class="alert alert-success" role="alert">
+                      <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+                    {{# each success }}
+                        {{ this }}</br>
+                    {{/ each }}
+                </div>
+                {{/ if }}
+                
+            {{/ if }}
           <form style="min-width: 20rem;" id="articleContent" action="{{actionpost}}" method="POST">
             <div class="form-group row">
               <label for="text" class="col-12 col-form-label">Tiêu đề bài viết</label>

@@ -14,8 +14,13 @@ const MongoStore = require('connect-mongo')(session);
 var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/user/user');
 
+var Handlebars     = require('handlebars');
+var HandlebarsIntl = require('handlebars-intl');
 
 var app = express();
+
+
+HandlebarsIntl.registerWith(Handlebars);
 
 // Tạo kết nối tới database
 require('./utils/db.connection');

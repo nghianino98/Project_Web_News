@@ -5,6 +5,10 @@ const checkRole = require('../middleware/check-role');
 const article = require('../models/article');
 const categorySub = require('../models/categorySub')
 
+const intlData = {
+    "locales": "en-US"
+};
+
 // Kiểm tra nếu là writer thì mới cho qua
 router.use(checkRole.isWriter);
 
@@ -25,9 +29,16 @@ router.get('/', (req, res, next) => {
 });
 
 router.get('/post', (req, res, next) => {
+    const errors = req.flash('errorPost');
+    const success = req.flash('successPost');
     categorySub.find().then(succ=>{
         console.log(succ);
-        res.render('writer/writer', { actionpost:"/user/writer/post",action:"/user/writer/edit", listCategory: succ, topic: "Thêm bài viết", layout: 'writer-layout', title: 'writer', csrfToken: req.csrfToken() });
+        res.render('writer/writer', { actionpost:"/user/writer/post",action:"/user/writer/edit", listCategory: succ, topic: "Thêm bài viết", layout: 'writer-layout', title: 'writer'
+        , csrfToken: req.csrfToken(),
+        errors: errors,
+        hasError: errors.length > 0,
+        success: success,
+        hasSuccess: success.length > 0 });
     })
     .catch(err=>{
         console.log(err);
@@ -62,11 +73,16 @@ router.post('/post', (req, res, next) => {
 
     article.add(entity, accountID)
         .then(succ => {
+            req.flash('successPost', 'Thêm bài viết thành công');
+            // res.status(200).json({message: 'successful'});
             console.log(req.body);
             const messagesSuccess = "Đã đăng bài có tiêu đề \" " + succ.title + " \" thành công";
-            res.render('writer/writer', {actionpost:"/user/writer/post", action:"/user/writer/edit",actionpost:"/user/writer/post",topic: "Thêm bài viết" ,layout: 'writer-layout', title: 'writer', csrfToken: req.csrfToken(), messagesSuccess: messagesSuccess, success: true, failure: false });
+            // res.render('writer/writer', {actionpost:"/user/writer/post", action:"/user/writer/edit",actionpost:"/user/writer/post",topic: "Thêm bài viết" ,layout: 'writer-layout', title: 'writer', csrfToken: req.csrfToken(), messagesSuccess: messagesSuccess, success: true, failure: false });
+            res.redirect('/user/writer/post');  
         })
         .catch(err => {
+            req.flash('errorPost', 'Thêm bài viết thất bại, thử lại sau.');
+            // res.status(500).json({message: 'Something wrong!'});
             console.log(err);
             const messagesFailure = err;
             res.render('writer/writer', {actionpost:"/user/writer/post", layout: 'writer-layout', title: 'writer', csrfToken: req.csrfToken(), messagesFailure: messagesFailure, failure: true, success: false });
@@ -76,21 +92,41 @@ router.post('/post', (req, res, next) => {
 
 router.post('/edit', (req, res, next) => {
 
+    // var entity = req.body;
+
+    // let accountID = req.user.id;
+
+
+    // article.findByIdAndUpdate(entity, accountID)
+    //     .then(succ => {
+    //         console.log(succ);
+    //         const messagesSuccess = "Đã cập nhật bài có tiêu đề \" " + succ.title + " \" thành công";
+    //         res.render('writer/writer', { actionpost:"/user/writer/post",action:"/user/writer/edit", layout: 'writer-layout', title: 'writer', csrfToken: req.csrfToken(), messagesSuccess: messagesSuccess, success: true, failure: false });
+    //     })
+    //     .catch(err => {
+    //         console.log(err);
+    //         const messagesFailure = err;
+    //         res.render('writer/writer', {actionpost:"/user/writer/post",action:"/user/writer/edit", layout: 'writer-layout', title: 'writer', csrfToken: req.csrfToken(), messagesFailure: messagesFailure, failure: true, success: false });
+    //     });
+
     var entity = req.body;
+    var accountID = req.user.id;
 
-    let accountID = req.user.id;
-
-
-    article.findByIdAndUpdate(entity, accountID)
+    article.add(entity, accountID)
         .then(succ => {
-            console.log(succ);
-            const messagesSuccess = "Đã cập nhật bài có tiêu đề \" " + succ.title + " \" thành công";
-            res.render('writer/writer', { actionpost:"/user/writer/post",action:"/user/writer/edit", layout: 'writer-layout', title: 'writer', csrfToken: req.csrfToken(), messagesSuccess: messagesSuccess, success: true, failure: false });
+            req.flash('successPost', 'Chỉnh sửa bài viết thành công');
+            // res.status(200).json({message: 'successful'});
+            console.log(req.body);
+            const messagesSuccess = "Đã đăng bài có tiêu đề \" " + succ.title + " \" thành công";
+            // res.render('writer/writer', {actionpost:"/user/writer/post", action:"/user/writer/edit",actionpost:"/user/writer/post",topic: "Thêm bài viết" ,layout: 'writer-layout', title: 'writer', csrfToken: req.csrfToken(), messagesSuccess: messagesSuccess, success: true, failure: false });
+            res.redirect('/user/writer/post');  
         })
         .catch(err => {
+            req.flash('errorPost', 'Chỉnh sửa bài viết thất bại, thử lại sau.');
+            // res.status(500).json({message: 'Something wrong!'});
             console.log(err);
             const messagesFailure = err;
-            res.render('writer/writer', {actionpost:"/user/writer/post",action:"/user/writer/edit", layout: 'writer-layout', title: 'writer', csrfToken: req.csrfToken(), messagesFailure: messagesFailure, failure: true, success: false });
+            res.render('writer/writer', {actionpost:"/user/writer/post", layout: 'writer-layout', title: 'writer', csrfToken: req.csrfToken(), messagesFailure: messagesFailure, failure: true, success: false });
         });
 
 });
@@ -146,7 +182,7 @@ router.get('/notApproved', (req, res, next) => {
     article.find("notApproved", _writerID).then(listArticles => {
         let _writerName = req.user.userName;
         console.log(listArticles);
-        res.render('writer/writer-list', {topic: "Danh sách bài viết chưa được duyệt", layout: 'writer-layout', title: 'writer', listArticles: listArticles, writerName: _writerName });
+        res.render('writer/writer-list', {data: {intl: intlData},topic: "Danh sách bài viết chưa được duyệt", layout: 'writer-layout', title: 'writer', listArticles: listArticles, writerName: _writerName });
     })
         .catch(err => {
             console.log(err);

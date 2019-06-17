@@ -259,13 +259,20 @@ router.get('/manager-post', (req, res, next) => {
 });
 
 router.get('/edit/:id',(req,res,next)=>{
+    const errors = req.flash('errorPost');
+    const success = req.flash('successPost');
     
     article.findById(req.params.id)
         .then(succ => {
             categorySub.find().then(list=>{
                 console.log(succ);
                 let topic = "Chỉnh sửa bài viết";
-                res.render('writer/writer', { actionpost:"/user/admin/post", action:"/user/admin/edit", listCategory: list, article: succ, topic: topic, layout: 'admin-layout', title: 'writer', csrfToken: req.csrfToken() });
+                res.render('writer/writer', { actionpost:"/user/admin/post", action:"/user/admin/edit", listCategory: list, article: succ, topic: topic,
+                errors: errors,
+        hasError: errors.length > 0,
+        success: success,
+        hasSuccess: success.length > 0 , 
+                layout: 'admin-layout', title: 'writer', csrfToken: req.csrfToken() });
             })
             .catch(err=>{
                 console.log(err);
@@ -282,16 +289,18 @@ router.post('/edit', (req, res, next) => {
 
     var entity = req.body;
 
-
     var accountID = req.body.writerMain;
 
     article.findByIdAndUpdate(entity, accountID)
         .then(succ => {
+            req.flash('successPost', 'Chỉnh sửa bài viết thành công');
             console.log(succ);
             const messagesSuccess = "Đã cập nhật bài có tiêu đề \" " + succ.title + " \" thành công";
-            res.render('writer/writer', {actionpost:"/user/admin/post", action:"/user/admin/edit",layout: 'admin-layout', title: 'admin', csrfToken: req.csrfToken(), messagesSuccess: messagesSuccess, success: true, failure: false });
+            // res.render('writer/writer', {actionpost:"/user/admin/post", action:"/user/admin/edit",layout: 'admin-layout', title: 'admin', csrfToken: req.csrfToken(), messagesSuccess: messagesSuccess, success: true, failure: false });
+            res.redirect('/user/admin/edit/'+succ._id);
         })
         .catch(err => {
+            req.flash('errorPost', 'Chỉnh sửa bài viết thất bại, thử lại sau.');
             console.log(err);
             const messagesFailure = err;
             res.render('writer/writer', { actionpost:"/user/admin/post", action:"/user/admin/edit",action:"/user/admin/edit",layout: 'admin-layout', title: 'admin', csrfToken: req.csrfToken(), messagesFailure: messagesFailure, failure: true, success: false });
