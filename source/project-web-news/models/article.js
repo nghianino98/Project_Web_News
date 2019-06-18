@@ -26,33 +26,19 @@ var articleSchema = Schema({
     comments: [JSON],
 })
 
-async function asyncall(listID) {
-    let result = [];
-    let i = 0;
-    for (i = 0; i < listID.length; i++) {
-        baibao.find(
-            { categorySub: listID[i] },
-            ['_id', 'title', 'bigAvatar', 'smallAvatar', 'categorySub', 'writeDate', 'postDate', 'views'],
-            {
-                skip: 0,
-                limit: 10,
-                sort: {
-                    views: -1
-                }
-            }).populate('categorySub', '_id categoryName')
-            .exec((err, succ) => {
-                if (err)
-                    reject(err);
-                else {
-                    console.log("one article" + succ);
-                    result.push(succ);
-                }
-            })
+articleSchema.index({
+    title: 'text',
+    abstract: 'text',
+    content: 'text'
+}, {
+        weights: {
+            title: 5,
+            abstract: 4,
+            content: 3,
+        }
     }
-    console.log(result);
-    return result;
-}
 
+)
 
 // module.exports = mongoose.model('Article', articleSchema);
 
@@ -61,8 +47,8 @@ const categorySub = require('./categorySub')
 
 module.exports = {
     findByStatusAndCategoriesSub: (status, categories) => {
-        return baibao.find({categorySub: {$in: categories}})
-            .where({status: status})
+        return baibao.find({ categorySub: { $in: categories } })
+            .where({ status: status })
             .populate('categoryMain', 'categoryName')
             .populate('categorySub', 'categoryName')
             .populate('writer', 'pseudonym')
@@ -291,31 +277,31 @@ module.exports = {
 
     findTop10CategoryNew: () => {
         let result = [];
-            categorySub.findTopCategory().then(listID => {
-                console.log("list ID" + listID);               
-                let i = 0;
-                for (i = 0; i < listID.length; i++) {
-                    baibao.find(
-                        { categorySub: listID[i] },
-                        ['_id', 'title', 'bigAvatar', 'smallAvatar', 'categorySub', 'writeDate', 'postDate', 'views'],
-                        {
-                            skip: 0,
-                            limit: 1,
-                            sort: {
-                                views: -1
-                            }
-                        }).populate('categorySub', '_id categoryName')
-                        .exec((err, succ) => {
-                            if (err)
-                                reject(err);
-                            else {
-                                console.log("one article" + succ);
-                                result.push(succ);
-                            }
-                        })
-                }
-                console.log(result);
-            })
+        categorySub.findTopCategory().then(listID => {
+            console.log("list ID" + listID);
+            let i = 0;
+            for (i = 0; i < listID.length; i++) {
+                baibao.find(
+                    { categorySub: listID[i] },
+                    ['_id', 'title', 'bigAvatar', 'smallAvatar', 'categorySub', 'writeDate', 'postDate', 'views'],
+                    {
+                        skip: 0,
+                        limit: 1,
+                        sort: {
+                            views: -1
+                        }
+                    }).populate('categorySub', '_id categoryName')
+                    .exec((err, succ) => {
+                        if (err)
+                            reject(err);
+                        else {
+                            console.log("one article" + succ);
+                            result.push(succ);
+                        }
+                    })
+            }
+            console.log(result);
+        })
             .catch(err => {
                 console.log(err);
                 reject(err);
@@ -323,30 +309,30 @@ module.exports = {
         return result;
     },
 
-    findArticleTopCate: (top)=>{
+    findArticleTopCate: (top) => {
         return new Promise((resolve, reject) => {
-        categorySub.findTopCategory(top).then(ID=>{
-            baibao.findOne(
-                { categorySub: ID },
-                ['_id', 'title', 'bigAvatar', 'smallAvatar', 'categorySub', 'writeDate', 'postDate', 'views'],
-                {
-                    skip: 0,
-                    limit: 1,
-                    sort: {
-                        views: -1
-                    }
-                }).populate('categorySub', '_id categoryName')
-                .exec((err, succ) => {
-                    if (err)
-                        reject(err);
-                    else {
-                        console.log("get one article" + succ);
-                        resolve(succ);
-                    }
-                })
+            categorySub.findTopCategory(top).then(ID => {
+                baibao.findOne(
+                    { categorySub: ID },
+                    ['_id', 'title', 'bigAvatar', 'smallAvatar', 'categorySub', 'writeDate', 'postDate', 'views'],
+                    {
+                        skip: 0,
+                        limit: 1,
+                        sort: {
+                            views: -1
+                        }
+                    }).populate('categorySub', '_id categoryName')
+                    .exec((err, succ) => {
+                        if (err)
+                            reject(err);
+                        else {
+                            console.log("get one article" + succ);
+                            resolve(succ);
+                        }
+                    })
+            })
         })
-    })
-},
+    },
 
     findNewest: () => {
         return new Promise((resolve, reject) => {
@@ -371,12 +357,12 @@ module.exports = {
         });
     },
 
-    findByCategorySub: (idCateSub,limit,offset)=>{
+    findByCategorySub: (idCateSub, limit, offset) => {
         return new Promise((resolve, reject) => {
             baibao.find({
                 categorySub: idCateSub
             },
-                ['_id', 'title', 'bigAvatar', 'smallAvatar','categoryMain','categorySub', 'writeDate', 'postDate', 'views','abstract'],
+                ['_id', 'title', 'bigAvatar', 'smallAvatar', 'categoryMain', 'categorySub', 'writeDate', 'postDate', 'views', 'abstract'],
                 {
                     skip: offset,
                     limit: limit,
@@ -385,7 +371,7 @@ module.exports = {
                     }
                 })
                 .populate('categorySub', '_id categoryName')
-                .populate('categoryMain','_id categoryName')
+                .populate('categoryMain', '_id categoryName')
                 .exec((err, succ) => {
                     if (err)
                         reject(err);
@@ -395,11 +381,73 @@ module.exports = {
         });
     },
 
-    countByCategorySub: (idCateSub)=>{
-        return new Promise((resolve,reject)=>{
+    countByCategorySub: (idCateSub) => {
+        return new Promise((resolve, reject) => {
             baibao.countDocuments({
                 categorySub: idCateSub
             })
+                .exec((err, succ) => {
+                    if (err)
+                        reject(err);
+                    else
+                        resolve(succ);
+                })
+        })
+    },
+
+    findByCategoryMain: (idCateMain, limit, offset) => {
+        return new Promise((resolve, reject) => {
+            baibao.find({
+                categoryMain: idCateMain
+            },
+                ['_id', 'title', 'bigAvatar', 'smallAvatar', 'categoryMain', 'categorySub', 'writeDate', 'postDate', 'views', 'abstract'],
+                {
+                    skip: offset,
+                    limit: limit,
+                    sort: {
+                        postDate: -1
+                    }
+                })
+                .populate('categorySub', '_id categoryName')
+                .populate('categoryMain', '_id categoryName')
+                .exec((err, succ) => {
+                    if (err)
+                        reject(err);
+                    else
+                        resolve(succ);
+                })
+        });
+    },
+
+    countByCategoryMain: (idCateMain) => {
+        return new Promise((resolve, reject) => {
+            baibao.countDocuments({
+                categoryMain: idCateMain
+            })
+                .exec((err, succ) => {
+                    if (err)
+                        reject(err);
+                    else
+                        resolve(succ);
+                })
+        })
+    },
+
+    search: (text, limit, offset) => {
+        return new Promise((resolve, reject) => {
+            baibao.find({
+                $text: { $search: text },
+            },
+            ['_id', 'title', 'bigAvatar', 'smallAvatar', 'categoryMain', 'categorySub', 'writeDate', 'postDate', 'views', 'abstract'],
+            {
+                skip: offset,
+                limit: limit,
+                sort: {
+                    postDate: -1
+                }
+            })
+            .populate('categoryMain', 'categoryName')
+            .populate('categorySub', 'categoryName')
             .exec((err, succ) => {
                 if (err)
                     reject(err);
@@ -409,34 +457,10 @@ module.exports = {
         })
     },
 
-    findByCategoryMain: (idCateMain,limit,offset)=>{
+    countsearch: (text) => {
         return new Promise((resolve, reject) => {
-            baibao.find({
-                categoryMain: idCateMain
-            },
-                ['_id', 'title', 'bigAvatar', 'smallAvatar','categoryMain','categorySub', 'writeDate', 'postDate', 'views','abstract'],
-                {
-                    skip: offset,
-                    limit: limit,
-                    sort: {
-                        postDate: -1
-                    }
-                })
-                .populate('categorySub', '_id categoryName')
-                .populate('categoryMain','_id categoryName')
-                .exec((err, succ) => {
-                    if (err)
-                        reject(err);
-                    else
-                        resolve(succ);
-                })
-        });
-    },
-
-    countByCategoryMain: (idCateMain)=>{
-        return new Promise((resolve,reject)=>{
             baibao.countDocuments({
-                categoryMain: idCateMain
+                $text: { $search: text },
             })
             .exec((err, succ) => {
                 if (err)
@@ -446,4 +470,5 @@ module.exports = {
             })
         })
     }
+
 }
