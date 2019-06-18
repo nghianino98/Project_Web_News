@@ -60,6 +60,14 @@ const baibao = mongoose.model('Articles', articleSchema);
 const categorySub = require('./categorySub')
 
 module.exports = {
+    findByStatusAndCategoriesSub: (status, categories) => {
+        return baibao.find({categorySub: {$in: categories}})
+            .where({status: status})
+            .populate('categoryMain', 'categoryName')
+            .populate('categorySub', 'categoryName')
+            .populate('writer', 'pseudonym')
+            .exec();
+    },
 
     find: (statusArticles, writerID) => {
         return new Promise((resolve, reject) => {

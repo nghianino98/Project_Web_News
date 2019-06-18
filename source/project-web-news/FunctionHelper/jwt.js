@@ -11,7 +11,8 @@ module.exports = {
             dob: user.dob,
             phoneNumber: user.phoneNumber,
             pseudonym: user.pseudonym,
-            expire: user.expire
+            expire: user.expire,
+            categoryEditor: user.categoryEditor
         }, secret_key, {
             expiresIn: expiresIn
         });
