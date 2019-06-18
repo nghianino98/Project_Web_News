@@ -265,7 +265,12 @@ router.get('/search',(req,res,next)=>{
       if(i > 1 && i < nPages)
         obj = {value:i, valuepre:i-1, valuenext: i+1  , active: i === +page};
       else if( i==1 )
+      if(nPages == 1){
+        obj = {value:i, active: i === +page};
+      }
+      else {
         obj = {value:i, valuenext: i+1  , active: i === +page};
+      }       
       else if (i == nPages)
         obj = {value:i,  valuepre:i-1 , active: i === +page};
       pages.push(obj);
