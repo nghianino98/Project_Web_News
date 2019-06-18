@@ -26,7 +26,32 @@ var articleSchema = Schema({
     comments: [JSON],
 })
 
-
+async function asyncall(listID) {
+    let result = [];
+    let i = 0;
+    for (i = 0; i < listID.length; i++) {
+        baibao.find(
+            { categorySub: listID[i] },
+            ['_id', 'title', 'bigAvatar', 'smallAvatar', 'categorySub', 'writeDate', 'postDate', 'views'],
+            {
+                skip: 0,
+                limit: 10,
+                sort: {
+                    views: -1
+                }
+            }).populate('categorySub', '_id categoryName')
+            .exec((err, succ) => {
+                if (err)
+                    reject(err);
+                else {
+                    console.log("one article" + succ);
+                    result.push(succ);
+                }
+            })
+    }
+    console.log(result);
+    return result;
+}
 
 
 // module.exports = mongoose.model('Article', articleSchema);
@@ -218,13 +243,14 @@ module.exports = {
 
     findTop10Category: () => {
         return new Promise((resolve, reject) => {
-            let result = [];
+
             categorySub.findTopCategory().then(listID => {
                 console.log("list ID" + listID);
-                
+
+                let result = [];
                 let i = 0;
                 for (i = 0; i < listID.length; i++) {
-                    baibao.findOne(
+                    baibao.find(
                         { categorySub: listID[i] },
                         ['_id', 'title', 'bigAvatar', 'smallAvatar', 'categorySub', 'writeDate', 'postDate', 'views'],
                         {
@@ -237,21 +263,82 @@ module.exports = {
                         .exec((err, succ) => {
                             if (err)
                                 reject(err);
-                            else{
-                                console.log("one article"+succ);
+                            else {
+                                console.log("one article" + succ);
                                 result.push(succ);
-                            } 
+                            }
                         })
                 }
-                
+                console.log(result);
+                return result;
+
             })
                 .catch(err => {
                     console.log(err);
                     reject(err);
                 })
-                resolve(result);
+
         })
     },
+
+    findTop10CategoryNew: () => {
+        let result = [];
+            categorySub.findTopCategory().then(listID => {
+                console.log("list ID" + listID);               
+                let i = 0;
+                for (i = 0; i < listID.length; i++) {
+                    baibao.find(
+                        { categorySub: listID[i] },
+                        ['_id', 'title', 'bigAvatar', 'smallAvatar', 'categorySub', 'writeDate', 'postDate', 'views'],
+                        {
+                            skip: 0,
+                            limit: 1,
+                            sort: {
+                                views: -1
+                            }
+                        }).populate('categorySub', '_id categoryName')
+                        .exec((err, succ) => {
+                            if (err)
+                                reject(err);
+                            else {
+                                console.log("one article" + succ);
+                                result.push(succ);
+                            }
+                        })
+                }
+                console.log(result);
+            })
+            .catch(err => {
+                console.log(err);
+                reject(err);
+            })
+        return result;
+    },
+
+    findArticleTopCate: (top)=>{
+        return new Promise((resolve, reject) => {
+        categorySub.findTopCategory(top).then(ID=>{
+            baibao.findOne(
+                { categorySub: ID },
+                ['_id', 'title', 'bigAvatar', 'smallAvatar', 'categorySub', 'writeDate', 'postDate', 'views'],
+                {
+                    skip: 0,
+                    limit: 1,
+                    sort: {
+                        views: -1
+                    }
+                }).populate('categorySub', '_id categoryName')
+                .exec((err, succ) => {
+                    if (err)
+                        reject(err);
+                    else {
+                        console.log("get one article" + succ);
+                        resolve(succ);
+                    }
+                })
+        })
+    })
+},
 
     findNewest: () => {
         return new Promise((resolve, reject) => {

@@ -164,7 +164,7 @@ module.exports = {
     },
 
     //Thêm chuyên mục con
-    addCategorySub: (mainID, subID,subName) => {
+    addCategorySub: (mainID, subID) => {
         return new Promise((resolve, reject) => {
             categoryMain.findById(mainID).exec((err, succ) => {
                 if (err)
@@ -173,7 +173,7 @@ module.exports = {
                     let objectCateMain = succ;
                     //console.log("object Main" + objectCateMain);
                     objectCateMain.arrayOfCategorySub.push(subID);
-                    objectCateMain.arrayOfCategorySubName.push(subName);
+                    // objectCateMain.arrayOfCategorySubName.push(subName);
                     objectCateMain.save((err, succ) => {
                         if (err) {
                             reject(err);

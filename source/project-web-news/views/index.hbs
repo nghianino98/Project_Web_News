@@ -177,90 +177,6 @@
               </div>
             </div>
             {{/each}}
-            {{!-- <div class="single_iteam"> <a href="/single-page" class="pic-top-week"> <img
-                  src="images/left-pic-article.jpg" alt=""></a>
-              <div class="slider_top">
-                <h2><a href="#"><i class="fas fa-ellipsis-v"></i> Thể thao</a></h2>
-              </div>
-              <div class="slider_article">
-
-                <h2>
-                  <a class="slider_tittle" href="/single-page">
-
-                    <i class="fas fa-newspaper"></i> Thua đắng ở derby London, Tottenham lỡ cơ hội bứt phá top 3
-                    </br>
-
-                    <span class="slider_tittle" title="" data-second=""> <i class="fas fa-clock"></i> 05/05/2019
-                      14:31:55 </span>
-
-                  </a>
-
-
-
-                </h2>
-
-                <!-- <p>
-                    Nếu thắng trong trận derby London trước West Ham, Tottenham sẽ bỏ rơi các đội còn lại trong cuộc đua top 4, khi ấy họ sẽ chắc suất top 3. Tuy nhiên, bất ngờ nổ ra ở sân vận động Tottenham Hotspurs, đội chủ nhà đã gục gã với kết quả 0-1. 
-                </p> -->
-
-              </div>
-            </div>
-            <div class="single_iteam"> <a href="/single-page" class="pic-top-week"> <img
-                  src="images/left-pic-article.jpg" alt=""></a>
-              <div class="slider_top">
-                <h2><a href="#"><i class="fas fa-ellipsis-v"></i> Thể thao</a></h2>
-              </div>
-              <div class="slider_article">
-
-                <h2>
-                  <a class="slider_tittle" href="/single-page">
-
-                    <i class="fas fa-newspaper"></i> Thua đắng ở derby London, Tottenham lỡ cơ hội bứt phá top 3
-                    </br>
-
-                    <span class="slider_tittle" title="" data-second=""> <i class="fas fa-clock"></i> 05/05/2019
-                      14:31:55 </span>
-
-                  </a>
-
-
-
-                </h2>
-
-                <!-- <p>
-                    Nếu thắng trong trận derby London trước West Ham, Tottenham sẽ bỏ rơi các đội còn lại trong cuộc đua top 4, khi ấy họ sẽ chắc suất top 3. Tuy nhiên, bất ngờ nổ ra ở sân vận động Tottenham Hotspurs, đội chủ nhà đã gục gã với kết quả 0-1. 
-                </p> -->
-
-              </div>
-            </div>
-            <div class="single_iteam"> <a href="/single-page" class="pic-top-week"> <img
-                  src="images/left-pic-article.jpg" alt=""></a>
-              <div class="slider_top">
-                <h2><a href="#"><i class="fas fa-ellipsis-v"></i> Thể thao</a></h2>
-              </div>
-              <div class="slider_article">
-
-                <h2>
-                  <a class="slider_tittle" href="/single-page">
-
-                    <i class="fas fa-newspaper"></i> Thua đắng ở derby London, Tottenham lỡ cơ hội bứt phá top 3
-                    </br>
-
-                    <span class="slider_tittle" title="" data-second=""> <i class="fas fa-clock"></i> 05/05/2019
-                      14:31:55 </span>
-
-                  </a>
-
-
-
-                </h2>
-
-                <!-- <p>
-                    Nếu thắng trong trận derby London trước West Ham, Tottenham sẽ bỏ rơi các đội còn lại trong cuộc đua top 4, khi ấy họ sẽ chắc suất top 3. Tuy nhiên, bất ngờ nổ ra ở sân vận động Tottenham Hotspurs, đội chủ nhà đã gục gã với kết quả 0-1. 
-                </p> -->
-
-              </div>
-            </div> --}}
           </div>
         </div>
         <div class="col-lg-4 col-md-4 col-sm-4">
@@ -300,164 +216,256 @@
       <div class="row">
         <div class="col-lg-8 col-md-8 col-sm-8">
           <div class="left_content">
+            
             <div class="fashion_technology_area">
-              {{#each Top10CategoryLeft }}
+              {{!-- top 1 --}}
+            {{#if articleTopCate1}}
               <div class="fashion">
                 <div class="single_post_content">
-                  <h2><span>Giao thông</span></h2>
+                  <h2><span>{{articleTopCate1.categorySub.categoryName}}</span></h2>
                   <ul class="business_catgnav wow fadeInDown">
                     <li>
-                      <figure class="bsbig_fig"> <a href="/single-page" class="featured_img"> <img alt=""
+                      <figure class="bsbig_fig"> <a href="/single-page/{{articleTopCate1._id}}" class="featured_img"> <img alt=""
                             src="images/featured_img2.jpg"> <span class="overlay"></span> </a>
-                        <figcaption> <a href="/single-page">Bài mới nhất chuyên mục</a> </figcaption>
+                        <figcaption> <a href="/single-page/{{articleTopCate1._id}}">{{articleTopCate1.title}}</a> </figcaption>
                         <!-- <p>Nunc tincidunt, elit non cursus euismod, lacus augue ornare metus, egestas imperdiet nulla nisl quis mauris. Suspendisse a phare...</p> -->
                         <div>
-                          <a href="" class="">Chuyên mục</a> -
-                          <span class="" title="" data-second=""> <i class="fas fa-clock"></i> Ngày đăng </span>
+                          {{!-- <a href="" class="">Chuyên mục</a> - --}}
+                          <i class="fas fa-eye"></i> {{articleTopCate1.views}} lượt xem
+                          <span class="" title="" data-second=""> <i class="fas fa-clock"></i>  {{formatDate articleTopCate1.writeDate day="numeric" month="long" year="numeric"}} </span>
                         </div>
                       </figure>
                     </li>
                   </ul>
-                  <!-- <ul class="spost_nav">
-                  <li>
-                    <div class="media wow fadeInDown"> <a href="/single-page" class="media-left"> <img alt="" src="images/post_img1.jpg"> </a>
-                      <div class="media-body"> <a href="/single-page" class="catg_title"> Aliquam malesuada diam eget turpis varius 1</a> </div>
-                    </div>
-                  </li>
-                  <li>
-                    <div class="media wow fadeInDown"> <a href="/single-page" class="media-left"> <img alt="" src="images/post_img2.jpg"> </a>
-                      <div class="media-body"> <a href="/single-page" class="catg_title"> Aliquam malesuada diam eget turpis varius 2</a> </div>
-                    </div>
-                  </li>
-                  <li>
-                    <div class="media wow fadeInDown"> <a href="/single-page" class="media-left"> <img alt="" src="images/post_img1.jpg"> </a>
-                      <div class="media-body"> <a href="/single-page" class="catg_title"> Aliquam malesuada diam eget turpis varius 3</a> </div>
-                    </div>
-                  </li>
-                  <li>
-                    <div class="media wow fadeInDown"> <a href="/single-page" class="media-left"> <img alt="" src="images/post_img2.jpg"> </a>
-                      <div class="media-body"> <a href="/single-page" class="catg_title"> Aliquam malesuada diam eget turpis varius 4</a> </div>
-                    </div>
-                  </li>
-                </ul> -->
+
                 </div>
               </div>
-              {{/each}}
-              {{#each Top10CategoryRight}}
+            {{/if}}
+            {{!-- top 2 --}}
+            {{#if articleTopCate2}}
               <div class="technology">
                 <div class="single_post_content">
-                  <h2><span>Công nghệ</span></h2>
-                  <ul class="business_catgnav">
+                  <h2><span>{{articleTopCate2.categorySub.categoryName}}</span></h2>
+                  <ul class="business_catgnav wow fadeInDown">
                     <li>
-                      <figure class="bsbig_fig wow fadeInDown"> <a href="/single-page" class="featured_img"> <img alt=""
-                            src="images/featured_img3.jpg"> <span class="overlay"></span> </a>
-                        <figcaption> <a href="/single-page">Bài mới nhất chuyên mục</a> </figcaption>
+                      <figure class="bsbig_fig"> <a href="/single-page/{{articleTopCate2._id}}" class="featured_img"> <img alt=""
+                            src="images/featured_img2.jpg"> <span class="overlay"></span> </a>
+                        <figcaption> <a href="/single-page/{{articleTopCate2._id}}">{{articleTopCate2.title}}</a> </figcaption>
+                        <!-- <p>Nunc tincidunt, elit non cursus euismod, lacus augue ornare metus, egestas imperdiet nulla nisl quis mauris. Suspendisse a phare...</p> -->
                         <div>
-                          <a href="" class="">Chuyên mục</a> -
-                          <span class="" title="" data-second=""> <i class="fas fa-clock"></i> Ngày đăng </span>
+                          {{!-- <a href="" class="">Chuyên mục</a> - --}}
+                          <i class="fas fa-eye"></i> {{articleTopCate2.views}} lượt xem
+                          <span class="" title="" data-second=""> <i class="fas fa-clock"></i>  {{formatDate articleTopCate2.writeDate day="numeric" month="long" year="numeric"}} </span>
                         </div>
                       </figure>
                     </li>
                   </ul>
-                  <!-- <ul class="spost_nav">
-                  <li>
-                    <div class="media wow fadeInDown"> <a href="/single-page" class="media-left"> <img alt="" src="images/post_img1.jpg"> </a>
-                      <div class="media-body"> <a href="/single-page" class="catg_title"> Aliquam malesuada diam eget turpis varius 1</a> </div>
-                    </div>
-                  </li>
-                  <li>
-                    <div class="media wow fadeInDown"> <a href="/single-page" class="media-left"> <img alt="" src="images/post_img2.jpg"> </a>
-                      <div class="media-body"> <a href="/single-page" class="catg_title"> Aliquam malesuada diam eget turpis varius 2</a> </div>
-                    </div>
-                  </li>
-                  <li>
-                    <div class="media wow fadeInDown"> <a href="/single-page" class="media-left"> <img alt="" src="images/post_img1.jpg"> </a>
-                      <div class="media-body"> <a href="/single-page" class="catg_title"> Aliquam malesuada diam eget turpis varius 3</a> </div>
-                    </div>
-                  </li>
-                  <li>
-                    <div class="media wow fadeInDown"> <a href="/single-page" class="media-left"> <img alt="" src="images/post_img2.jpg"> </a>
-                      <div class="media-body"> <a href="/single-page" class="catg_title"> Aliquam malesuada diam eget turpis varius 4</a> </div>
-                    </div>
-                  </li>
-                </ul> -->
                 </div>
+
               </div>
-              {{/each}}
+            {{/if}}
               
             </div>
-            <!-- <div class="single_post_content">
-            <h2><span>Photography</span></h2>
-            <ul class="photograph_nav  wow fadeInDown">
-              <li>
-                <div class="photo_grid">
-                  <figure class="effect-layla"> <a class="fancybox-buttons" data-fancybox-group="button" href="images/photograph_img2.jpg" title="Photography Ttile 1"> <img src="images/photograph_img2.jpg" alt=""/></a> </figure>
+
+            <div class="fashion_technology_area">
+              {{!-- top 3 --}}
+            {{#if articleTopCate3}}
+              <div class="fashion">
+                <div class="single_post_content">
+                  <h2><span>{{articleTopCate3.categorySub.categoryName}}</span></h2>
+                  <ul class="business_catgnav wow fadeInDown">
+                    <li>
+                      <figure class="bsbig_fig"> <a href="/single-page/{{articleTopCate3._id}}" class="featured_img"> <img alt=""
+                            src="images/featured_img2.jpg"> <span class="overlay"></span> </a>
+                        <figcaption> <a href="/single-page/{{articleTopCate3._id}}">{{articleTopCate3.title}}</a> </figcaption>
+                        <!-- <p>Nunc tincidunt, elit non cursus euismod, lacus augue ornare metus, egestas imperdiet nulla nisl quis mauris. Suspendisse a phare...</p> -->
+                        <div>
+                          {{!-- <a href="" class="">Chuyên mục</a> - --}}
+                          <i class="fas fa-eye"></i> {{articleTopCate3.views}} lượt xem
+                          <span class="" title="" data-second=""> <i class="fas fa-clock"></i>  {{formatDate articleTopCate3.writeDate day="numeric" month="long" year="numeric"}} </span>
+                        </div>
+                      </figure>
+                    </li>
+                  </ul>
+
                 </div>
-              </li>
-              <li>
-                <div class="photo_grid">
-                  <figure class="effect-layla"> <a class="fancybox-buttons" data-fancybox-group="button" href="images/photograph_img3.jpg" title="Photography Ttile 2"> <img src="images/photograph_img3.jpg" alt=""/> </a> </figure>
+              </div>
+            {{/if}}
+            {{!-- top 4--}}
+            {{#if articleTopCate4}}
+              <div class="technology">
+                <div class="single_post_content">
+                  <h2><span>{{articleTopCate4.categorySub.categoryName}}</span></h2>
+                  <ul class="business_catgnav wow fadeInDown">
+                    <li>
+                      <figure class="bsbig_fig"> <a href="/single-page/{{articleTopCate4._id}}" class="featured_img"> <img alt=""
+                            src="images/featured_img2.jpg"> <span class="overlay"></span> </a>
+                        <figcaption> <a href="/single-page/{{articleTopCate4._id}}">{{articleTopCate4.title}}</a> </figcaption>
+                        <!-- <p>Nunc tincidunt, elit non cursus euismod, lacus augue ornare metus, egestas imperdiet nulla nisl quis mauris. Suspendisse a phare...</p> -->
+                        <div>
+                          {{!-- <a href="" class="">Chuyên mục</a> - --}}
+                          <i class="fas fa-eye"></i> {{articleTopCate4.views}} lượt xem
+                          <span class="" title="" data-second=""> <i class="fas fa-clock"></i>  {{formatDate articleTopCate4.writeDate day="numeric" month="long" year="numeric"}} </span>
+                        </div>
+                      </figure>
+                    </li>
+                  </ul>
                 </div>
-              </li>
-              <li>
-                <div class="photo_grid">
-                  <figure class="effect-layla"> <a class="fancybox-buttons" data-fancybox-group="button" href="images/photograph_img4.jpg" title="Photography Ttile 3"> <img src="images/photograph_img4.jpg" alt=""/> </a> </figure>
-                </div>
-              </li>
-              <li>
-                <div class="photo_grid">
-                  <figure class="effect-layla"> <a class="fancybox-buttons" data-fancybox-group="button" href="images/photograph_img4.jpg" title="Photography Ttile 4"> <img src="images/photograph_img4.jpg" alt=""/> </a> </figure>
-                </div>
-              </li>
-              <li>
-                <div class="photo_grid">
-                  <figure class="effect-layla"> <a class="fancybox-buttons" data-fancybox-group="button" href="images/photograph_img2.jpg" title="Photography Ttile 5"> <img src="images/photograph_img2.jpg" alt=""/> </a> </figure>
-                </div>
-              </li>
-              <li>
-                <div class="photo_grid">
-                  <figure class="effect-layla"> <a class="fancybox-buttons" data-fancybox-group="button" href="images/photograph_img3.jpg" title="Photography Ttile 6"> <img src="images/photograph_img3.jpg" alt=""/> </a> </figure>
-                </div>
-              </li>
-            </ul>
-          </div> -->
-            <!-- <div class="single_post_content">
-            <h2><span>Bóng đá thế giới</span></h2>
-            <div class="single_post_content_left">
-              <ul class="business_catgnav">
-                <li>
-                  <figure class="bsbig_fig  wow fadeInDown"> <a class="featured_img" href="/single-page"> <img src="images/featured_img1.jpg" alt=""> <span class="overlay"></span> </a>
-                    <figcaption> <a href="/single-page">Proin rhoncus consequat nisl eu ornare mauris</a> </figcaption>
-                    <p>Nunc tincidunt, elit non cursus euismod, lacus augue ornare metus, egestas imperdiet nulla nisl quis mauris. Suspendisse a phare...</p>
-                  </figure>
-                </li>
-              </ul>
+
+              </div>
+            {{/if}}
+              
             </div>
-            <div class="single_post_content_right">
-              <ul class="spost_nav">
-                <li>
-                  <div class="media wow fadeInDown"> <a href="/single-page" class="media-left"> <img alt="" src="images/post_img1.jpg"> </a>
-                    <div class="media-body"> <a href="/single-page" class="catg_title"> Aliquam malesuada diam eget turpis varius 1</a> </div>
-                  </div>
-                </li>
-                <li>
-                  <div class="media wow fadeInDown"> <a href="/single-page" class="media-left"> <img alt="" src="images/post_img2.jpg"> </a>
-                    <div class="media-body"> <a href="/single-page" class="catg_title"> Aliquam malesuada diam eget turpis varius 2</a> </div>
-                  </div>
-                </li>
-                <li>
-                  <div class="media wow fadeInDown"> <a href="/single-page" class="media-left"> <img alt="" src="images/post_img1.jpg"> </a>
-                    <div class="media-body"> <a href="/single-page" class="catg_title"> Aliquam malesuada diam eget turpis varius 3</a> </div>
-                  </div>
-                </li>
-                <li>
-                  <div class="media wow fadeInDown"> <a href="/single-page" class="media-left"> <img alt="" src="images/post_img2.jpg"> </a>
-                    <div class="media-body"> <a href="/single-page" class="catg_title"> Aliquam malesuada diam eget turpis varius 4</a> </div>
-                  </div>
-                </li>
-              </ul>
+
+            <div class="fashion_technology_area">
+              {{!-- top 5 --}}
+            {{#if articleTopCate5}}
+              <div class="fashion">
+                <div class="single_post_content">
+                  <h2><span>{{articleTopCate5.categorySub.categoryName}}</span></h2>
+                  <ul class="business_catgnav wow fadeInDown">
+                    <li>
+                      <figure class="bsbig_fig"> <a href="/single-page/{{articleTopCate5._id}}" class="featured_img"> <img alt=""
+                            src="images/featured_img2.jpg"> <span class="overlay"></span> </a>
+                        <figcaption> <a href="/single-page/{{articleTopCate5._id}}">{{articleTopCate5.title}}</a> </figcaption>
+                        <!-- <p>Nunc tincidunt, elit non cursus euismod, lacus augue ornare metus, egestas imperdiet nulla nisl quis mauris. Suspendisse a phare...</p> -->
+                        <div>
+                          {{!-- <a href="" class="">Chuyên mục</a> - --}}
+                          <i class="fas fa-eye"></i> {{articleTopCate5.views}} lượt xem
+                          <span class="" title="" data-second=""> <i class="fas fa-clock"></i>  {{formatDate articleTopCate5.writeDate day="numeric" month="long" year="numeric"}} </span>
+                        </div>
+                      </figure>
+                    </li>
+                  </ul>
+
+                </div>
+              </div>
+            {{/if}}
+            {{!-- top 6 --}}
+            {{#if articleTopCate6}}
+              <div class="technology">
+                <div class="single_post_content">
+                  <h2><span>{{articleTopCate6.categorySub.categoryName}}</span></h2>
+                  <ul class="business_catgnav wow fadeInDown">
+                    <li>
+                      <figure class="bsbig_fig"> <a href="/single-page/{{articleTopCate6._id}}" class="featured_img"> <img alt=""
+                            src="images/featured_img2.jpg"> <span class="overlay"></span> </a>
+                        <figcaption> <a href="/single-page/{{articleTopCate6._id}}">{{articleTopCate6.title}}</a> </figcaption>
+                        <!-- <p>Nunc tincidunt, elit non cursus euismod, lacus augue ornare metus, egestas imperdiet nulla nisl quis mauris. Suspendisse a phare...</p> -->
+                        <div>
+                          {{!-- <a href="" class="">Chuyên mục</a> - --}}
+                          <i class="fas fa-eye"></i> {{articleTopCate6.views}} lượt xem
+                          <span class="" title="" data-second=""> <i class="fas fa-clock"></i>  {{formatDate articleTopCate6.writeDate day="numeric" month="long" year="numeric"}} </span>
+                        </div>
+                      </figure>
+                    </li>
+                  </ul>
+                </div>
+
+              </div>
+            {{/if}}
+              
             </div>
-          </div> -->
+            <div class="fashion_technology_area">
+              {{!-- top 7 --}}
+            {{#if articleTopCate7}}
+              <div class="fashion">
+                <div class="single_post_content">
+                  <h2><span>{{articleTopCate7.categorySub.categoryName}}</span></h2>
+                  <ul class="business_catgnav wow fadeInDown">
+                    <li>
+                      <figure class="bsbig_fig"> <a href="/single-page/{{articleTopCate7._id}}" class="featured_img"> <img alt=""
+                            src="images/featured_img2.jpg"> <span class="overlay"></span> </a>
+                        <figcaption> <a href="/single-page/{{articleTopCate7._id}}">{{articleTopCate7.title}}</a> </figcaption>
+                        <!-- <p>Nunc tincidunt, elit non cursus euismod, lacus augue ornare metus, egestas imperdiet nulla nisl quis mauris. Suspendisse a phare...</p> -->
+                        <div>
+                          {{!-- <a href="" class="">Chuyên mục</a> - --}}
+                          <i class="fas fa-eye"></i> {{articleTopCate7.views}} lượt xem
+                          <span class="" title="" data-second=""> <i class="fas fa-clock"></i>  {{formatDate articleTopCate7.writeDate day="numeric" month="long" year="numeric"}} </span>
+                        </div>
+                      </figure>
+                    </li>
+                  </ul>
+
+                </div>
+              </div>
+            {{/if}}
+            {{!-- top 8 --}}
+            {{#if articleTopCate8}}
+              <div class="technology">
+                <div class="single_post_content">
+                  <h2><span>{{articleTopCate8.categorySub.categoryName}}</span></h2>
+                  <ul class="business_catgnav wow fadeInDown">
+                    <li>
+                      <figure class="bsbig_fig"> <a href="/single-page/{{articleTopCate8._id}}" class="featured_img"> <img alt=""
+                            src="images/featured_img2.jpg"> <span class="overlay"></span> </a>
+                        <figcaption> <a href="/single-page/{{articleTopCate8._id}}">{{articleTopCate8.title}}</a> </figcaption>
+                        <!-- <p>Nunc tincidunt, elit non cursus euismod, lacus augue ornare metus, egestas imperdiet nulla nisl quis mauris. Suspendisse a phare...</p> -->
+                        <div>
+                          {{!-- <a href="" class="">Chuyên mục</a> - --}}
+                          <i class="fas fa-eye"></i> {{articleTopCate8.views}} lượt xem
+                          <span class="" title="" data-second=""> <i class="fas fa-clock"></i>  {{formatDate articleTopCate8.writeDate day="numeric" month="long" year="numeric"}} </span>
+                        </div>
+                      </figure>
+                    </li>
+                  </ul>
+                </div>
+
+              </div>
+            {{/if}}
+              
+            </div>
+            <div class="fashion_technology_area">
+              {{!-- top9 --}}
+            {{#if articleTopCate9}}
+              <div class="fashion">
+                <div class="single_post_content">
+                  <h2><span>{{articleTopCate9.categorySub.categoryName}}</span></h2>
+                  <ul class="business_catgnav wow fadeInDown">
+                    <li>
+                      <figure class="bsbig_fig"> <a href="/single-page/{{articleTopCate9._id}}" class="featured_img"> <img alt=""
+                            src="images/featured_img2.jpg"> <span class="overlay"></span> </a>
+                        <figcaption> <a href="/single-page/{{articleTopCate9._id}}">{{articleTopCate9.title}}</a> </figcaption>
+                        <!-- <p>Nunc tincidunt, elit non cursus euismod, lacus augue ornare metus, egestas imperdiet nulla nisl quis mauris. Suspendisse a phare...</p> -->
+                        <div>
+                          {{!-- <a href="" class="">Chuyên mục</a> - --}}
+                          <i class="fas fa-eye"></i> {{articleTopCate9.views}} lượt xem
+                          <span class="" title="" data-second=""> <i class="fas fa-clock"></i>  {{formatDate articleTopCate9.writeDate day="numeric" month="long" year="numeric"}} </span>
+                        </div>
+                      </figure>
+                    </li>
+                  </ul>
+
+                </div>
+              </div>
+            {{/if}}
+            {{!-- top 10 --}}
+            {{#if articleTopCate10}}
+              <div class="technology">
+                <div class="single_post_content">
+                  <h2><span>{{articleTopCate10.categorySub.categoryName}}</span></h2>
+                  <ul class="business_catgnav wow fadeInDown">
+                    <li>
+                      <figure class="bsbig_fig"> <a href="/single-page/{{articleTopCate10._id}}" class="featured_img"> <img alt=""
+                            src="images/featured_img2.jpg"> <span class="overlay"></span> </a>
+                        <figcaption> <a href="/single-page/{{articleTopCate10._id}}">{{articleTopCate10.title}}</a> </figcaption>
+                        <!-- <p>Nunc tincidunt, elit non cursus euismod, lacus augue ornare metus, egestas imperdiet nulla nisl quis mauris. Suspendisse a phare...</p> -->
+                        <div>
+                          {{!-- <a href="" class="">Chuyên mục</a> - --}}
+                          <i class="fas fa-eye"></i> {{articleTopCate10.views}} lượt xem
+                          <span class="" title="" data-second=""> <i class="fas fa-clock"></i>  {{formatDate articleTopCate10.writeDate day="numeric" month="long" year="numeric"}} </span>
+                        </div>
+                      </figure>
+                    </li>
+                  </ul>
+                </div>
+
+              </div>
+            {{/if}}
+              
+            </div>
+            
+
           </div>
         </div>
         <div class="col-lg-4 col-md-4 col-sm-4">
@@ -475,7 +483,7 @@
                       </div>
                       <div>
                         <a href="/list-articles/category/{{categorySub._id}}" class="">
-                          {{categorySub.categoryName}} - </a>
+                          {{categorySub.categoryName}} -</a>&nbsp
                         <span class="" title="" data-second=""><i class="fas fa-clock"></i>
                           {{formatDate writeDate day="numeric" month="long" year="numeric"}} </span>
                       </div>

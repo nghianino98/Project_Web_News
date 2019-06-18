@@ -70,13 +70,14 @@ module.exports = {
         });
     },
     //Return ID catesub
-    findTopCategory:()=>{
+    findTopCategory:(top)=>{
         return new Promise((resolve, reject) => {
-            categorySub.find({},
+            categorySub.findOne({
+            },
                 ['_id'],
                 {
-                    skip : 0,
-                    limit : 10,
+                    skip : top-1,
+                    limit : top,
                 }
             )
                 .exec((err, arrayOfCate) => {
