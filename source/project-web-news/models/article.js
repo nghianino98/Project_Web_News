@@ -395,6 +395,20 @@ module.exports = {
         });
     },
 
+    countByCategorySub: (idCateSub)=>{
+        return new Promise((resolve,reject)=>{
+            baibao.countDocuments({
+                categorySub: idCateSub
+            })
+            .exec((err, succ) => {
+                if (err)
+                    reject(err);
+                else
+                    resolve(succ);
+            })
+        })
+    },
+
     findByCategoryMain: (idCateMain,limit,offset)=>{
         return new Promise((resolve, reject) => {
             baibao.find({

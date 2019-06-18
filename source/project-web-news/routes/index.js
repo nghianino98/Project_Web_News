@@ -61,7 +61,7 @@ router.get('/', (req, res, next) => {
     // let Top10CategoryLeft = temp.slice(0,5);
     // let Top10CategoryRight = temp.slice(5,10);
 
-    console.log("article1"+articleTopCate1);
+    console.log(listCateMain);
  
       res.render('index', {
         title: 'Express',
@@ -102,20 +102,46 @@ router.get('/list-articles/category/:id', (req, res, next) => {
 
   let idCate = req.params.id;
 
-  articles.findByCategorySub(idCate)
-    .then(succ => {
-      console.log(succ);
-      res.render('list_articles', {
-        listArticles: succ,
-        title: 'Express',
-        //  layout: 'news-layouts',
-        listCateMain: succ,
-        data: {intl: intlData}
-      });
-    })
-    .catch(err => {
-      console.log(err);
-    })
+  let page = req.query.page || 1;
+
+  if (page < 1) page = 1;
+
+  let limit = 6;
+
+  let offset = (page-1)*limit;
+
+  Promise.all([
+    articles.findByCategorySub(idCate,limit,offset),
+    articles.countByCategorySub(idCate)
+  ]).then(([rows,count_rows])=>{
+    
+
+    let total = count_rows;
+    let nPages = Math.floor(total/limit);
+    if(total % limit > 0) nPages++;
+
+    let pages = [];
+    for(i=1;i<=nPages;i++){
+      if(i > 1 && i < nPages)
+        obj = {value:i, valuepre:i-1, valuenext: i+1  , active: i === +page};
+      else if( i==1 )
+        obj = {value:i, valuenext: i+1  , active: i === +page};
+      else if (i == nPages)
+        obj = {value:i,  valuepre:i-1 , active: i === +page};
+      pages.push(obj);
+      
+    }
+
+    console.log(pages);
+
+    res.render('list_articles', {
+      pages,
+      listArticles: rows,
+      title: 'Express',
+      data: {intl: intlData}
+    });
+  })
+ 
 });
 
 router.get('/list-articles/categorymain/:id', (req, res, next) => {
