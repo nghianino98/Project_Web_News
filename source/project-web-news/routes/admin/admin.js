@@ -8,8 +8,10 @@ const csurfProtection = csrf();
 const admin = require('../../models/user');
 const categoryMain = require('../../models/categoryMain');
 const categorySub = require('../../models/categorySub');
-const managerUserRouter = require('./manager-user');
 const article = require('../../models/article');
+
+const managerTagRouter = require('./manager-tag');
+const managerUserRouter = require('./manager-user');
 
 // Kiểm tra nếu là admin mới cho qua
 router.use(checkRole.isAdmin);
@@ -60,12 +62,7 @@ router.get('/manager-category', (req, res, next) => {
         });
 });
 
-router.get('/manager-tag', (req, res, next) => {
-    res.render('admin/admin-manager-tag', {
-        layout: 'admin-layout',
-        title: 'Admin | Quản lí thẻ'
-    });
-});
+router.use('/manager-tag', managerTagRouter);
 
 router.use('/manager-user', managerUserRouter);
 

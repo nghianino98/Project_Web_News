@@ -9,11 +9,21 @@ function updateCategorySub(categoryid, categoryname) {
 }
 
 function deleteCategory(categoryid, categoryname) {
-    document.getElementById("content_delete").textContent ="Bạn có chắc chắn xóa chuyên mục \"" + categoryname + "\" ?";  
-    document.getElementById("deleteId").href = "/user/admin/manager-category/delete/category/"+categoryid;
+    document.getElementById("content_delete").textContent = "Bạn có chắc chắn xóa chuyên mục \"" + categoryname + "\" ?";
+    document.getElementById("deleteId").href = "/user/admin/manager-category/delete/category/" + categoryid;
 }
 
 function deleteCategorySub(categoryid, categoryname) {
-    document.getElementById("content_delete_sub").textContent ="Bạn có chắc chắn xóa chuyên mục \"" + categoryname + "\" ?";  
-    document.getElementById("deleteSubId").href = "/user/admin/manager-category/delete/categorysub/"+categoryid;
+    document.getElementById("content_delete_sub").textContent = "Bạn có chắc chắn xóa chuyên mục \"" + categoryname + "\" ?";
+    document.getElementById("deleteSubId").href = "/user/admin/manager-category/delete/categorysub/" + categoryid;
+}
+
+function updateTag(id, name) {
+    document.getElementById("tagnameUpdate").value = name;
+    document.getElementById("tagid").value = id;
+}
+
+function deleteTag(id, name) {
+    document.getElementById("content_delete").textContent = "Bạn có chắc chắn xóa tag \"" + name + "\" ?";
+    document.getElementById("deleteTagId").href = "/user/admin/manager-tag/delete/" + id;
 }

@@ -6,38 +6,30 @@
             <h4>Danh sách Tags</h4>
         </div>     
         <div class="col">
-          <button type="button" class="btn btn-sm btn-primary" data-toggle="modal" data-target=".bd-example-modal-lg">Thêm tag mới</button>
+          <button type="button" class="btn btn-sm btn-primary" data-toggle="modal" data-target="#addTag">Thêm tag mới</button>
           
-          <div class="modal fade bd-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+          <div class="modal fade" id="addTag" tabindex="-1" role="dialog" aria-labelledby="addTagTitle" aria-hidden="true">
             <div class="modal-dialog modal-lg modal-dialog-centered">
               <div class="modal-content">
-                <form class="form-horizontal">
+                <form action="/user/admin/manager-tag" method="POST" class="form-horizontal">
                 <fieldset>
                 <div class="modal-header">
-                    <legend>TAGS</legend>
+                    <legend> ADD TAG</legend>
                 </div>
                 <div class="modal-body">
                   <div class="text-right">        
                     <div class="form-group row">
-                      <label class="col-md-3 col-form-label" for="tag_name"><b>Tag Name</b></label>
+                      <label class="col-md-3 col-form-label" for="tagname"><b>Tag Name</b></label>
                       <div class="col-md-7">
-                        <input id="tag_name" name="tag_name" placeholder="Input tag name" class="form-control input-md" required="" type="text">
+                        <input id="tagname" name="tagname" placeholder="Input tag name" class="form-control input-md" required="" type="text">
                       </div>
                     </div>
-                    <!-- Text input-->
-                    <div class="form-group row">
-                      <label class="col-md-3 col-form-label" for="tagid"><b>Tag ID</b> </label>  
-                      <div class="col-md-7">
-                      <input id="modification_date" name="tagid" placeholder="Input a number" class="form-control input-md" required="" type="text">
-                        
-                      </div>
-                    </div>                       
-                   
+                    <input type="text" id="_csrf" name="_csrf" value="{{csrfToken}}" hidden>
                   </div>
                 </div>
                 <div class="modal-footer">
                   <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                  <button id="" name="" class="btn btn-primary">Submit</button>
+                  <button type="submit" class="btn btn-primary">Submit</button>
                 </div>
                 </fieldset>
                 </form>
@@ -65,6 +57,20 @@
        
       </div> <!-- end filter-->
       <!-- list posts -->
+      {{# if success}}
+          <div class="alert alert-success" role="alert">
+            <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+            <strong>Success!</strong>
+            {{messagesSuccess}}
+          </div>
+          {{/if}}
+          {{# if failure}}
+          <div class="alert alert-danger" role="alert">
+            <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+            <strong>Failure!</strong>
+            {{messagesFailure}}
+          </div>
+      {{/if}}
       <div class="row">
         <div class="col-md-12">
           <table class="table table-hover ">
@@ -84,6 +90,7 @@
               </tr>
             </thead>
             <tbody>
+              {{#each this.listTags}}
               <tr>
                 <td>
                     <div class="form-check-inline">
@@ -92,49 +99,72 @@
                        </label>
                    </div>
                 </td>  
-                <td><a href="#">bongda</a></td>
-                <td><center><small>#12</small></center></td>                     
-                <td><a href="#"><center><small>25</small></center></a></td>
+                <td><a href="#">{{tagName}}</a></td>
+                <td><center><small>{{_id}}</small></center></td>                     
+                <td><a href="#"><center><small>{{arrayOfArticles.length}}</small></center></a></td>
                 <td><center>
-                  <a href="#"><i class="fas fa-pencil-alt" title="Sửa chuyên mục"></i></a>
-                  <a href="#"><i class="fa fa-trash" title="Xóa chuyên mục"></i></a></center>
+                  <a href="javascript:;" id="{{_id}}" title="{{tagName}}" data-toggle="modal"
+                      data-target="#updateTag" onclick="return updateTag(id,title)"><i class="fas fa-pencil-alt" title="Sửa tag"></i></a>
+                  <a href="javascript:;" id="{{_id}}" title="{{tagName}}" data-toggle="modal"
+                      data-target="#deleteTag" onclick="return deleteTag(id,title)"><i class="fa fa-trash" title="Xóa tag"></i></a></center>
                 </td>
               </tr>
-              <tr>
-                <td>
-                    <div class="form-check-inline">
-                      <label class="form-check-label">
-                        <input type="checkbox" class="form-check-input" value="">
-                       </label>
-                   </div>
-                </td>  
-                <td><a href="#">treem</a></td>
-                <td><center><small>#6</small></center></td>                     
-                <td><a href="#"><center><small>15</small></center></a></td>
-                <td><center>
-                  <a href="#"><i class="fas fa-pencil-alt" title="Sửa chuyên mục"></i></a>
-                  <a href="#"><i class="fa fa-trash" title="Xóa chuyên mục"></i></a></center>
-                </td>
-              </tr>
-              <tr>
-                <td>
-                    <div class="form-check-inline">
-                      <label class="form-check-label">
-                        <input type="checkbox" class="form-check-input" value="">
-                       </label>
-                   </div>
-                </td>  
-                <td><a href="#">giaoduc2019</a></td>
-                <td><center><small>#25</small></center></td>                     
-                <td><a href="#"><center><small>7</small></center></a></td>
-                <td><center>
-                  <a href="#"><i class="fas fa-pencil-alt" title="Sửa chuyên mục"></i></a>
-                  <a href="#"><i class="fa fa-trash" title="Xóa chuyên mục"></i></a></center>
-                </td>
-              </tr>
-                     
+              {{/each}}                    
             </tbody>
           </table>
+
+          <div class="modal fade" id="updateTag" tabindex="-1" role="dialog" aria-labelledby="updateTagModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-lg modal-dialog-centered">
+              <div class="modal-content">
+                <form action="/user/admin/manager-tag/update" method="POST" class="form-horizontal">
+                <fieldset>
+                <div class="modal-header">
+                    <legend> UPDATE TAG</legend>
+                </div>
+                <div class="modal-body">
+                  <div class="text-right">        
+                    <div class="form-group row">
+                      <label class="col-md-3 col-form-label" for="tagnameUpdate"><b>Tag Name</b></label>
+                      <div class="col-md-7">
+                        <input id="tagnameUpdate" name="tagnameUpdate" placeholder="Input tag name" class="form-control input-md" required="" type="text">
+                      </div>
+                    </div>
+                    <input type="text" id="_csrf" name="_csrf" value="{{csrfToken}}" hidden>
+                    <input type="text" id="tagid" name="tagid" hidden>
+                  </div>
+                </div>
+                <div class="modal-footer">
+                  <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                  <button type="submit" class="btn btn-primary">Submit</button>
+                </div>
+                </fieldset>
+                </form>
+              </div>
+            </div>
+          </div>  
+
+
+          <!-- Modal xóa thư tag-->
+        <div class="modal fade" id="deleteTag" tabindex="-1" role="dialog" aria-labelledby="deleteTagModalLabel"
+          aria-hidden="true">
+          <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h5 class="modal-title" id="deleteTagTitle">Xóa Tag</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                  <span aria-hidden="true">&times;</span>
+                </button>
+              </div>
+              <div class="modal-body">
+                <span id="content_delete"></span>
+              </div>
+              <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Đóng</button>
+                <a href="" id="deleteTagId" class="btn btn-primary" tabindex="-1" role="button">Xác nhận</a>
+              </div>
+            </div>
+          </div>
+        </div>
         </div>
       </div>
     </div>
