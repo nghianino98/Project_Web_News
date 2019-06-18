@@ -370,4 +370,66 @@ module.exports = {
                 })
         });
     },
+
+    findByCategorySub: (idCateSub,limit,offset)=>{
+        return new Promise((resolve, reject) => {
+            baibao.find({
+                categorySub: idCateSub
+            },
+                ['_id', 'title', 'bigAvatar', 'smallAvatar','categoryMain','categorySub', 'writeDate', 'postDate', 'views','abstract'],
+                {
+                    skip: offset,
+                    limit: limit,
+                    sort: {
+                        postDate: -1
+                    }
+                })
+                .populate('categorySub', '_id categoryName')
+                .populate('categoryMain','_id categoryName')
+                .exec((err, succ) => {
+                    if (err)
+                        reject(err);
+                    else
+                        resolve(succ);
+                })
+        });
+    },
+
+    findByCategoryMain: (idCateMain,limit,offset)=>{
+        return new Promise((resolve, reject) => {
+            baibao.find({
+                categoryMain: idCateMain
+            },
+                ['_id', 'title', 'bigAvatar', 'smallAvatar','categoryMain','categorySub', 'writeDate', 'postDate', 'views','abstract'],
+                {
+                    skip: offset,
+                    limit: limit,
+                    sort: {
+                        postDate: -1
+                    }
+                })
+                .populate('categorySub', '_id categoryName')
+                .populate('categoryMain','_id categoryName')
+                .exec((err, succ) => {
+                    if (err)
+                        reject(err);
+                    else
+                        resolve(succ);
+                })
+        });
+    },
+
+    countByCategoryMain: (idCateMain)=>{
+        return new Promise((resolve,reject)=>{
+            baibao.countDocuments({
+                categoryMain: idCateMain
+            })
+            .exec((err, succ) => {
+                if (err)
+                    reject(err);
+                else
+                    resolve(succ);
+            })
+        })
+    }
 }
