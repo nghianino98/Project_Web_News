@@ -111,9 +111,12 @@ router.get('/list-articles/category/:id', (req, res, next) => {
   let offset = (page-1)*limit;
 
   Promise.all([
+    categoryMain.findSub(),
+    articles.findNewest(),
+    articles.findTop10(),
     articles.findByCategorySub(idCate,limit,offset),
     articles.countByCategorySub(idCate)
-  ]).then(([rows,count_rows])=>{
+  ]).then(([listCateMain,newestArticles,top10Articles,rows,count_rows])=>{
     
 
     let total = count_rows;
@@ -124,8 +127,14 @@ router.get('/list-articles/category/:id', (req, res, next) => {
     for(i=1;i<=nPages;i++){
       if(i > 1 && i < nPages)
         obj = {value:i, valuepre:i-1, valuenext: i+1  , active: i === +page};
-      else if( i==1 )
-        obj = {value:i, valuenext: i+1  , active: i === +page};
+      else if( i==1 ){
+        if(nPages == 1){
+          obj = {value:i, active: i === +page};
+        }
+        else {
+          obj = {value:i, valuenext: i+1  , active: i === +page};
+        }
+      }   
       else if (i == nPages)
         obj = {value:i,  valuepre:i-1 , active: i === +page};
       pages.push(obj);
@@ -135,9 +144,13 @@ router.get('/list-articles/category/:id', (req, res, next) => {
     console.log(pages);
 
     res.render('list_articles', {
+      listCateMain,
+      newestArticles,
+      top10Articles,
       pages,
       listArticles: rows,
       title: 'Express',
+      categorySub: true,
       data: {intl: intlData}
     });
   })
@@ -157,9 +170,12 @@ router.get('/list-articles/categorymain/:id', (req, res, next) => {
   let offset = (page-1)*limit;
 
   Promise.all([
+    categoryMain.findSub(),
+    articles.findNewest(),
+    articles.findTop10(),
     articles.findByCategoryMain(idCate,limit,offset),
     articles.countByCategoryMain(idCate)
-  ]).then(([rows,count_rows])=>{
+  ]).then(([listCateMain,newestArticles,top10Articles,rows,count_rows])=>{
     
 
     let total = count_rows;
@@ -170,17 +186,26 @@ router.get('/list-articles/categorymain/:id', (req, res, next) => {
     for(i=1;i<=nPages;i++){
       if(i > 1 && i < nPages)
         obj = {value:i, valuepre:i-1, valuenext: i+1  , active: i === +page};
-      else if( i==1 )
-        obj = {value:i, valuenext: i+1  , active: i === +page};
+      else if( i==1 ){
+        if(nPages == 1){
+          obj = {value:i, active: i === +page};
+        }
+        else {
+          obj = {value:i, valuenext: i+1  , active: i === +page};
+        }
+      }
       else if (i == nPages)
         obj = {value:i,  valuepre:i-1 , active: i === +page};
       pages.push(obj);
       
     }
 
-    console.log(pages);
+    console.log(rows);
 
     res.render('list_articles', {
+      listCateMain,
+      newestArticles,
+      top10Articles,
       pages,
       listArticles: rows,
       title: 'Express',

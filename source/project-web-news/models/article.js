@@ -21,7 +21,7 @@ var articleSchema = Schema({
     views: { type: Number, default: 0 },
     smallAvatar: { type: String, default: '/images/news_thumbnail2.jpg' },
     bigAvatar: { type: String, default: '/images/photograph_img2.jpg' },
-    arrayOfTags: [Schema.Types.ObjectId],
+    arrayOfTags: [{type: Schema.Types.ObjectId, ref: 'Tags', require: true}],
     isPremiumArticle: { type: String },
     comments: [JSON],
 })
@@ -376,7 +376,7 @@ module.exports = {
             baibao.find({
                 categorySub: idCateSub
             },
-                ['_id', 'title', 'bigAvatar', 'smallAvatar','categoryMain','categorySub', 'writeDate', 'postDate', 'views','abstract'],
+                ['_id', 'title', 'bigAvatar', 'smallAvatar','categoryMain','categorySub', 'writeDate', 'postDate', 'views','abstract','arrayOfTags'],
                 {
                     skip: offset,
                     limit: limit,
@@ -386,6 +386,7 @@ module.exports = {
                 })
                 .populate('categorySub', '_id categoryName')
                 .populate('categoryMain','_id categoryName')
+                .populate('arrayOfTags','tagName')
                 .exec((err, succ) => {
                     if (err)
                         reject(err);
@@ -414,7 +415,7 @@ module.exports = {
             baibao.find({
                 categoryMain: idCateMain
             },
-                ['_id', 'title', 'bigAvatar', 'smallAvatar','categoryMain','categorySub', 'writeDate', 'postDate', 'views','abstract'],
+                ['_id', 'title', 'bigAvatar', 'smallAvatar','categoryMain','categorySub', 'writeDate', 'postDate', 'views','abstract','arrayOfTags'],
                 {
                     skip: offset,
                     limit: limit,
@@ -424,6 +425,7 @@ module.exports = {
                 })
                 .populate('categorySub', '_id categoryName')
                 .populate('categoryMain','_id categoryName')
+                .populate('arrayOfTags','tagName')
                 .exec((err, succ) => {
                     if (err)
                         reject(err);
