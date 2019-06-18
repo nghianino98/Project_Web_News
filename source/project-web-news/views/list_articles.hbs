@@ -100,10 +100,18 @@
           <div>
             <nav aria-label="breadcrumb">
               <ol class="breadcrumb">
+                {{#if search}}
+                  <li class="breadcrumb-item active" aria-current="page"> Kết quả tìm kiếm
+                </li>
+                {{/if}}
+                {{#if categoryMain}}
+                  <li class="breadcrumb-item active" aria-current="page">{{listArticles.0.categoryMain.categoryName}}
+                  </li>
+                {{/if}}
+                {{#if categorySub}}
                 <li class="breadcrumb-item"><a
                     href="/list-articles/categorymain/{{listArticles.0.categoryMain._id}}">{{listArticles.0.categoryMain.categoryName}}</a>
-                </li>
-                {{#if categorySub}}
+                </li>               
                 <li class="breadcrumb-item active" aria-current="page">{{listArticles.0.categorySub.categoryName}}</li>
                 {{/if}}
               </ol>
