@@ -46,6 +46,15 @@ const baibao = mongoose.model('Articles', articleSchema);
 const categorySub = require('./categorySub')
 
 module.exports = {
+    findOneById: (id) => {
+        return baibao.findOne({_id: id})
+            .populate('categoryMain', 'categoryName')
+            .populate('categorySub', 'categoryName')
+            .populate('writer', 'pseudonym')
+            .populate('arrayOfTags', 'tagName')
+            .exec();
+    },
+
     findByStatusAndCategoriesSub: (status, categories) => {
         return baibao.find({ categorySub: { $in: categories } })
             .where({ status: status })
@@ -362,11 +371,7 @@ module.exports = {
             baibao.find({
                 categorySub: idCateSub
             },
-<<<<<<< HEAD
                 ['_id', 'title', 'bigAvatar', 'smallAvatar','categoryMain','categorySub', 'writeDate', 'postDate', 'views','abstract','arrayOfTags'],
-=======
-                ['_id', 'title', 'bigAvatar', 'smallAvatar', 'categoryMain', 'categorySub', 'writeDate', 'postDate', 'views', 'abstract'],
->>>>>>> 8f88b6515d26665e02241212f340b4b93d739b3d
                 {
                     skip: offset,
                     limit: limit,
@@ -375,12 +380,8 @@ module.exports = {
                     }
                 })
                 .populate('categorySub', '_id categoryName')
-<<<<<<< HEAD
                 .populate('categoryMain','_id categoryName')
                 .populate('arrayOfTags','tagName')
-=======
-                .populate('categoryMain', '_id categoryName')
->>>>>>> 8f88b6515d26665e02241212f340b4b93d739b3d
                 .exec((err, succ) => {
                     if (err)
                         reject(err);
@@ -409,11 +410,7 @@ module.exports = {
             baibao.find({
                 categoryMain: idCateMain
             },
-<<<<<<< HEAD
                 ['_id', 'title', 'bigAvatar', 'smallAvatar','categoryMain','categorySub', 'writeDate', 'postDate', 'views','abstract','arrayOfTags'],
-=======
-                ['_id', 'title', 'bigAvatar', 'smallAvatar', 'categoryMain', 'categorySub', 'writeDate', 'postDate', 'views', 'abstract'],
->>>>>>> 8f88b6515d26665e02241212f340b4b93d739b3d
                 {
                     skip: offset,
                     limit: limit,
@@ -422,12 +419,8 @@ module.exports = {
                     }
                 })
                 .populate('categorySub', '_id categoryName')
-<<<<<<< HEAD
                 .populate('categoryMain','_id categoryName')
                 .populate('arrayOfTags','tagName')
-=======
-                .populate('categoryMain', '_id categoryName')
->>>>>>> 8f88b6515d26665e02241212f340b4b93d739b3d
                 .exec((err, succ) => {
                     if (err)
                         reject(err);

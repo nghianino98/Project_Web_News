@@ -9,6 +9,10 @@ var tagSchema = Schema({
 const tag = mongoose.model('Tags', tagSchema);
 
 module.exports = {
+    findExceptId: (ids) => {
+        return tag.find({_id: {$nin: ids}})
+            .exec();
+    },
 
     add: (name) => {
         return new Promise((resolve, reject) => {
