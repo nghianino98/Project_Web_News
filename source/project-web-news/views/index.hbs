@@ -1,543 +1,344 @@
-<!DOCTYPE html>
-<html>
-
-<head>
-  <title>Báo điện tử TH16 - News</title>
-  <meta charset="utf-8">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <link rel="stylesheet" type="text/css" href="assets/css/bootstrap.min.css">
-  <link rel="stylesheet" type="text/css" href="assets/css/font-awesome.min.css">
-  <link rel="stylesheet" type="text/css" href="assets/css/animate.css">
-  <link href="https://use.fontawesome.com/releases/v5.0.6/css/all.css" rel="stylesheet">
-  <link rel="stylesheet" type="text/css" href="assets/css/li-scroller.css">
-  <link rel="stylesheet" type="text/css" href="assets/css/slick.css">
-  <link rel="stylesheet" type="text/css" href="assets/css/jquery.fancybox.css">
-  <link rel="stylesheet" type="text/css" href="assets/css/theme.css">
-  <link rel="stylesheet" type="text/css" href="assets/css/style.css">
-  <!--[if lt IE 9]>
-<script src="assets/js/html5shiv.min.js"></script>
-<script src="assets/js/respond.min.js"></script>
-<![endif]-->
-</head>
-
-<body>
-  <div id="preloader">
-    <div id="status">&nbsp;</div>
-  </div>
-  <a class="scrollToTop" href="#"><i class="fa fa-angle-up"></i></a>
-  <div class="container">
-    <header id="header">
-      <div class="row">
-        <div class="col-lg-12 col-md-12 col-sm-12">
-          <div class="header_bottom">
-            <div class="logo_area"><a href="/" class="logo"><img src="images/logo.jpg" alt=""></a></div>
-            <!-- <div class="add_banner"><a href="#"><img src="images/addbanner_728x90_V1.jpg" alt=""></a></div> -->
+<section id="sliderSection">
+  <div class="row">
+    <div class="col-lg-8 col-md-8 col-sm-8">
+      <div class="slick_slider">
+        {{#each top4Articles}}
+        <div class="single_iteam"> <a href="/single-page/{{_id}}" class="pic-top-week"> <img src="{{bigAvatar}}"
+              alt=""></a>
+          <div class="slider_top">
+            <h2><a href="/list-articles/category/{{categorySub._id}}"><i class="fas fa-ellipsis-v"></i>
+                {{categorySub.categoryName}}</a></h2>
+          </div>
+          <div class="slider_article">
+            <h2>
+              <a class="slider_tittle" href="/single-page/{{_id}}">
+                <i class="fas fa-newspaper"></i> {{title}}
+                </br>
+                <span class="slider_tittle" title="" data-second=""> <i class="fas fa-clock"></i>
+                  {{formatDate writeDate day="numeric" month="long" year="numeric"}} </span>
+                </br>
+                <span class="slider_tittle" title="" data-second=""> <i class="fas fa-eye"></i> {{views}} lượt xem
+                </span>
+              </a>
+            </h2>
           </div>
         </div>
+        {{/each}}
       </div>
-    </header>
-    <section id="navArea">
-      <nav class="navbar navbar-inverse" role="navigation">
-        <div class="navbar-header">
-          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar"
-            aria-expanded="false" aria-controls="navbar"> <span class="sr-only">Toggle navigation</span> <span
-              class="icon-bar"></span> <span class="icon-bar"></span> <span class="icon-bar"></span> </button>
-        </div>
-        <div id="navbar" class="navbar-collapse collapse">
-          <ul class="nav navbar-nav main_nav">
-            <li class="active"><a href="/"><span class="fa fa-home desktop-home"></span><span
-                  class="mobile-show">Home</span></a></li>
-
-            {{#each listCateMain}}
-            <li class="dropdown"> <a href="/list-articles/categoryMain/{{_id}}" class="dropdown-toggle"
-                data-toggle="dropdown" role="button" aria-expanded="false">{{categoryName}}</a>
-              <ul class="dropdown-menu" role="menu">
-                {{!-- <li><a href="#">Chính trị</a></li>
-                <li><a href="#">Phóng sự - Ký sự</a></li>
-                <li><a href="#">Môi trường</a></li>
-                <li><a href="#">Giao thông</a></li>
-                <li><a href="#">Hồ sơ</a></li> --}}
-                {{#each arrayOfCategorySub}}
-                <li><a href="/list-articles/category/{{_id}}">{{categoryName}}</a></li>
-                {{/each}}
-              </ul>
+    </div>
+    <div class="col-lg-4 col-md-4 col-sm-4">
+      <div class="latest_post">
+        <h2><span>Tin nóng</span></h2>
+        <div class="latest_post_container">
+          <div id="prev-button"><i class="fa fa-chevron-up"></i></div>
+          <ul class="latest_postnav">
+            {{#each top10Articles}}
+            <li>
+              <div class="media-new">
+                <a href="/single-page/{{_id}}" class="media-left"> <img alt="" src="{{smallAvatar}}"> </a>
+                <div class="media-body-new">
+                  <div class="title-mini">
+                    <a href="/single-page/{{_id}}" class="catg_title"> <strong>{{title}}</strong></a>
+                  </div>
+                  <div>
+                    <a href="/list-articles/category/{{categorySub._id}}" class="">
+                      {{categorySub.categoryName}} - </a>
+                    <span class="" title="" data-second=""><i class="fas fa-clock"></i>
+                      {{formatDate writeDate day="numeric" month="long" year="numeric"}} </span>
+                  </div>
+                </div>
+              </div>
             </li>
             {{/each}}
           </ul>
-          <form id="searchbar" method="GET" action="/search" class="search-bar">
-            <input name="text" class="search-box form-control" type="search" placeholder="Search.." aria-label="Search">
-            <button type="submit" form="searchbar" class="search-button btn btn-info">
-              <span class="glyphicon glyphicon-search"></span>
-            </button>
-          </form>
-        </div>
-      </nav>
-    </section>
-    <section id="newsSection">
-      <div class="row">
-        <div class="col-lg-12 col-md-12">
-          <div class="latest_newsarea"> <span>Tin mới nhất</span>
-            <ul id="ticker01" class="news_sticker">
-              {{!-- <li><a href="#"><img src="images/news_thumbnail3.jpg" alt="">My First News Item</a></li> --}}
-              {{#each newestArticles}}
-              <li><a href="/single-page/{{_id}}"><img src="{{smallAvatar}}" alt=""> {{title}}</a></li>
-              {{/each}}
-            </ul>
-            <div class="social_area">
-              <ul class="social_nav">
-                <li class="facebook"><a href="#"></a></li>
-                <li class="twitter"><a href="#"></a></li>
-                <li class="flickr"><a href="#"></a></li>
-                <li class="pinterest"><a href="#"></a></li>
-                <li class="googleplus"><a href="#"></a></li>
-                <li class="vimeo"><a href="#"></a></li>
-                <li class="youtube"><a href="#"></a></li>
-                <li class="mail"><a href="#"></a></li>
-              </ul>
-            </div>
-          </div>
+          <div id="next-button"><i class="fa  fa-chevron-down"></i></div>
         </div>
       </div>
-    </section>
-
-
-    <section id="sliderSection">
-      <div class="row">
-        <div class="col-lg-8 col-md-8 col-sm-8">
-          <div class="slick_slider">
-
-            {{#each top4Articles}}
-            <div class="single_iteam"> <a href="/single-page/{{_id}}" class="pic-top-week"> <img src="{{bigAvatar}}"
-                  alt=""></a>
-              <div class="slider_top">
-                <h2><a href="/list-articles/category/{{categorySub._id}}"><i class="fas fa-ellipsis-v"></i>
-                    {{categorySub.categoryName}}</a></h2>
-              </div>
-              <div class="slider_article">
-
-                <h2>
-                  <a class="slider_tittle" href="/single-page/{{_id}}">
-
-                    <i class="fas fa-newspaper"></i> {{title}}
-                    </br>
-
-                    <span class="slider_tittle" title="" data-second=""> <i class="fas fa-clock"></i>
-                      {{formatDate writeDate day="numeric" month="long" year="numeric"}} </span>
-                    </br>
-                    <span class="slider_tittle" title="" data-second=""> <i class="fas fa-eye"></i> {{views}} lượt xem
-                    </span>
-                  </a>
-
-
-
-                </h2>
-
-                <!-- <p>
-                    Nếu thắng trong trận derby London trước West Ham, Tottenham sẽ bỏ rơi các đội còn lại trong cuộc đua top 4, khi ấy họ sẽ chắc suất top 3. Tuy nhiên, bất ngờ nổ ra ở sân vận động Tottenham Hotspurs, đội chủ nhà đã gục gã với kết quả 0-1. 
-                </p> -->
-
-              </div>
-            </div>
-            {{/each}}
-          </div>
-        </div>
-        <div class="col-lg-4 col-md-4 col-sm-4">
-          <div class="latest_post">
-            <h2><span>Tin nóng</span></h2>
-            <div class="latest_post_container">
-              <div id="prev-button"><i class="fa fa-chevron-up"></i></div>
-              <ul class="latest_postnav">
-
-                {{#each top10Articles}}
-                <li>
-                  <div class="media-new">
-                    <a href="/single-page/{{_id}}" class="media-left"> <img alt="" src="{{smallAvatar}}"> </a>
-                    <div class="media-body-new">
-                      <div class="title-mini">
-                        <a href="/single-page/{{_id}}" class="catg_title"> <strong>{{title}}</strong></a>
-                      </div>
-                      <div>
-                        <a href="/list-articles/category/{{categorySub._id}}" class="">
-                          {{categorySub.categoryName}} - </a>
-                        <span class="" title="" data-second=""><i class="fas fa-clock"></i>
-                          {{formatDate writeDate day="numeric" month="long" year="numeric"}} </span>
-                      </div>
-                    </div>
-                  </div>
-                </li>
-                {{/each}}
-
-              </ul>
-              <div id="next-button"><i class="fa  fa-chevron-down"></i></div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>
-    <section id="contentSection">
-      <div class="row">
-        <div class="col-lg-8 col-md-8 col-sm-8">
-          <div class="left_content">
-
-            <div class="fashion_technology_area">
-              {{!-- top 1 --}}
-              {{#if articleTopCate1}}
-              <div class="fashion">
-                <div class="single_post_content">
-                  <h2><span>{{articleTopCate1.categorySub.categoryName}}</span></h2>
-                  <ul class="business_catgnav wow fadeInDown">
-                    <li>
-                      <figure class="bsbig_fig"> <a href="/single-page/{{articleTopCate1._id}}" class="featured_img">
-                          <img alt="" src="images/featured_img2.jpg"> <span class="overlay"></span> </a>
-                        <figcaption> <a href="/single-page/{{articleTopCate1._id}}">{{articleTopCate1.title}}</a>
-                        </figcaption>
-                        <!-- <p>Nunc tincidunt, elit non cursus euismod, lacus augue ornare metus, egestas imperdiet nulla nisl quis mauris. Suspendisse a phare...</p> -->
-                        <div>
-                          {{!-- <a href="" class="">Chuyên mục</a> - --}}
-                          <i class="fas fa-eye"></i> {{articleTopCate1.views}} lượt xem
-                          <span class="" title="" data-second=""> <i class="fas fa-clock"></i>
-                            {{formatDate articleTopCate1.writeDate day="numeric" month="long" year="numeric"}} </span>
-                        </div>
-                      </figure>
-                    </li>
-                  </ul>
-
-                </div>
-              </div>
-              {{/if}}
-              {{!-- top 2 --}}
-              {{#if articleTopCate2}}
-              <div class="technology">
-                <div class="single_post_content">
-                  <h2><span>{{articleTopCate2.categorySub.categoryName}}</span></h2>
-                  <ul class="business_catgnav wow fadeInDown">
-                    <li>
-                      <figure class="bsbig_fig"> <a href="/single-page/{{articleTopCate2._id}}" class="featured_img">
-                          <img alt="" src="images/featured_img2.jpg"> <span class="overlay"></span> </a>
-                        <figcaption> <a href="/single-page/{{articleTopCate2._id}}">{{articleTopCate2.title}}</a>
-                        </figcaption>
-                        <!-- <p>Nunc tincidunt, elit non cursus euismod, lacus augue ornare metus, egestas imperdiet nulla nisl quis mauris. Suspendisse a phare...</p> -->
-                        <div>
-                          {{!-- <a href="" class="">Chuyên mục</a> - --}}
-                          <i class="fas fa-eye"></i> {{articleTopCate2.views}} lượt xem
-                          <span class="" title="" data-second=""> <i class="fas fa-clock"></i>
-                            {{formatDate articleTopCate2.writeDate day="numeric" month="long" year="numeric"}} </span>
-                        </div>
-                      </figure>
-                    </li>
-                  </ul>
-                </div>
-
-              </div>
-              {{/if}}
-
-            </div>
-
-            <div class="fashion_technology_area">
-              {{!-- top 3 --}}
-              {{#if articleTopCate3}}
-              <div class="fashion">
-                <div class="single_post_content">
-                  <h2><span>{{articleTopCate3.categorySub.categoryName}}</span></h2>
-                  <ul class="business_catgnav wow fadeInDown">
-                    <li>
-                      <figure class="bsbig_fig"> <a href="/single-page/{{articleTopCate3._id}}" class="featured_img">
-                          <img alt="" src="images/featured_img2.jpg"> <span class="overlay"></span> </a>
-                        <figcaption> <a href="/single-page/{{articleTopCate3._id}}">{{articleTopCate3.title}}</a>
-                        </figcaption>
-                        <!-- <p>Nunc tincidunt, elit non cursus euismod, lacus augue ornare metus, egestas imperdiet nulla nisl quis mauris. Suspendisse a phare...</p> -->
-                        <div>
-                          {{!-- <a href="" class="">Chuyên mục</a> - --}}
-                          <i class="fas fa-eye"></i> {{articleTopCate3.views}} lượt xem
-                          <span class="" title="" data-second=""> <i class="fas fa-clock"></i>
-                            {{formatDate articleTopCate3.writeDate day="numeric" month="long" year="numeric"}} </span>
-                        </div>
-                      </figure>
-                    </li>
-                  </ul>
-
-                </div>
-              </div>
-              {{/if}}
-              {{!-- top 4--}}
-              {{#if articleTopCate4}}
-              <div class="technology">
-                <div class="single_post_content">
-                  <h2><span>{{articleTopCate4.categorySub.categoryName}}</span></h2>
-                  <ul class="business_catgnav wow fadeInDown">
-                    <li>
-                      <figure class="bsbig_fig"> <a href="/single-page/{{articleTopCate4._id}}" class="featured_img">
-                          <img alt="" src="images/featured_img2.jpg"> <span class="overlay"></span> </a>
-                        <figcaption> <a href="/single-page/{{articleTopCate4._id}}">{{articleTopCate4.title}}</a>
-                        </figcaption>
-                        <!-- <p>Nunc tincidunt, elit non cursus euismod, lacus augue ornare metus, egestas imperdiet nulla nisl quis mauris. Suspendisse a phare...</p> -->
-                        <div>
-                          {{!-- <a href="" class="">Chuyên mục</a> - --}}
-                          <i class="fas fa-eye"></i> {{articleTopCate4.views}} lượt xem
-                          <span class="" title="" data-second=""> <i class="fas fa-clock"></i>
-                            {{formatDate articleTopCate4.writeDate day="numeric" month="long" year="numeric"}} </span>
-                        </div>
-                      </figure>
-                    </li>
-                  </ul>
-                </div>
-
-              </div>
-              {{/if}}
-
-            </div>
-
-            <div class="fashion_technology_area">
-              {{!-- top 5 --}}
-              {{#if articleTopCate5}}
-              <div class="fashion">
-                <div class="single_post_content">
-                  <h2><span>{{articleTopCate5.categorySub.categoryName}}</span></h2>
-                  <ul class="business_catgnav wow fadeInDown">
-                    <li>
-                      <figure class="bsbig_fig"> <a href="/single-page/{{articleTopCate5._id}}" class="featured_img">
-                          <img alt="" src="images/featured_img2.jpg"> <span class="overlay"></span> </a>
-                        <figcaption> <a href="/single-page/{{articleTopCate5._id}}">{{articleTopCate5.title}}</a>
-                        </figcaption>
-                        <!-- <p>Nunc tincidunt, elit non cursus euismod, lacus augue ornare metus, egestas imperdiet nulla nisl quis mauris. Suspendisse a phare...</p> -->
-                        <div>
-                          {{!-- <a href="" class="">Chuyên mục</a> - --}}
-                          <i class="fas fa-eye"></i> {{articleTopCate5.views}} lượt xem
-                          <span class="" title="" data-second=""> <i class="fas fa-clock"></i>
-                            {{formatDate articleTopCate5.writeDate day="numeric" month="long" year="numeric"}} </span>
-                        </div>
-                      </figure>
-                    </li>
-                  </ul>
-
-                </div>
-              </div>
-              {{/if}}
-              {{!-- top 6 --}}
-              {{#if articleTopCate6}}
-              <div class="technology">
-                <div class="single_post_content">
-                  <h2><span>{{articleTopCate6.categorySub.categoryName}}</span></h2>
-                  <ul class="business_catgnav wow fadeInDown">
-                    <li>
-                      <figure class="bsbig_fig"> <a href="/single-page/{{articleTopCate6._id}}" class="featured_img">
-                          <img alt="" src="images/featured_img2.jpg"> <span class="overlay"></span> </a>
-                        <figcaption> <a href="/single-page/{{articleTopCate6._id}}">{{articleTopCate6.title}}</a>
-                        </figcaption>
-                        <!-- <p>Nunc tincidunt, elit non cursus euismod, lacus augue ornare metus, egestas imperdiet nulla nisl quis mauris. Suspendisse a phare...</p> -->
-                        <div>
-                          {{!-- <a href="" class="">Chuyên mục</a> - --}}
-                          <i class="fas fa-eye"></i> {{articleTopCate6.views}} lượt xem
-                          <span class="" title="" data-second=""> <i class="fas fa-clock"></i>
-                            {{formatDate articleTopCate6.writeDate day="numeric" month="long" year="numeric"}} </span>
-                        </div>
-                      </figure>
-                    </li>
-                  </ul>
-                </div>
-
-              </div>
-              {{/if}}
-
-            </div>
-            <div class="fashion_technology_area">
-              {{!-- top 7 --}}
-              {{#if articleTopCate7}}
-              <div class="fashion">
-                <div class="single_post_content">
-                  <h2><span>{{articleTopCate7.categorySub.categoryName}}</span></h2>
-                  <ul class="business_catgnav wow fadeInDown">
-                    <li>
-                      <figure class="bsbig_fig"> <a href="/single-page/{{articleTopCate7._id}}" class="featured_img">
-                          <img alt="" src="images/featured_img2.jpg"> <span class="overlay"></span> </a>
-                        <figcaption> <a href="/single-page/{{articleTopCate7._id}}">{{articleTopCate7.title}}</a>
-                        </figcaption>
-                        <!-- <p>Nunc tincidunt, elit non cursus euismod, lacus augue ornare metus, egestas imperdiet nulla nisl quis mauris. Suspendisse a phare...</p> -->
-                        <div>
-                          {{!-- <a href="" class="">Chuyên mục</a> - --}}
-                          <i class="fas fa-eye"></i> {{articleTopCate7.views}} lượt xem
-                          <span class="" title="" data-second=""> <i class="fas fa-clock"></i>
-                            {{formatDate articleTopCate7.writeDate day="numeric" month="long" year="numeric"}} </span>
-                        </div>
-                      </figure>
-                    </li>
-                  </ul>
-
-                </div>
-              </div>
-              {{/if}}
-              {{!-- top 8 --}}
-              {{#if articleTopCate8}}
-              <div class="technology">
-                <div class="single_post_content">
-                  <h2><span>{{articleTopCate8.categorySub.categoryName}}</span></h2>
-                  <ul class="business_catgnav wow fadeInDown">
-                    <li>
-                      <figure class="bsbig_fig"> <a href="/single-page/{{articleTopCate8._id}}" class="featured_img">
-                          <img alt="" src="images/featured_img2.jpg"> <span class="overlay"></span> </a>
-                        <figcaption> <a href="/single-page/{{articleTopCate8._id}}">{{articleTopCate8.title}}</a>
-                        </figcaption>
-                        <!-- <p>Nunc tincidunt, elit non cursus euismod, lacus augue ornare metus, egestas imperdiet nulla nisl quis mauris. Suspendisse a phare...</p> -->
-                        <div>
-                          {{!-- <a href="" class="">Chuyên mục</a> - --}}
-                          <i class="fas fa-eye"></i> {{articleTopCate8.views}} lượt xem
-                          <span class="" title="" data-second=""> <i class="fas fa-clock"></i>
-                            {{formatDate articleTopCate8.writeDate day="numeric" month="long" year="numeric"}} </span>
-                        </div>
-                      </figure>
-                    </li>
-                  </ul>
-                </div>
-
-              </div>
-              {{/if}}
-
-            </div>
-            <div class="fashion_technology_area">
-              {{!-- top9 --}}
-              {{#if articleTopCate9}}
-              <div class="fashion">
-                <div class="single_post_content">
-                  <h2><span>{{articleTopCate9.categorySub.categoryName}}</span></h2>
-                  <ul class="business_catgnav wow fadeInDown">
-                    <li>
-                      <figure class="bsbig_fig"> <a href="/single-page/{{articleTopCate9._id}}" class="featured_img">
-                          <img alt="" src="images/featured_img2.jpg"> <span class="overlay"></span> </a>
-                        <figcaption> <a href="/single-page/{{articleTopCate9._id}}">{{articleTopCate9.title}}</a>
-                        </figcaption>
-                        <!-- <p>Nunc tincidunt, elit non cursus euismod, lacus augue ornare metus, egestas imperdiet nulla nisl quis mauris. Suspendisse a phare...</p> -->
-                        <div>
-                          {{!-- <a href="" class="">Chuyên mục</a> - --}}
-                          <i class="fas fa-eye"></i> {{articleTopCate9.views}} lượt xem
-                          <span class="" title="" data-second=""> <i class="fas fa-clock"></i>
-                            {{formatDate articleTopCate9.writeDate day="numeric" month="long" year="numeric"}} </span>
-                        </div>
-                      </figure>
-                    </li>
-                  </ul>
-
-                </div>
-              </div>
-              {{/if}}
-              {{!-- top 10 --}}
-              {{#if articleTopCate10}}
-              <div class="technology">
-                <div class="single_post_content">
-                  <h2><span>{{articleTopCate10.categorySub.categoryName}}</span></h2>
-                  <ul class="business_catgnav wow fadeInDown">
-                    <li>
-                      <figure class="bsbig_fig"> <a href="/single-page/{{articleTopCate10._id}}" class="featured_img">
-                          <img alt="" src="images/featured_img2.jpg"> <span class="overlay"></span> </a>
-                        <figcaption> <a href="/single-page/{{articleTopCate10._id}}">{{articleTopCate10.title}}</a>
-                        </figcaption>
-                        <!-- <p>Nunc tincidunt, elit non cursus euismod, lacus augue ornare metus, egestas imperdiet nulla nisl quis mauris. Suspendisse a phare...</p> -->
-                        <div>
-                          {{!-- <a href="" class="">Chuyên mục</a> - --}}
-                          <i class="fas fa-eye"></i> {{articleTopCate10.views}} lượt xem
-                          <span class="" title="" data-second=""> <i class="fas fa-clock"></i>
-                            {{formatDate articleTopCate10.writeDate day="numeric" month="long" year="numeric"}} </span>
-                        </div>
-                      </figure>
-                    </li>
-                  </ul>
-                </div>
-
-              </div>
-              {{/if}}
-
-            </div>
-
-
-          </div>
-        </div>
-        <div class="col-lg-4 col-md-4 col-sm-4">
-          <aside class="right_content">
-            <div class="single_sidebar">
-              <h2><span>Tin mới nhất</span></h2>
-              <ul class="spost_nav">
-                {{#each newestArticles}}
-                <li>
-                  <div class="media-new wow fadeInDown"> <a href="/single-page/{{_id}}" class="media-left"> <img alt=""
-                        src="{{smallAvatar}}"> </a>
-                    <div class="media-body-new">
-                      <div class="title-mini">
-                        <a href="/single-page/{{_id}}" class="catg_title"> {{title}}</a>
-                      </div>
-                      <div>
-                        <a href="/list-articles/category/{{categorySub._id}}" class="">
-                          {{categorySub.categoryName}} -</a>&nbsp
-                        <span class="" title="" data-second=""><i class="fas fa-clock"></i>
-                          {{formatDate writeDate day="numeric" month="long" year="numeric"}} </span>
-                      </div>
-                    </div>
-                  </div>
-                </li>
-                {{/each}}
-              </ul>
-            </div>
-          </aside>
-        </div>
-      </div>
-    </section>
-    <footer id="footer">
-      <div class="footer_top">
-        <div class="row">
-          <div class="col-lg-4 col-md-4 col-sm-4">
-            <div class="footer_widget wow fadeInLeftBig">
-              <h2>Category</h2>
-              <ul class="tag_nav">
-                {{!-- <li><a href="#">Games</a></li>
-                <li><a href="#">Sports</a></li>
-                <li><a href="#">Fashion</a></li>
-                <li><a href="#">Business</a></li>
-                <li><a href="#">Life &amp; Style</a></li>
-                <li><a href="#">Technology</a></li>
-                <li><a href="#">Photo</a></li>
-                <li><a href="#">Slider</a></li> --}}
-                {{#each listCateMain}}
-                {{#each arrayOfCategorySub}}
-                <li><a href="/list-articles/category/{{_id}}">{{../categoryName}} / {{categoryName}}</a></li>
-                {{/each}}
-                {{/each}}
-              </ul>
-            </div>
-          </div>
-          <div class="col-lg-4 col-md-4 col-sm-4">
-            <div class="footer_widget wow fadeInDown">
-              <h2>Address</h2>
-              227 Nguyễn Văn Cừ, Quận 5, Thành phố Hồ Chí Minh
-            </div>
-          </div>
-          <div class="col-lg-4 col-md-4 col-sm-4">
-            <div class="footer_widget wow fadeInRightBig">
-              <h2>Contact</h2>
-              <p>1612421 Nguyễn Ngọc Nghĩa</p>
-              <p>1612424 Đặng Ngọc Nghĩa</p>
-              <p>1612425 Tạ Đăng Hiếu Nghĩa</p>
-              <address>
-                Ho Chi Minh City University of Science, VietNam
-              </address>
-            </div>
-          </div>
-        </div>
-      </div>
-      <div class="footer_bottom">
-        <p class="copyright">Copyright &copy; <a href="/"></a></p>
-        <p class="developer"></p>
-      </div>
-    </footer>
+    </div>
   </div>
-  <script src="assets/js/jquery.min.js"></script>
-  <script src="assets/js/wow.min.js"></script>
-  <script src="assets/js/bootstrap.min.js"></script>
-  <script src="assets/js/slick.min.js"></script>
-  <script src="assets/js/jquery.li-scroller.1.0.js"></script>
-  <script src="assets/js/jquery.newsTicker.min.js"></script>
-  <script src="assets/js/jquery.fancybox.pack.js"></script>
-  <script src="assets/js/custom.js"></script>
-  <script src="handlebars/dist/handlebars.min.js"></script>
-  <script src="handlebars-intl/dist/handlebars-intl.min.js"></script>
-</body>
-
-</html>
+</section>
+<section id="contentSection">
+  <div class="row">
+    <div class="col-lg-8 col-md-8 col-sm-8">
+      <div class="left_content">
+        <div class="fashion_technology_area">
+          {{!-- top 1 --}}
+          {{#if articleTopCate1}}
+          <div class="fashion">
+            <div class="single_post_content">
+              <h2><span>{{articleTopCate1.categorySub.categoryName}}</span></h2>
+              <ul class="business_catgnav wow fadeInDown">
+                <li>
+                  <figure class="bsbig_fig"> <a href="/single-page/{{articleTopCate1._id}}" class="featured_img">
+                      <img alt="" src="images/featured_img2.jpg"> <span class="overlay"></span> </a>
+                    <figcaption> <a href="/single-page/{{articleTopCate1._id}}">{{articleTopCate1.title}}</a>
+                    </figcaption>
+                    <!-- <p>Nunc tincidunt, elit non cursus euismod, lacus augue ornare metus, egestas imperdiet nulla nisl quis mauris. Suspendisse a phare...</p> -->
+                    <div>
+                      {{!-- <a href="" class="">Chuyên mục</a> - --}}
+                      <i class="fas fa-eye"></i> {{articleTopCate1.views}} lượt xem
+                      <span class="" title="" data-second=""> <i class="fas fa-clock"></i>
+                        {{formatDate articleTopCate1.writeDate day="numeric" month="long" year="numeric"}} </span>
+                    </div>
+                  </figure>
+                </li>
+              </ul>
+            </div>
+          </div>
+          {{/if}}
+          {{!-- top 2 --}}
+          {{#if articleTopCate2}}
+          <div class="technology">
+            <div class="single_post_content">
+              <h2><span>{{articleTopCate2.categorySub.categoryName}}</span></h2>
+              <ul class="business_catgnav wow fadeInDown">
+                <li>
+                  <figure class="bsbig_fig"> <a href="/single-page/{{articleTopCate2._id}}" class="featured_img">
+                      <img alt="" src="images/featured_img2.jpg"> <span class="overlay"></span> </a>
+                    <figcaption> <a href="/single-page/{{articleTopCate2._id}}">{{articleTopCate2.title}}</a>
+                    </figcaption>
+                    <!-- <p>Nunc tincidunt, elit non cursus euismod, lacus augue ornare metus, egestas imperdiet nulla nisl quis mauris. Suspendisse a phare...</p> -->
+                    <div>
+                      {{!-- <a href="" class="">Chuyên mục</a> - --}}
+                      <i class="fas fa-eye"></i> {{articleTopCate2.views}} lượt xem
+                      <span class="" title="" data-second=""> <i class="fas fa-clock"></i>
+                        {{formatDate articleTopCate2.writeDate day="numeric" month="long" year="numeric"}} </span>
+                    </div>
+                  </figure>
+                </li>
+              </ul>
+            </div>
+          </div>
+          {{/if}}
+        </div>
+        <div class="fashion_technology_area">
+          {{!-- top 3 --}}
+          {{#if articleTopCate3}}
+          <div class="fashion">
+            <div class="single_post_content">
+              <h2><span>{{articleTopCate3.categorySub.categoryName}}</span></h2>
+              <ul class="business_catgnav wow fadeInDown">
+                <li>
+                  <figure class="bsbig_fig"> <a href="/single-page/{{articleTopCate3._id}}" class="featured_img">
+                      <img alt="" src="images/featured_img2.jpg"> <span class="overlay"></span> </a>
+                    <figcaption> <a href="/single-page/{{articleTopCate3._id}}">{{articleTopCate3.title}}</a>
+                    </figcaption>
+                    <!-- <p>Nunc tincidunt, elit non cursus euismod, lacus augue ornare metus, egestas imperdiet nulla nisl quis mauris. Suspendisse a phare...</p> -->
+                    <div>
+                      {{!-- <a href="" class="">Chuyên mục</a> - --}}
+                      <i class="fas fa-eye"></i> {{articleTopCate3.views}} lượt xem
+                      <span class="" title="" data-second=""> <i class="fas fa-clock"></i>
+                        {{formatDate articleTopCate3.writeDate day="numeric" month="long" year="numeric"}} </span>
+                    </div>
+                  </figure>
+                </li>
+              </ul>
+            </div>
+          </div>
+          {{/if}}
+          {{!-- top 4--}}
+          {{#if articleTopCate4}}
+          <div class="technology">
+            <div class="single_post_content">
+              <h2><span>{{articleTopCate4.categorySub.categoryName}}</span></h2>
+              <ul class="business_catgnav wow fadeInDown">
+                <li>
+                  <figure class="bsbig_fig"> <a href="/single-page/{{articleTopCate4._id}}" class="featured_img">
+                      <img alt="" src="images/featured_img2.jpg"> <span class="overlay"></span> </a>
+                    <figcaption> <a href="/single-page/{{articleTopCate4._id}}">{{articleTopCate4.title}}</a>
+                    </figcaption>
+                    <!-- <p>Nunc tincidunt, elit non cursus euismod, lacus augue ornare metus, egestas imperdiet nulla nisl quis mauris. Suspendisse a phare...</p> -->
+                    <div>
+                      {{!-- <a href="" class="">Chuyên mục</a> - --}}
+                      <i class="fas fa-eye"></i> {{articleTopCate4.views}} lượt xem
+                      <span class="" title="" data-second=""> <i class="fas fa-clock"></i>
+                        {{formatDate articleTopCate4.writeDate day="numeric" month="long" year="numeric"}} </span>
+                    </div>
+                  </figure>
+                </li>
+              </ul>
+            </div>
+          </div>
+          {{/if}}
+        </div>
+        <div class="fashion_technology_area">
+          {{!-- top 5 --}}
+          {{#if articleTopCate5}}
+          <div class="fashion">
+            <div class="single_post_content">
+              <h2><span>{{articleTopCate5.categorySub.categoryName}}</span></h2>
+              <ul class="business_catgnav wow fadeInDown">
+                <li>
+                  <figure class="bsbig_fig"> <a href="/single-page/{{articleTopCate5._id}}" class="featured_img">
+                      <img alt="" src="images/featured_img2.jpg"> <span class="overlay"></span> </a>
+                    <figcaption> <a href="/single-page/{{articleTopCate5._id}}">{{articleTopCate5.title}}</a>
+                    </figcaption>
+                    <!-- <p>Nunc tincidunt, elit non cursus euismod, lacus augue ornare metus, egestas imperdiet nulla nisl quis mauris. Suspendisse a phare...</p> -->
+                    <div>
+                      {{!-- <a href="" class="">Chuyên mục</a> - --}}
+                      <i class="fas fa-eye"></i> {{articleTopCate5.views}} lượt xem
+                      <span class="" title="" data-second=""> <i class="fas fa-clock"></i>
+                        {{formatDate articleTopCate5.writeDate day="numeric" month="long" year="numeric"}} </span>
+                    </div>
+                  </figure>
+                </li>
+              </ul>
+            </div>
+          </div>
+          {{/if}}
+          {{!-- top 6 --}}
+          {{#if articleTopCate6}}
+          <div class="technology">
+            <div class="single_post_content">
+              <h2><span>{{articleTopCate6.categorySub.categoryName}}</span></h2>
+              <ul class="business_catgnav wow fadeInDown">
+                <li>
+                  <figure class="bsbig_fig"> <a href="/single-page/{{articleTopCate6._id}}" class="featured_img">
+                      <img alt="" src="images/featured_img2.jpg"> <span class="overlay"></span> </a>
+                    <figcaption> <a href="/single-page/{{articleTopCate6._id}}">{{articleTopCate6.title}}</a>
+                    </figcaption>
+                    <!-- <p>Nunc tincidunt, elit non cursus euismod, lacus augue ornare metus, egestas imperdiet nulla nisl quis mauris. Suspendisse a phare...</p> -->
+                    <div>
+                      {{!-- <a href="" class="">Chuyên mục</a> - --}}
+                      <i class="fas fa-eye"></i> {{articleTopCate6.views}} lượt xem
+                      <span class="" title="" data-second=""> <i class="fas fa-clock"></i>
+                        {{formatDate articleTopCate6.writeDate day="numeric" month="long" year="numeric"}} </span>
+                    </div>
+                  </figure>
+                </li>
+              </ul>
+            </div>
+          </div>
+          {{/if}}
+        </div>
+        <div class="fashion_technology_area">
+          {{!-- top 7 --}}
+          {{#if articleTopCate7}}
+          <div class="fashion">
+            <div class="single_post_content">
+              <h2><span>{{articleTopCate7.categorySub.categoryName}}</span></h2>
+              <ul class="business_catgnav wow fadeInDown">
+                <li>
+                  <figure class="bsbig_fig"> <a href="/single-page/{{articleTopCate7._id}}" class="featured_img">
+                      <img alt="" src="images/featured_img2.jpg"> <span class="overlay"></span> </a>
+                    <figcaption> <a href="/single-page/{{articleTopCate7._id}}">{{articleTopCate7.title}}</a>
+                    </figcaption>
+                    <!-- <p>Nunc tincidunt, elit non cursus euismod, lacus augue ornare metus, egestas imperdiet nulla nisl quis mauris. Suspendisse a phare...</p> -->
+                    <div>
+                      {{!-- <a href="" class="">Chuyên mục</a> - --}}
+                      <i class="fas fa-eye"></i> {{articleTopCate7.views}} lượt xem
+                      <span class="" title="" data-second=""> <i class="fas fa-clock"></i>
+                        {{formatDate articleTopCate7.writeDate day="numeric" month="long" year="numeric"}} </span>
+                    </div>
+                  </figure>
+                </li>
+              </ul>
+            </div>
+          </div>
+          {{/if}}
+          {{!-- top 8 --}}
+          {{#if articleTopCate8}}
+          <div class="technology">
+            <div class="single_post_content">
+              <h2><span>{{articleTopCate8.categorySub.categoryName}}</span></h2>
+              <ul class="business_catgnav wow fadeInDown">
+                <li>
+                  <figure class="bsbig_fig"> <a href="/single-page/{{articleTopCate8._id}}" class="featured_img">
+                      <img alt="" src="images/featured_img2.jpg"> <span class="overlay"></span> </a>
+                    <figcaption> <a href="/single-page/{{articleTopCate8._id}}">{{articleTopCate8.title}}</a>
+                    </figcaption>
+                    <!-- <p>Nunc tincidunt, elit non cursus euismod, lacus augue ornare metus, egestas imperdiet nulla nisl quis mauris. Suspendisse a phare...</p> -->
+                    <div>
+                      {{!-- <a href="" class="">Chuyên mục</a> - --}}
+                      <i class="fas fa-eye"></i> {{articleTopCate8.views}} lượt xem
+                      <span class="" title="" data-second=""> <i class="fas fa-clock"></i>
+                        {{formatDate articleTopCate8.writeDate day="numeric" month="long" year="numeric"}} </span>
+                    </div>
+                  </figure>
+                </li>
+              </ul>
+            </div>
+          </div>
+          {{/if}}
+        </div>
+        <div class="fashion_technology_area">
+          {{!-- top9 --}}
+          {{#if articleTopCate9}}
+          <div class="fashion">
+            <div class="single_post_content">
+              <h2><span>{{articleTopCate9.categorySub.categoryName}}</span></h2>
+              <ul class="business_catgnav wow fadeInDown">
+                <li>
+                  <figure class="bsbig_fig"> <a href="/single-page/{{articleTopCate9._id}}" class="featured_img">
+                      <img alt="" src="images/featured_img2.jpg"> <span class="overlay"></span> </a>
+                    <figcaption> <a href="/single-page/{{articleTopCate9._id}}">{{articleTopCate9.title}}</a>
+                    </figcaption>
+                    <!-- <p>Nunc tincidunt, elit non cursus euismod, lacus augue ornare metus, egestas imperdiet nulla nisl quis mauris. Suspendisse a phare...</p> -->
+                    <div>
+                      {{!-- <a href="" class="">Chuyên mục</a> - --}}
+                      <i class="fas fa-eye"></i> {{articleTopCate9.views}} lượt xem
+                      <span class="" title="" data-second=""> <i class="fas fa-clock"></i>
+                        {{formatDate articleTopCate9.writeDate day="numeric" month="long" year="numeric"}} </span>
+                    </div>
+                  </figure>
+                </li>
+              </ul>
+            </div>
+          </div>
+          {{/if}}
+          {{!-- top 10 --}}
+          {{#if articleTopCate10}}
+          <div class="technology">
+            <div class="single_post_content">
+              <h2><span>{{articleTopCate10.categorySub.categoryName}}</span></h2>
+              <ul class="business_catgnav wow fadeInDown">
+                <li>
+                  <figure class="bsbig_fig"> <a href="/single-page/{{articleTopCate10._id}}" class="featured_img">
+                      <img alt="" src="images/featured_img2.jpg"> <span class="overlay"></span> </a>
+                    <figcaption> <a href="/single-page/{{articleTopCate10._id}}">{{articleTopCate10.title}}</a>
+                    </figcaption>
+                    <!-- <p>Nunc tincidunt, elit non cursus euismod, lacus augue ornare metus, egestas imperdiet nulla nisl quis mauris. Suspendisse a phare...</p> -->
+                    <div>
+                      {{!-- <a href="" class="">Chuyên mục</a> - --}}
+                      <i class="fas fa-eye"></i> {{articleTopCate10.views}} lượt xem
+                      <span class="" title="" data-second=""> <i class="fas fa-clock"></i>
+                        {{formatDate articleTopCate10.writeDate day="numeric" month="long" year="numeric"}} </span>
+                    </div>
+                  </figure>
+                </li>
+              </ul>
+            </div>
+          </div>
+          {{/if}}
+        </div>
+      </div>
+    </div>
+    <div class="col-lg-4 col-md-4 col-sm-4">
+      <aside class="right_content">
+        <div class="single_sidebar">
+          <h2><span>Tin mới nhất</span></h2>
+          <ul class="spost_nav">
+            {{#each newestArticles}}
+            <li>
+              <div class="media-new wow fadeInDown"> <a href="/single-page/{{_id}}" class="media-left"> <img alt=""
+                    src="{{smallAvatar}}"> </a>
+                <div class="media-body-new">
+                  <div class="title-mini">
+                    <a href="/single-page/{{_id}}" class="catg_title"> {{title}}</a>
+                  </div>
+                  <div>
+                    <a href="/list-articles/category/{{categorySub._id}}" class="">
+                      {{categorySub.categoryName}} -</a>&nbsp
+                    <span class="" title="" data-second=""><i class="fas fa-clock"></i>
+                      {{formatDate writeDate day="numeric" month="long" year="numeric"}} </span>
+                  </div>
+                </div>
+              </div>
+            </li>
+            {{/each}}
+          </ul>
+        </div>
+      </aside>
+    </div>
+  </div>
+</section>

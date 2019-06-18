@@ -1,0 +1,31 @@
+<section id="navArea">
+    <nav class="navbar navbar-inverse" role="navigation">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar"
+                aria-expanded="false" aria-controls="navbar"> <span class="sr-only">Toggle navigation</span> <span
+                class="icon-bar"></span> <span class="icon-bar"></span> <span class="icon-bar"></span> </button>
+        </div>
+        <div id="navbar" class="navbar-collapse collapse">
+            <ul class="nav navbar-nav main_nav">
+                <li class="active"><a href="/"><span class="fa fa-home desktop-home"></span><span
+                    class="mobile-show">Home</span></a></li>
+                {{#each listCateMain}}
+                <li class="dropdown"> <a href="/list-articles/categoryMain/{{_id}}" class="dropdown-toggle"
+                    data-toggle="dropdown" role="button" aria-expanded="false">{{categoryName}}</a>
+                <ul class="dropdown-menu" role="menu">
+                    {{#each arrayOfCategorySub}}
+                    <li><a href="/list-articles/category/{{_id}}">{{categoryName}}</a></li>
+                    {{/each}}
+                </ul>
+                </li>
+                {{/each}}
+            </ul>
+            <form id="searchbar" method="GET" action="/search" class="search-bar">
+                <input name="text" class="search-box form-control" type="search" placeholder="Search.." aria-label="Search">
+                <button type="submit" form="searchbar" class="search-button btn btn-info">
+                    <span class="glyphicon glyphicon-search"></span>
+                </button>
+            </form>
+        </div>
+     </nav>
+</section>

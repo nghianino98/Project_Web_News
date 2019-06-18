@@ -1,402 +1,245 @@
-<!DOCTYPE html>
-<html>
-
-<head>
-  <title>Báo điện tử TH16 - News</title>
-  <meta charset="utf-8">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <link rel="stylesheet" type="text/css" href="/assets/css/bootstrap.min.css">
-  <link rel="stylesheet" type="text/css" href="/assets/css/font-awesome.min.css">
-  <link rel="stylesheet" type="text/css" href="/assets/css/animate.css">
-  <link href="https://use.fontawesome.com/releases/v5.0.6/css/all.css" rel="stylesheet">
-  <link rel="stylesheet" type="text/css" href="/assets/css/li-scroller.css">
-  <link rel="stylesheet" type="text/css" href="/assets/css/slick.css">
-  <link rel="stylesheet" type="text/css" href="/assets/css/jquery.fancybox.css">
-  <link rel="stylesheet" type="text/css" href="/assets/css/theme.css">
-  <link rel="stylesheet" type="text/css" href="/assets/css/style.css">
-  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-  <!--[if lt IE 9]>
-<script src="/assets/js/html5shiv.min.js"></script>
-<script src="/assets/js/respond.min.js"></script>
-<![endif]-->
-</head>
-
-<body>
-  <div id="preloader">
-    <div id="status">&nbsp;</div>
-  </div>
-  <a class="scrollToTop" href="#"><i class="fa fa-angle-up"></i></a>
-  <div class="container">
-    <header id="header">
-      <div class="row">
-        <div class="col-lg-12 col-md-12 col-sm-12">
-          <div class="header_bottom">
-            <div class="logo_area"><a href="/" class="logo"><img src="/images/logo.jpg" alt=""></a></div>
-            <!-- <div class="add_banner"><a href="#"><img src="/images/addbanner_728x90_V1.jpg" alt=""></a></div> -->
-          </div>
-        </div>
-      </div>
-    </header>
-    <section id="navArea">
-      <nav class="navbar navbar-inverse" role="navigation">
-        <div class="navbar-header">
-          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar"
-            aria-expanded="false" aria-controls="navbar"> <span class="sr-only">Toggle navigation</span> <span
-              class="icon-bar"></span> <span class="icon-bar"></span> <span class="icon-bar"></span> </button>
-        </div>
-        <div id="navbar" class="navbar-collapse collapse">
-          <ul class="nav navbar-nav main_nav">
-            <li class="active"><a href="/"><span class="fa fa-home desktop-home"></span><span
-                  class="mobile-show">Home</span></a></li>
-            {{#each listCateMain}}
-            <li class="dropdown"> <a href="/list-articles/categoryMain/{{_id}}" class="dropdown-toggle" data-toggle="dropdown" role="button"
-                aria-expanded="false">{{categoryName}}</a>
-              <ul class="dropdown-menu" role="menu">
-                {{#each arrayOfCategorySub}}
-                <li><a href="/list-articles/category/{{_id}}">{{categoryName}}</a></li>
-                {{/each}}
-              </ul>
+<section id="sliderSection">
+  <div class="row">
+    <div class="col-lg-8 col-md-8 col-sm-8">
+      <div>
+        <nav aria-label="breadcrumb">
+          <ol class="breadcrumb">
+            {{#if search}}
+              <li class="breadcrumb-item active" aria-current="page"> Kết quả tìm kiếm
             </li>
-            {{/each}}
-          </ul>
-          <form id="searchbar" method="GET" action="/search" class="search-bar">
-            <input name="text" class="search-box form-control" type="search" placeholder="Search.." aria-label="Search">
-            <button type="submit" form="searchbar" class="search-button btn btn-info">
-              <span class="glyphicon glyphicon-search"></span>
-            </button>
-          </form>
-        </div>
-      </nav>
-    </section>
-    <section id="newsSection">
-      <div class="row">
-        <div class="col-lg-12 col-md-12">
-          <div class="latest_newsarea"> <span>Tin mới nhất</span>
-            <ul id="ticker01" class="news_sticker">
-              {{#each newestArticles}}
-              <li><a href="/single-page/{{_id}}"><img src="{{smallAvatar}}" alt=""> {{title}}</a></li>
+            {{/if}}
+            {{#if categoryMain}}
+              <li class="breadcrumb-item active" aria-current="page">{{listArticles.0.categoryMain.categoryName}}
+              </li>
+            {{/if}}
+            {{#if categorySub}}
+            <li class="breadcrumb-item"><a
+                href="/list-articles/categorymain/{{listArticles.0.categoryMain._id}}">{{listArticles.0.categoryMain.categoryName}}</a>
+            </li>               
+            <li class="breadcrumb-item active" aria-current="page">{{listArticles.0.categorySub.categoryName}}</li>
+            {{/if}}
+          </ol>
+        </nav>
+      </div>
+      <div>
+        {{#each listArticles}}
+        <div class="articles_one">
+          <div href="/single-page" class="pic-left-articles">
+            <img alt="" src="/images/left-pic-article.jpg">
+          </div>
+          <div class="content-article">
+            <div class="content-article bsbig_fig">
+              <div>
+                <figcaption>
+                  <i class="material-icons">bookmarks</i> <a href="/single-page">{{title}} </a>
+                </figcaption>
+              </div>
+              <div>
+                <!-- <i class="material-icons md-10">dashboard</i> -->
+                <i class="material-icons md-small">trip_origin</i>
+                <a href="/list-articles/category/{{categorySub._id}}" class="">
+                  <b>{{categorySub.categoryName}}</b>
+                </a> -
+                <i class="material-icons md-medium">today</i>
+                <span class="" title="" data-second="">
+                  {{formatDate writeDate day="numeric" month="long" year="numeric"}} </span>
+              </div>
+            </div>
+            <div>
+              <i class="material-icons md-medium">border_color</i>
+              {{abstract}}
+            </div>
+            <div>
+              <i class="material-icons md-medium">label</i>
+              {{#each arrayOfTags}}
+              <a href="#" class="badge badge-dark">#{{tagName}}</a>
               {{/each}}
-            </ul>
-            <div class="social_area">
-              <ul class="social_nav">
-                <li class="facebook"><a href="#"></a></li>
-                <li class="twitter"><a href="#"></a></li>
-                <li class="flickr"><a href="#"></a></li>
-                <li class="pinterest"><a href="#"></a></li>
-                <li class="googleplus"><a href="#"></a></li>
-                <li class="vimeo"><a href="#"></a></li>
-                <li class="youtube"><a href="#"></a></li>
-                <li class="mail"><a href="#"></a></li>
-              </ul>
             </div>
           </div>
         </div>
+        <hr>
+        {{/each}}
       </div>
-    </section>
-    <section id="sliderSection">
-      <div class="row">
-        <div class="col-lg-8 col-md-8 col-sm-8">
-          <div>
-            <nav aria-label="breadcrumb">
-              <ol class="breadcrumb">
-                {{#if search}}
-                  <li class="breadcrumb-item active" aria-current="page"> Kết quả tìm kiếm
-                </li>
-                {{/if}}
-                {{#if categoryMain}}
-                  <li class="breadcrumb-item active" aria-current="page">{{listArticles.0.categoryMain.categoryName}}
-                  </li>
-                {{/if}}
-                {{#if categorySub}}
-                <li class="breadcrumb-item"><a
-                    href="/list-articles/categorymain/{{listArticles.0.categoryMain._id}}">{{listArticles.0.categoryMain.categoryName}}</a>
-                </li>               
-                <li class="breadcrumb-item active" aria-current="page">{{listArticles.0.categorySub.categoryName}}</li>
-                {{/if}}
-              </ol>
-            </nav>
-          </div>
-          <div>
-            {{#each listArticles}}
-            <div class="articles_one">
-              <div href="/single-page" class="pic-left-articles">
-                <img alt="" src="/images/left-pic-article.jpg">
-              </div>
-              <div class="content-article">
-                <div class="content-article bsbig_fig">
-                  <div>
-                    <figcaption>
-                      <i class="material-icons">bookmarks</i> <a href="/single-page">{{title}} </a>
-                    </figcaption>
+      <nav aria-label="...">
+        {{#unless search}}
+        <ul class="pagination">
+          {{#each this.pages}}
+          {{#if active}}
+          {{#if valuepre}}
+          <li class="page-item">
+            <a class="page-link" href="?page={{valuepre}}" tabindex="-1" aria-disabled="true">Previous</a>
+          </li>
+          {{else}}
+          <li class="page-item disabled">
+            <a class="page-link" tabindex="-1" aria-disabled="true">Previous</a>
+          </li>
+          {{/if}}
+          {{/if}}
+          {{/each}}
+          {{#each this.pages}}
+          {{#if active}}
+          <li class="page-item active" aria-current="page">
+            <a class="page-link" href="javascript:;">{{value}} <span class="sr-only">(current)</span></a>
+          </li>
+          {{else}}
+          <li class="page-item">
+            <a class="page-link" href="?page={{value}}">{{value}}</a>
+          </li>
+          {{/if}}
+          {{/each}}
+          {{#each this.pages}}
+          {{#if active}}
+          {{#if valuenext}}
+          <li class="page-item">
+            <a class="page-link" href="?page={{valuenext}}" tabindex="-1" aria-disabled="true">Next</a>
+          </li>
+          {{else}}
+          <li class="page-item disabled">
+            <a class="page-link" tabindex="-1" aria-disabled="true">Next</a>
+          </li>
+          {{/if}}
+          {{/if}}
+          {{/each}}
+        </ul>
+        {{else}}
+        <ul class="pagination">
+          {{#each this.pages}}
+          {{#if active}}
+          {{#if valuepre}}
+          <li class="page-item">
+            <a class="page-link" href="?text={{../text}}&page={{valuepre}}" tabindex="-1" aria-disabled="true">Previous</a>
+          </li>
+          {{else}}
+          <li class="page-item disabled">
+            <a class="page-link" tabindex="-1" aria-disabled="true">Previous</a>
+          </li>
+          {{/if}}
+          {{/if}}
+          {{/each}}
+          {{#each this.pages}}
+          {{#if active}}
+          <li class="page-item active" aria-current="page">
+            <a class="page-link" href="javascript:;">{{value}} <span class="sr-only">(current)</span></a>
+          </li>
+          {{else}}
+          <li class="page-item">
+            <a class="page-link" href="?text={{../text}}&page={{value}}">{{value}}</a>
+          </li>
+          {{/if}}
+          {{/each}}
+          {{#each this.pages}}
+          {{#if active}}
+          {{#if valuenext}}
+          <li class="page-item">
+            <a class="page-link" href="?text={{../text}}&page={{valuenext}}" tabindex="-1" aria-disabled="true">Next</a>
+          </li>
+          {{else}}
+          <li class="page-item disabled">
+            <a class="page-link" tabindex="-1" aria-disabled="true">Next</a>
+          </li>
+          {{/if}}
+          {{/if}}
+          {{/each}}
+        </ul>
+        {{/unless}}
+      </nav>
+    </div>
+    <div class="col-lg-4 col-md-4 col-sm-4">
+      <div class="latest_post">
+        <h2><span>Tin nóng</span></h2>
+        <div class="latest_post_container">
+          <div id="prev-button"><i class="fa fa-chevron-up"></i></div>
+          <ul class="latest_postnav">
+            {{#each top10Articles}}
+            <li>
+              <div class="media-new">
+                <a href="/single-page/{{_id}}" class="media-left"> <img alt="" src="{{smallAvatar}}"> </a>
+                <div class="media-body-new">
+                  <div class="title-mini">
+                    <a href="/single-page/{{_id}}" class="catg_title"> <strong>{{title}}</strong></a>
                   </div>
                   <div>
-                    <!-- <i class="material-icons md-10">dashboard</i> -->
-                    <i class="material-icons md-small">trip_origin</i>
                     <a href="/list-articles/category/{{categorySub._id}}" class="">
-                      <b>{{categorySub.categoryName}}</b>
-                    </a> -
-                    <i class="material-icons md-medium">today</i>
-                    <span class="" title="" data-second="">
+                      {{categorySub.categoryName}} - </a>
+                    <span class="" title="" data-second=""><i class="fas fa-clock"></i>
                       {{formatDate writeDate day="numeric" month="long" year="numeric"}} </span>
                   </div>
                 </div>
-                <div>
-                  <i class="material-icons md-medium">border_color</i>
-                  {{abstract}}
-                </div>
-                <div>
-                  <i class="material-icons md-medium">label</i>
-                  {{#each arrayOfTags}}
-                  <a href="#" class="badge badge-dark">#{{tagName}}</a>
-                  {{/each}}
+              </div>
+            </li>
+            {{/each}}
+          </ul>
+          <div id="next-button"><i class="fa  fa-chevron-down"></i></div>
+        </div>
+      </div>
+      <aside class="right_content">
+        <div class="single_sidebar">
+          <h2><span>Tin mới nhất</span></h2>
+          <ul class="spost_nav">
+            {{#each newestArticles}}
+            <li>
+              <div class="media-new wow fadeInDown"> <a href="/single-page/{{_id}}" class="media-left"> <img alt=""
+                    src="{{smallAvatar}}"> </a>
+                <div class="media-body-new">
+                  <div class="title-mini">
+                    <a href="/single-page/{{_id}}" class="catg_title"> {{title}}</a>
+                  </div>
+                  <div>
+                    <a href="/list-articles/category/{{categorySub._id}}" class="">
+                      {{categorySub.categoryName}} -</a>&nbsp
+                    <span class="" title="" data-second=""><i class="fas fa-clock"></i>
+                      {{formatDate writeDate day="numeric" month="long" year="numeric"}} </span>
+                  </div>
                 </div>
               </div>
-            </div>
-            <hr>
+            </li>
             {{/each}}
-          </div>
-          <nav aria-label="...">
-            {{#unless search}}
-            <ul class="pagination">
-              {{#each this.pages}}
-              {{#if active}}
-              {{#if valuepre}}
-              <li class="page-item">
-                <a class="page-link" href="?page={{valuepre}}" tabindex="-1" aria-disabled="true">Previous</a>
-              </li>
-              {{else}}
-              <li class="page-item disabled">
-                <a class="page-link" tabindex="-1" aria-disabled="true">Previous</a>
-              </li>
-              {{/if}}
-              {{/if}}
-              {{/each}}
-              {{#each this.pages}}
-              {{#if active}}
-              <li class="page-item active" aria-current="page">
-                <a class="page-link" href="javascript:;">{{value}} <span class="sr-only">(current)</span></a>
-              </li>
-              {{else}}
-              <li class="page-item">
-                <a class="page-link" href="?page={{value}}">{{value}}</a>
-              </li>
-              {{/if}}
-              {{/each}}
-              {{#each this.pages}}
-              {{#if active}}
-              {{#if valuenext}}
-              <li class="page-item">
-                <a class="page-link" href="?page={{valuenext}}" tabindex="-1" aria-disabled="true">Next</a>
-              </li>
-              {{else}}
-              <li class="page-item disabled">
-                <a class="page-link" tabindex="-1" aria-disabled="true">Next</a>
-              </li>
-              {{/if}}
-              {{/if}}
-              {{/each}}
-            </ul>
-            {{else}}
-
-            <ul class="pagination">
-              {{#each this.pages}}
-              {{#if active}}
-              {{#if valuepre}}
-              <li class="page-item">
-                <a class="page-link" href="?text={{../text}}&page={{valuepre}}" tabindex="-1" aria-disabled="true">Previous</a>
-              </li>
-              {{else}}
-              <li class="page-item disabled">
-                <a class="page-link" tabindex="-1" aria-disabled="true">Previous</a>
-              </li>
-              {{/if}}
-              {{/if}}
-              {{/each}}
-              {{#each this.pages}}
-              {{#if active}}
-              <li class="page-item active" aria-current="page">
-                <a class="page-link" href="javascript:;">{{value}} <span class="sr-only">(current)</span></a>
-              </li>
-              {{else}}
-              <li class="page-item">
-                <a class="page-link" href="?text={{../text}}&page={{value}}">{{value}}</a>
-              </li>
-              {{/if}}
-              {{/each}}
-              {{#each this.pages}}
-              {{#if active}}
-              {{#if valuenext}}
-              <li class="page-item">
-                <a class="page-link" href="?text={{../text}}&page={{valuenext}}" tabindex="-1" aria-disabled="true">Next</a>
-              </li>
-              {{else}}
-              <li class="page-item disabled">
-                <a class="page-link" tabindex="-1" aria-disabled="true">Next</a>
-              </li>
-              {{/if}}
-              {{/if}}
-              {{/each}}
-            </ul>
-
-            {{/unless}}
-          </nav>
+          </ul>
         </div>
-        <div class="col-lg-4 col-md-4 col-sm-4">
-          <div class="latest_post">
-            <h2><span>Tin nóng</span></h2>
-            <div class="latest_post_container">
-              <div id="prev-button"><i class="fa fa-chevron-up"></i></div>
-              <ul class="latest_postnav">
-                {{#each top10Articles}}
-                <li>
-                  <div class="media-new">
-                    <a href="/single-page/{{_id}}" class="media-left"> <img alt="" src="{{smallAvatar}}"> </a>
-                    <div class="media-body-new">
-                      <div class="title-mini">
-                        <a href="/single-page/{{_id}}" class="catg_title"> <strong>{{title}}</strong></a>
-                      </div>
-                      <div>
-                        <a href="/list-articles/category/{{categorySub._id}}" class="">
-                          {{categorySub.categoryName}} - </a>
-                        <span class="" title="" data-second=""><i class="fas fa-clock"></i>
-                          {{formatDate writeDate day="numeric" month="long" year="numeric"}} </span>
-                      </div>
-                    </div>
-                  </div>
-                </li>
-                {{/each}}
-              </ul>
-              <div id="next-button"><i class="fa  fa-chevron-down"></i></div>
-            </div>
-          </div>
-
-          <aside class="right_content">
-            <div class="single_sidebar">
-              <h2><span>Tin mới nhất</span></h2>
-              <ul class="spost_nav">
-                {{#each newestArticles}}
-                <li>
-                  <div class="media-new wow fadeInDown"> <a href="/single-page/{{_id}}" class="media-left"> <img alt=""
-                        src="{{smallAvatar}}"> </a>
-                    <div class="media-body-new">
-                      <div class="title-mini">
-                        <a href="/single-page/{{_id}}" class="catg_title"> {{title}}</a>
-                      </div>
-                      <div>
-                        <a href="/list-articles/category/{{categorySub._id}}" class="">
-                          {{categorySub.categoryName}} -</a>&nbsp
-                        <span class="" title="" data-second=""><i class="fas fa-clock"></i>
-                          {{formatDate writeDate day="numeric" month="long" year="numeric"}} </span>
-                      </div>
-                    </div>
-                  </div>
-                </li>
-                {{/each}}
-              </ul>
-            </div>
-
-          </aside>
-        </div>
-      </div>
-    </section>
-    <section id="contentSection">
-      <div class="row">
-        <div class="col-lg-8 col-md-8 col-sm-8">
-          <div class="left_content">
-            <!-- <div class="single_post_content">
-            <h2><span>Kinh doanh</span></h2>
-            <div class="single_post_content_left">
-              <ul class="business_catgnav  wow fadeInDown">
-                <li>
-                  <figure class="bsbig_fig"> <a href="/single-page" class="featured_img"> <img alt="" src="/images/featured_img1.jpg"> <span class="overlay"></span> </a>
-                    <figcaption> <a href="/single-page">Proin rhoncus consequat nisl eu ornare mauris</a> </figcaption>
-                    <p>Nunc tincidunt, elit non cursus euismod, lacus augue ornare metus, egestas imperdiet nulla nisl quis mauris. Suspendisse a phare...</p>
-                  </figure>
-                </li>
-              </ul>
-            </div>
-            <div class="single_post_content_right">
-              <ul class="spost_nav">
-                <li>
-                  <div class="media wow fadeInDown"> <a href="/single-page" class="media-left"> <img alt="" src="/images/post_img1.jpg"> </a>
-                    <div class="media-body"> <a href="/single-page" class="catg_title"> Aliquam malesuada diam eget turpis varius 1</a> </div>
-                  </div>
-                </li>
-                <li>
-                  <div class="media wow fadeInDown"> <a href="/single-page" class="media-left"> <img alt="" src="/images/post_img2.jpg"> </a>
-                    <div class="media-body"> <a href="/single-page" class="catg_title"> Aliquam malesuada diam eget turpis varius 2</a> </div>
-                  </div>
-                </li>
-                <li>
-                  <div class="media wow fadeInDown"> <a href="/single-page" class="media-left"> <img alt="" src="/images/post_img1.jpg"> </a>
-                    <div class="media-body"> <a href="/single-page" class="catg_title"> Aliquam malesuada diam eget turpis varius 3</a> </div>
-                  </div>
-                </li>
-                <li>
-                  <div class="media wow fadeInDown"> <a href="/single-page" class="media-left"> <img alt="" src="/images/post_img2.jpg"> </a>
-                    <div class="media-body"> <a href="/single-page" class="catg_title"> Aliquam malesuada diam eget turpis varius 4</a> </div>
-                  </div>
-                </li>
-              </ul>
-            </div>
-          </div> -->
-
-          </div>
-
-    </section>
-    <footer id="footer">
-      <div class="footer_top">
-        <div class="row">
-          <div class="col-lg-4 col-md-4 col-sm-4">
-            <div class="footer_widget wow fadeInLeftBig">
-              <h2>Category</h2>
-              <ul class="tag_nav">
-                <li><a href="#">Games</a></li>
-                <li><a href="#">Sports</a></li>
-                <li><a href="#">Fashion</a></li>
-                <li><a href="#">Business</a></li>
-                <li><a href="#">Life &amp; Style</a></li>
-                <li><a href="#">Technology</a></li>
-                <li><a href="#">Photo</a></li>
-                <li><a href="#">Slider</a></li>
-              </ul>
-            </div>
-          </div>
-          <div class="col-lg-4 col-md-4 col-sm-4">
-            <div class="footer_widget wow fadeInDown">
-              <h2>Address</h2>
-              227 Nguyễn Văn Cừ, Quận 5, Thành phố Hồ Chí Minh
-            </div>
-          </div>
-          <div class="col-lg-4 col-md-4 col-sm-4">
-            <div class="footer_widget wow fadeInRightBig">
-              <h2>Contact</h2>
-              <p>1612421 Nguyễn Ngọc Nghĩa</p>
-              <p>1612424 Đặng Ngọc Nghĩa</p>
-              <p>1612425 Tạ Đăng Hiếu Nghĩa</p>
-              <address>
-                Ho Chi Minh City University of Science, VietNam
-              </address>
-            </div>
-          </div>
-        </div>
-      </div>
-      <div class="footer_bottom">
-        <p class="copyright">Copyright &copy; <a href="/"></a></p>
-        <p class="developer"></p>
-      </div>
-    </footer>
+      </aside>
+    </div>
   </div>
-  <script src="/assets/js/jquery.min.js"></script>
-  <script src="/assets/js/wow.min.js"></script>
-  <script src="/assets/js/bootstrap.min.js"></script>
-  <script src="/assets/js/slick.min.js"></script>
-  <script src="/assets/js/jquery.li-scroller.1.0.js"></script>
-  <script src="/assets/js/jquery.newsTicker.min.js"></script>
-  <script src="/assets/js/jquery.fancybox.pack.js"></script>
-  <script src="/assets/js/custom.js"></script>
-  <script src="https://unpkg.com/ionicons@4.5.5/dist/ionicons.js"></script>
-</body>
-
-</html>
+</section>
+<section id="contentSection">
+  <div class="row">
+    <div class="col-lg-8 col-md-8 col-sm-8">
+      <div class="left_content">
+        <!-- <div class="single_post_content">
+        <h2><span>Kinh doanh</span></h2>
+        <div class="single_post_content_left">
+          <ul class="business_catgnav  wow fadeInDown">
+            <li>
+              <figure class="bsbig_fig"> <a href="/single-page" class="featured_img"> <img alt="" src="/images/featured_img1.jpg"> <span class="overlay"></span> </a>
+                <figcaption> <a href="/single-page">Proin rhoncus consequat nisl eu ornare mauris</a> </figcaption>
+                <p>Nunc tincidunt, elit non cursus euismod, lacus augue ornare metus, egestas imperdiet nulla nisl quis mauris. Suspendisse a phare...</p>
+              </figure>
+            </li>
+          </ul>
+        </div>
+        <div class="single_post_content_right">
+          <ul class="spost_nav">
+            <li>
+              <div class="media wow fadeInDown"> <a href="/single-page" class="media-left"> <img alt="" src="/images/post_img1.jpg"> </a>
+                <div class="media-body"> <a href="/single-page" class="catg_title"> Aliquam malesuada diam eget turpis varius 1</a> </div>
+              </div>
+            </li>
+            <li>
+              <div class="media wow fadeInDown"> <a href="/single-page" class="media-left"> <img alt="" src="/images/post_img2.jpg"> </a>
+                <div class="media-body"> <a href="/single-page" class="catg_title"> Aliquam malesuada diam eget turpis varius 2</a> </div>
+              </div>
+            </li>
+            <li>
+              <div class="media wow fadeInDown"> <a href="/single-page" class="media-left"> <img alt="" src="/images/post_img1.jpg"> </a>
+                <div class="media-body"> <a href="/single-page" class="catg_title"> Aliquam malesuada diam eget turpis varius 3</a> </div>
+              </div>
+            </li>
+            <li>
+              <div class="media wow fadeInDown"> <a href="/single-page" class="media-left"> <img alt="" src="/images/post_img2.jpg"> </a>
+                <div class="media-body"> <a href="/single-page" class="catg_title"> Aliquam malesuada diam eget turpis varius 4</a> </div>
+              </div>
+            </li>
+          </ul>
+        </div>
+      </div> -->
+      </div>
+</section>
