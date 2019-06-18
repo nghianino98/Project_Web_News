@@ -7,6 +7,7 @@ const articles = require('../models/article');
 const intlData = {
   "locales": "en-US"
 };
+
 /* GET home page. */
 router.get('/', (req, res, next) => {
 
@@ -218,5 +219,71 @@ router.get('/list-articles/categorymain/:id', (req, res, next) => {
 router.get('/contact', (req, res, next) => {
   res.render('contact');
 });
+
+//Search
+
+router.get('/search',(req,res,next)=>{
+  
+  let text = req.query.text;
+
+  // let limit = 3;
+
+  // let offset = 0;
+
+  // articles.search(text,limit,offset).then(succ=>{
+  //   // res.status(200).json(succ);
+  //   let listArticles = succ;
+  //   res.render('list_articles', {
+  //     listArticles,
+  //     title: 'Express',
+  //     data: {intl: intlData}
+  //   });
+    
+  // })
+  // .catch(err=>{
+  //   console.log(err);
+  // })
+  let page = req.query.page || 1;
+
+  if (page < 1) page = 1;
+
+  let limit = 6;
+
+  let offset = (page-1)*limit;
+
+  Promise.all([
+    articles.search(text,limit,offset),
+    articles.countsearch(text)
+  ]).then(([rows,count_rows])=>{
+    
+    let total = count_rows;
+    let nPages = Math.floor(total/limit);
+    if(total % limit > 0) nPages++;
+
+    let pages = [];
+    for(i=1;i<=nPages;i++){
+      if(i > 1 && i < nPages)
+        obj = {value:i, valuepre:i-1, valuenext: i+1  , active: i === +page};
+      else if( i==1 )
+        obj = {value:i, valuenext: i+1  , active: i === +page};
+      else if (i == nPages)
+        obj = {value:i,  valuepre:i-1 , active: i === +page};
+      pages.push(obj);
+      
+    }
+
+    console.log(pages);
+
+    res.render('list_articles', {
+      text,
+      search: true,
+      pages,
+      listArticles: rows,
+      title: 'Express',
+      data: {intl: intlData}
+    });
+  })
+
+})
 
 module.exports = router;

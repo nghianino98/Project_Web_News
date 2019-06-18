@@ -50,8 +50,8 @@
                   class="mobile-show">Home</span></a></li>
 
             {{#each listCateMain}}
-            <li class="dropdown"> <a href="/list-articles/categoryMain/{{_id}}" class="dropdown-toggle" data-toggle="dropdown" role="button"
-                aria-expanded="false">{{categoryName}}</a>
+            <li class="dropdown"> <a href="/list-articles/categoryMain/{{_id}}" class="dropdown-toggle"
+                data-toggle="dropdown" role="button" aria-expanded="false">{{categoryName}}</a>
               <ul class="dropdown-menu" role="menu">
                 {{!-- <li><a href="#">Chính trị</a></li>
                 <li><a href="#">Phóng sự - Ký sự</a></li>
@@ -65,9 +65,9 @@
             </li>
             {{/each}}
           </ul>
-          <form class="search-bar">
-            <input class="search-box form-control" type="search" placeholder="Search.." aria-label="Search">
-            <button type="submit" class="search-button btn btn-info">
+          <form id="searchbar" method="GET" action="/search" class="search-bar">
+            <input name="text" class="search-box form-control" type="search" placeholder="Search.." aria-label="Search">
+            <button type="submit" form="searchbar" class="search-button btn btn-info">
               <span class="glyphicon glyphicon-search"></span>
             </button>
           </form>
@@ -179,23 +179,25 @@
       <div class="row">
         <div class="col-lg-8 col-md-8 col-sm-8">
           <div class="left_content">
-            
+
             <div class="fashion_technology_area">
               {{!-- top 1 --}}
-            {{#if articleTopCate1}}
+              {{#if articleTopCate1}}
               <div class="fashion">
                 <div class="single_post_content">
                   <h2><span>{{articleTopCate1.categorySub.categoryName}}</span></h2>
                   <ul class="business_catgnav wow fadeInDown">
                     <li>
-                      <figure class="bsbig_fig"> <a href="/single-page/{{articleTopCate1._id}}" class="featured_img"> <img alt=""
-                            src="images/featured_img2.jpg"> <span class="overlay"></span> </a>
-                        <figcaption> <a href="/single-page/{{articleTopCate1._id}}">{{articleTopCate1.title}}</a> </figcaption>
+                      <figure class="bsbig_fig"> <a href="/single-page/{{articleTopCate1._id}}" class="featured_img">
+                          <img alt="" src="images/featured_img2.jpg"> <span class="overlay"></span> </a>
+                        <figcaption> <a href="/single-page/{{articleTopCate1._id}}">{{articleTopCate1.title}}</a>
+                        </figcaption>
                         <!-- <p>Nunc tincidunt, elit non cursus euismod, lacus augue ornare metus, egestas imperdiet nulla nisl quis mauris. Suspendisse a phare...</p> -->
                         <div>
                           {{!-- <a href="" class="">Chuyên mục</a> - --}}
                           <i class="fas fa-eye"></i> {{articleTopCate1.views}} lượt xem
-                          <span class="" title="" data-second=""> <i class="fas fa-clock"></i>  {{formatDate articleTopCate1.writeDate day="numeric" month="long" year="numeric"}} </span>
+                          <span class="" title="" data-second=""> <i class="fas fa-clock"></i>
+                            {{formatDate articleTopCate1.writeDate day="numeric" month="long" year="numeric"}} </span>
                         </div>
                       </figure>
                     </li>
@@ -203,22 +205,24 @@
 
                 </div>
               </div>
-            {{/if}}
-            {{!-- top 2 --}}
-            {{#if articleTopCate2}}
+              {{/if}}
+              {{!-- top 2 --}}
+              {{#if articleTopCate2}}
               <div class="technology">
                 <div class="single_post_content">
                   <h2><span>{{articleTopCate2.categorySub.categoryName}}</span></h2>
                   <ul class="business_catgnav wow fadeInDown">
                     <li>
-                      <figure class="bsbig_fig"> <a href="/single-page/{{articleTopCate2._id}}" class="featured_img"> <img alt=""
-                            src="images/featured_img2.jpg"> <span class="overlay"></span> </a>
-                        <figcaption> <a href="/single-page/{{articleTopCate2._id}}">{{articleTopCate2.title}}</a> </figcaption>
+                      <figure class="bsbig_fig"> <a href="/single-page/{{articleTopCate2._id}}" class="featured_img">
+                          <img alt="" src="images/featured_img2.jpg"> <span class="overlay"></span> </a>
+                        <figcaption> <a href="/single-page/{{articleTopCate2._id}}">{{articleTopCate2.title}}</a>
+                        </figcaption>
                         <!-- <p>Nunc tincidunt, elit non cursus euismod, lacus augue ornare metus, egestas imperdiet nulla nisl quis mauris. Suspendisse a phare...</p> -->
                         <div>
                           {{!-- <a href="" class="">Chuyên mục</a> - --}}
                           <i class="fas fa-eye"></i> {{articleTopCate2.views}} lượt xem
-                          <span class="" title="" data-second=""> <i class="fas fa-clock"></i>  {{formatDate articleTopCate2.writeDate day="numeric" month="long" year="numeric"}} </span>
+                          <span class="" title="" data-second=""> <i class="fas fa-clock"></i>
+                            {{formatDate articleTopCate2.writeDate day="numeric" month="long" year="numeric"}} </span>
                         </div>
                       </figure>
                     </li>
@@ -226,26 +230,28 @@
                 </div>
 
               </div>
-            {{/if}}
-              
+              {{/if}}
+
             </div>
 
             <div class="fashion_technology_area">
               {{!-- top 3 --}}
-            {{#if articleTopCate3}}
+              {{#if articleTopCate3}}
               <div class="fashion">
                 <div class="single_post_content">
                   <h2><span>{{articleTopCate3.categorySub.categoryName}}</span></h2>
                   <ul class="business_catgnav wow fadeInDown">
                     <li>
-                      <figure class="bsbig_fig"> <a href="/single-page/{{articleTopCate3._id}}" class="featured_img"> <img alt=""
-                            src="images/featured_img2.jpg"> <span class="overlay"></span> </a>
-                        <figcaption> <a href="/single-page/{{articleTopCate3._id}}">{{articleTopCate3.title}}</a> </figcaption>
+                      <figure class="bsbig_fig"> <a href="/single-page/{{articleTopCate3._id}}" class="featured_img">
+                          <img alt="" src="images/featured_img2.jpg"> <span class="overlay"></span> </a>
+                        <figcaption> <a href="/single-page/{{articleTopCate3._id}}">{{articleTopCate3.title}}</a>
+                        </figcaption>
                         <!-- <p>Nunc tincidunt, elit non cursus euismod, lacus augue ornare metus, egestas imperdiet nulla nisl quis mauris. Suspendisse a phare...</p> -->
                         <div>
                           {{!-- <a href="" class="">Chuyên mục</a> - --}}
                           <i class="fas fa-eye"></i> {{articleTopCate3.views}} lượt xem
-                          <span class="" title="" data-second=""> <i class="fas fa-clock"></i>  {{formatDate articleTopCate3.writeDate day="numeric" month="long" year="numeric"}} </span>
+                          <span class="" title="" data-second=""> <i class="fas fa-clock"></i>
+                            {{formatDate articleTopCate3.writeDate day="numeric" month="long" year="numeric"}} </span>
                         </div>
                       </figure>
                     </li>
@@ -253,22 +259,24 @@
 
                 </div>
               </div>
-            {{/if}}
-            {{!-- top 4--}}
-            {{#if articleTopCate4}}
+              {{/if}}
+              {{!-- top 4--}}
+              {{#if articleTopCate4}}
               <div class="technology">
                 <div class="single_post_content">
                   <h2><span>{{articleTopCate4.categorySub.categoryName}}</span></h2>
                   <ul class="business_catgnav wow fadeInDown">
                     <li>
-                      <figure class="bsbig_fig"> <a href="/single-page/{{articleTopCate4._id}}" class="featured_img"> <img alt=""
-                            src="images/featured_img2.jpg"> <span class="overlay"></span> </a>
-                        <figcaption> <a href="/single-page/{{articleTopCate4._id}}">{{articleTopCate4.title}}</a> </figcaption>
+                      <figure class="bsbig_fig"> <a href="/single-page/{{articleTopCate4._id}}" class="featured_img">
+                          <img alt="" src="images/featured_img2.jpg"> <span class="overlay"></span> </a>
+                        <figcaption> <a href="/single-page/{{articleTopCate4._id}}">{{articleTopCate4.title}}</a>
+                        </figcaption>
                         <!-- <p>Nunc tincidunt, elit non cursus euismod, lacus augue ornare metus, egestas imperdiet nulla nisl quis mauris. Suspendisse a phare...</p> -->
                         <div>
                           {{!-- <a href="" class="">Chuyên mục</a> - --}}
                           <i class="fas fa-eye"></i> {{articleTopCate4.views}} lượt xem
-                          <span class="" title="" data-second=""> <i class="fas fa-clock"></i>  {{formatDate articleTopCate4.writeDate day="numeric" month="long" year="numeric"}} </span>
+                          <span class="" title="" data-second=""> <i class="fas fa-clock"></i>
+                            {{formatDate articleTopCate4.writeDate day="numeric" month="long" year="numeric"}} </span>
                         </div>
                       </figure>
                     </li>
@@ -276,26 +284,28 @@
                 </div>
 
               </div>
-            {{/if}}
-              
+              {{/if}}
+
             </div>
 
             <div class="fashion_technology_area">
               {{!-- top 5 --}}
-            {{#if articleTopCate5}}
+              {{#if articleTopCate5}}
               <div class="fashion">
                 <div class="single_post_content">
                   <h2><span>{{articleTopCate5.categorySub.categoryName}}</span></h2>
                   <ul class="business_catgnav wow fadeInDown">
                     <li>
-                      <figure class="bsbig_fig"> <a href="/single-page/{{articleTopCate5._id}}" class="featured_img"> <img alt=""
-                            src="images/featured_img2.jpg"> <span class="overlay"></span> </a>
-                        <figcaption> <a href="/single-page/{{articleTopCate5._id}}">{{articleTopCate5.title}}</a> </figcaption>
+                      <figure class="bsbig_fig"> <a href="/single-page/{{articleTopCate5._id}}" class="featured_img">
+                          <img alt="" src="images/featured_img2.jpg"> <span class="overlay"></span> </a>
+                        <figcaption> <a href="/single-page/{{articleTopCate5._id}}">{{articleTopCate5.title}}</a>
+                        </figcaption>
                         <!-- <p>Nunc tincidunt, elit non cursus euismod, lacus augue ornare metus, egestas imperdiet nulla nisl quis mauris. Suspendisse a phare...</p> -->
                         <div>
                           {{!-- <a href="" class="">Chuyên mục</a> - --}}
                           <i class="fas fa-eye"></i> {{articleTopCate5.views}} lượt xem
-                          <span class="" title="" data-second=""> <i class="fas fa-clock"></i>  {{formatDate articleTopCate5.writeDate day="numeric" month="long" year="numeric"}} </span>
+                          <span class="" title="" data-second=""> <i class="fas fa-clock"></i>
+                            {{formatDate articleTopCate5.writeDate day="numeric" month="long" year="numeric"}} </span>
                         </div>
                       </figure>
                     </li>
@@ -303,22 +313,24 @@
 
                 </div>
               </div>
-            {{/if}}
-            {{!-- top 6 --}}
-            {{#if articleTopCate6}}
+              {{/if}}
+              {{!-- top 6 --}}
+              {{#if articleTopCate6}}
               <div class="technology">
                 <div class="single_post_content">
                   <h2><span>{{articleTopCate6.categorySub.categoryName}}</span></h2>
                   <ul class="business_catgnav wow fadeInDown">
                     <li>
-                      <figure class="bsbig_fig"> <a href="/single-page/{{articleTopCate6._id}}" class="featured_img"> <img alt=""
-                            src="images/featured_img2.jpg"> <span class="overlay"></span> </a>
-                        <figcaption> <a href="/single-page/{{articleTopCate6._id}}">{{articleTopCate6.title}}</a> </figcaption>
+                      <figure class="bsbig_fig"> <a href="/single-page/{{articleTopCate6._id}}" class="featured_img">
+                          <img alt="" src="images/featured_img2.jpg"> <span class="overlay"></span> </a>
+                        <figcaption> <a href="/single-page/{{articleTopCate6._id}}">{{articleTopCate6.title}}</a>
+                        </figcaption>
                         <!-- <p>Nunc tincidunt, elit non cursus euismod, lacus augue ornare metus, egestas imperdiet nulla nisl quis mauris. Suspendisse a phare...</p> -->
                         <div>
                           {{!-- <a href="" class="">Chuyên mục</a> - --}}
                           <i class="fas fa-eye"></i> {{articleTopCate6.views}} lượt xem
-                          <span class="" title="" data-second=""> <i class="fas fa-clock"></i>  {{formatDate articleTopCate6.writeDate day="numeric" month="long" year="numeric"}} </span>
+                          <span class="" title="" data-second=""> <i class="fas fa-clock"></i>
+                            {{formatDate articleTopCate6.writeDate day="numeric" month="long" year="numeric"}} </span>
                         </div>
                       </figure>
                     </li>
@@ -326,25 +338,27 @@
                 </div>
 
               </div>
-            {{/if}}
-              
+              {{/if}}
+
             </div>
             <div class="fashion_technology_area">
               {{!-- top 7 --}}
-            {{#if articleTopCate7}}
+              {{#if articleTopCate7}}
               <div class="fashion">
                 <div class="single_post_content">
                   <h2><span>{{articleTopCate7.categorySub.categoryName}}</span></h2>
                   <ul class="business_catgnav wow fadeInDown">
                     <li>
-                      <figure class="bsbig_fig"> <a href="/single-page/{{articleTopCate7._id}}" class="featured_img"> <img alt=""
-                            src="images/featured_img2.jpg"> <span class="overlay"></span> </a>
-                        <figcaption> <a href="/single-page/{{articleTopCate7._id}}">{{articleTopCate7.title}}</a> </figcaption>
+                      <figure class="bsbig_fig"> <a href="/single-page/{{articleTopCate7._id}}" class="featured_img">
+                          <img alt="" src="images/featured_img2.jpg"> <span class="overlay"></span> </a>
+                        <figcaption> <a href="/single-page/{{articleTopCate7._id}}">{{articleTopCate7.title}}</a>
+                        </figcaption>
                         <!-- <p>Nunc tincidunt, elit non cursus euismod, lacus augue ornare metus, egestas imperdiet nulla nisl quis mauris. Suspendisse a phare...</p> -->
                         <div>
                           {{!-- <a href="" class="">Chuyên mục</a> - --}}
                           <i class="fas fa-eye"></i> {{articleTopCate7.views}} lượt xem
-                          <span class="" title="" data-second=""> <i class="fas fa-clock"></i>  {{formatDate articleTopCate7.writeDate day="numeric" month="long" year="numeric"}} </span>
+                          <span class="" title="" data-second=""> <i class="fas fa-clock"></i>
+                            {{formatDate articleTopCate7.writeDate day="numeric" month="long" year="numeric"}} </span>
                         </div>
                       </figure>
                     </li>
@@ -352,22 +366,24 @@
 
                 </div>
               </div>
-            {{/if}}
-            {{!-- top 8 --}}
-            {{#if articleTopCate8}}
+              {{/if}}
+              {{!-- top 8 --}}
+              {{#if articleTopCate8}}
               <div class="technology">
                 <div class="single_post_content">
                   <h2><span>{{articleTopCate8.categorySub.categoryName}}</span></h2>
                   <ul class="business_catgnav wow fadeInDown">
                     <li>
-                      <figure class="bsbig_fig"> <a href="/single-page/{{articleTopCate8._id}}" class="featured_img"> <img alt=""
-                            src="images/featured_img2.jpg"> <span class="overlay"></span> </a>
-                        <figcaption> <a href="/single-page/{{articleTopCate8._id}}">{{articleTopCate8.title}}</a> </figcaption>
+                      <figure class="bsbig_fig"> <a href="/single-page/{{articleTopCate8._id}}" class="featured_img">
+                          <img alt="" src="images/featured_img2.jpg"> <span class="overlay"></span> </a>
+                        <figcaption> <a href="/single-page/{{articleTopCate8._id}}">{{articleTopCate8.title}}</a>
+                        </figcaption>
                         <!-- <p>Nunc tincidunt, elit non cursus euismod, lacus augue ornare metus, egestas imperdiet nulla nisl quis mauris. Suspendisse a phare...</p> -->
                         <div>
                           {{!-- <a href="" class="">Chuyên mục</a> - --}}
                           <i class="fas fa-eye"></i> {{articleTopCate8.views}} lượt xem
-                          <span class="" title="" data-second=""> <i class="fas fa-clock"></i>  {{formatDate articleTopCate8.writeDate day="numeric" month="long" year="numeric"}} </span>
+                          <span class="" title="" data-second=""> <i class="fas fa-clock"></i>
+                            {{formatDate articleTopCate8.writeDate day="numeric" month="long" year="numeric"}} </span>
                         </div>
                       </figure>
                     </li>
@@ -375,25 +391,27 @@
                 </div>
 
               </div>
-            {{/if}}
-              
+              {{/if}}
+
             </div>
             <div class="fashion_technology_area">
               {{!-- top9 --}}
-            {{#if articleTopCate9}}
+              {{#if articleTopCate9}}
               <div class="fashion">
                 <div class="single_post_content">
                   <h2><span>{{articleTopCate9.categorySub.categoryName}}</span></h2>
                   <ul class="business_catgnav wow fadeInDown">
                     <li>
-                      <figure class="bsbig_fig"> <a href="/single-page/{{articleTopCate9._id}}" class="featured_img"> <img alt=""
-                            src="images/featured_img2.jpg"> <span class="overlay"></span> </a>
-                        <figcaption> <a href="/single-page/{{articleTopCate9._id}}">{{articleTopCate9.title}}</a> </figcaption>
+                      <figure class="bsbig_fig"> <a href="/single-page/{{articleTopCate9._id}}" class="featured_img">
+                          <img alt="" src="images/featured_img2.jpg"> <span class="overlay"></span> </a>
+                        <figcaption> <a href="/single-page/{{articleTopCate9._id}}">{{articleTopCate9.title}}</a>
+                        </figcaption>
                         <!-- <p>Nunc tincidunt, elit non cursus euismod, lacus augue ornare metus, egestas imperdiet nulla nisl quis mauris. Suspendisse a phare...</p> -->
                         <div>
                           {{!-- <a href="" class="">Chuyên mục</a> - --}}
                           <i class="fas fa-eye"></i> {{articleTopCate9.views}} lượt xem
-                          <span class="" title="" data-second=""> <i class="fas fa-clock"></i>  {{formatDate articleTopCate9.writeDate day="numeric" month="long" year="numeric"}} </span>
+                          <span class="" title="" data-second=""> <i class="fas fa-clock"></i>
+                            {{formatDate articleTopCate9.writeDate day="numeric" month="long" year="numeric"}} </span>
                         </div>
                       </figure>
                     </li>
@@ -401,22 +419,24 @@
 
                 </div>
               </div>
-            {{/if}}
-            {{!-- top 10 --}}
-            {{#if articleTopCate10}}
+              {{/if}}
+              {{!-- top 10 --}}
+              {{#if articleTopCate10}}
               <div class="technology">
                 <div class="single_post_content">
                   <h2><span>{{articleTopCate10.categorySub.categoryName}}</span></h2>
                   <ul class="business_catgnav wow fadeInDown">
                     <li>
-                      <figure class="bsbig_fig"> <a href="/single-page/{{articleTopCate10._id}}" class="featured_img"> <img alt=""
-                            src="images/featured_img2.jpg"> <span class="overlay"></span> </a>
-                        <figcaption> <a href="/single-page/{{articleTopCate10._id}}">{{articleTopCate10.title}}</a> </figcaption>
+                      <figure class="bsbig_fig"> <a href="/single-page/{{articleTopCate10._id}}" class="featured_img">
+                          <img alt="" src="images/featured_img2.jpg"> <span class="overlay"></span> </a>
+                        <figcaption> <a href="/single-page/{{articleTopCate10._id}}">{{articleTopCate10.title}}</a>
+                        </figcaption>
                         <!-- <p>Nunc tincidunt, elit non cursus euismod, lacus augue ornare metus, egestas imperdiet nulla nisl quis mauris. Suspendisse a phare...</p> -->
                         <div>
                           {{!-- <a href="" class="">Chuyên mục</a> - --}}
                           <i class="fas fa-eye"></i> {{articleTopCate10.views}} lượt xem
-                          <span class="" title="" data-second=""> <i class="fas fa-clock"></i>  {{formatDate articleTopCate10.writeDate day="numeric" month="long" year="numeric"}} </span>
+                          <span class="" title="" data-second=""> <i class="fas fa-clock"></i>
+                            {{formatDate articleTopCate10.writeDate day="numeric" month="long" year="numeric"}} </span>
                         </div>
                       </figure>
                     </li>
@@ -424,10 +444,10 @@
                 </div>
 
               </div>
-            {{/if}}
-              
+              {{/if}}
+
             </div>
-            
+
 
           </div>
         </div>
@@ -467,14 +487,19 @@
             <div class="footer_widget wow fadeInLeftBig">
               <h2>Category</h2>
               <ul class="tag_nav">
-                <li><a href="#">Games</a></li>
+                {{!-- <li><a href="#">Games</a></li>
                 <li><a href="#">Sports</a></li>
                 <li><a href="#">Fashion</a></li>
                 <li><a href="#">Business</a></li>
                 <li><a href="#">Life &amp; Style</a></li>
                 <li><a href="#">Technology</a></li>
                 <li><a href="#">Photo</a></li>
-                <li><a href="#">Slider</a></li>
+                <li><a href="#">Slider</a></li> --}}
+                {{#each listCateMain}}
+                {{#each arrayOfCategorySub}}
+                <li><a href="/list-articles/category/{{_id}}">{{../categoryName}} / {{categoryName}}</a></li>
+                {{/each}}
+                {{/each}}
               </ul>
             </div>
           </div>

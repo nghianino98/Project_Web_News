@@ -60,9 +60,9 @@
             </li>
             {{/each}}
           </ul>
-          <form class="search-bar">
-            <input class="search-box form-control" type="search" placeholder="Search.." aria-label="Search">
-            <button type="submit" class="search-button btn btn-info">
+          <form id="searchbar" method="GET" action="/search" class="search-bar">
+            <input name="text" class="search-box form-control" type="search" placeholder="Search.." aria-label="Search">
+            <button type="submit" form="searchbar" class="search-button btn btn-info">
               <span class="glyphicon glyphicon-search"></span>
             </button>
           </form>
@@ -128,7 +128,7 @@
                     <a href="/list-articles/category/{{categorySub._id}}" class="">
                       <b>{{categorySub.categoryName}}</b>
                     </a> -
-                    <i class="material-icons md-small">today</i>
+                    <i class="material-icons md-medium">today</i>
                     <span class="" title="" data-second="">
                       {{formatDate writeDate day="numeric" month="long" year="numeric"}} </span>
                   </div>
@@ -149,6 +149,7 @@
             {{/each}}
           </div>
           <nav aria-label="...">
+            {{#unless search}}
             <ul class="pagination">
               {{#each this.pages}}
               {{#if active}}
@@ -175,19 +176,62 @@
               {{/if}}
               {{/each}}
               {{#each this.pages}}
-                {{#if active}}
-                  {{#if valuenext}}
-                  <li class="page-item">
-                    <a class="page-link" href="?page={{valuenext}}" tabindex="-1" aria-disabled="true">Next</a>
-                  </li>
-                  {{else}}
-                  <li class="page-item disabled">
-                    <a class="page-link" tabindex="-1" aria-disabled="true">Next</a>
-                  </li>
-                  {{/if}}
-                {{/if}}
+              {{#if active}}
+              {{#if valuenext}}
+              <li class="page-item">
+                <a class="page-link" href="?page={{valuenext}}" tabindex="-1" aria-disabled="true">Next</a>
+              </li>
+              {{else}}
+              <li class="page-item disabled">
+                <a class="page-link" tabindex="-1" aria-disabled="true">Next</a>
+              </li>
+              {{/if}}
+              {{/if}}
               {{/each}}
             </ul>
+            {{else}}
+
+            <ul class="pagination">
+              {{#each this.pages}}
+              {{#if active}}
+              {{#if valuepre}}
+              <li class="page-item">
+                <a class="page-link" href="?text={{../text}}&page={{valuepre}}" tabindex="-1" aria-disabled="true">Previous</a>
+              </li>
+              {{else}}
+              <li class="page-item disabled">
+                <a class="page-link" tabindex="-1" aria-disabled="true">Previous</a>
+              </li>
+              {{/if}}
+              {{/if}}
+              {{/each}}
+              {{#each this.pages}}
+              {{#if active}}
+              <li class="page-item active" aria-current="page">
+                <a class="page-link" href="javascript:;">{{value}} <span class="sr-only">(current)</span></a>
+              </li>
+              {{else}}
+              <li class="page-item">
+                <a class="page-link" href="?text={{../text}}&page={{value}}">{{value}}</a>
+              </li>
+              {{/if}}
+              {{/each}}
+              {{#each this.pages}}
+              {{#if active}}
+              {{#if valuenext}}
+              <li class="page-item">
+                <a class="page-link" href="?text={{../text}}&page={{valuenext}}" tabindex="-1" aria-disabled="true">Next</a>
+              </li>
+              {{else}}
+              <li class="page-item disabled">
+                <a class="page-link" tabindex="-1" aria-disabled="true">Next</a>
+              </li>
+              {{/if}}
+              {{/if}}
+              {{/each}}
+            </ul>
+
+            {{/unless}}
           </nav>
         </div>
         <div class="col-lg-4 col-md-4 col-sm-4">
