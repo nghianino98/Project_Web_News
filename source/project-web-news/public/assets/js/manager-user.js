@@ -25,7 +25,7 @@ function handleChangeFile() {
             $('#save-avatar-btn').prop('disabled', false);
             $('#cancel-avatar-btn').prop('disabled', false);
         };
-
+        
         reader.readAsDataURL(this.files[0]);
     }
 }

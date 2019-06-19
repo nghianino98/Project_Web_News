@@ -1,6 +1,8 @@
 const express = require('express');
 const router = express.Router();
 const checkRole = require('../middleware/check-role');
+const multer = require('../config/multer-disk-storage');
+const sharp = require('sharp');
 
 const article = require('../models/article');
 const categorySub = require('../models/categorySub')
@@ -40,7 +42,8 @@ router.get('/post', (req, res, next) => {
                     hasSuccess: success.length > 0,
                     hasCustomCSS: true,
                     partial: function () { return 'manager-user-css' },
-                    tags: tags
+                    tags: tags,
+                    key: 'fit-hcmus'
                 });
             }).catch(err => {
                 err.status = 500;
@@ -58,10 +61,15 @@ router.get('/post/:id', (req, res, next) => {
 
     article.findById(id)
         .then(succ => {
-            console.log(succ);
             categorySub.find().then(list => {
+                
+                var tags = [];
 
-                Tag.findExceptId(succ.arrayOfTags.map(item => item.id))
+                if (succ.arrayOfTags) {
+                    tag = succ.arrayOfTags.map(item => item.id);
+                }
+
+                Tag.findExceptId(tags)
                     .then(tags => {
                         let topic = "Chỉnh sửa bài viết";
                         res.render('writer/writer',
@@ -95,31 +103,30 @@ router.get('/post/:id', (req, res, next) => {
 });
 
 
-router.post('/post', (req, res, next) => {
+router.post('/post', multer.single('avatar'), (req, res, next) => {
 
     var entity = req.body;
     var accountID = req.user.id;
 
-    article.add(entity, accountID)
+    if (!req.file) {
+        return res.status(500).json({message: 'Something wrong !!!'});
+    }
+
+    entity.bigAvatar = req.file.path.substring(req.file.path.indexOf('\\'));
+    entity.smallAvatar = '/uploads/thumbnail-' + req.file.filename;
+    console.log(entity.smallAvatar);
+
+    Promise.all([sharp(req.file.path).resize({width: 150}).toFile(`./public${entity.smallAvatar}`), article.add(entity, accountID)])
         .then(succ => {
             req.flash('successPost', 'Thêm bài viết thành công');
-            // res.status(200).json({message: 'successful'});
-            console.log(req.body);
-            const messagesSuccess = "Đã đăng bài có tiêu đề \" " + succ.title + " \" thành công";
-            // res.render('writer/writer', {actionpost:"/user/writer/post", action:"/user/writer/edit",actionpost:"/user/writer/post",topic: "Thêm bài viết" ,layout: 'writer-layout', title: 'writer', csrfToken: req.csrfToken(), messagesSuccess: messagesSuccess, success: true, failure: false });
-            res.redirect('/user/writer/post');
+            res.status(200).json({message: 'success'});
         })
         .catch(err => {
-            req.flash('errorPost', 'Thêm bài viết thất bại, thử lại sau.');
-            // res.status(500).json({message: 'Something wrong!'});
-            console.log(err);
-            const messagesFailure = err;
-            res.render('writer/writer', { actionpost: "/user/writer/post", layout: 'writer-layout', title: 'writer', csrfToken: req.csrfToken(), messagesFailure: messagesFailure, failure: true, success: false });
+            res.status(500).json({message: err.message});
         });
-
 });
 
-router.post('/edit', (req, res, next) => {
+router.post('/edit', multer.single('avatar'), (req, res, next) => {
 
     var entity = req.body;
     var accountID = req.user.id;

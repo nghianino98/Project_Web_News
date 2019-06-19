@@ -71,7 +71,7 @@ router.post('/login', notLoggedIn, passport.authenticate('local.login', {
 
     res.cookie('Authorization', 'Bearer ' + token, {httpOnly: true});
 
-    if (req.user.role === 'guest') {
+    if (req.user.role === 'subscriber') {
         res.redirect('/');
     } else {
         res.redirect(`/user/${req.user.role}`);

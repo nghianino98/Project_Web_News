@@ -10,7 +10,6 @@
   type="text/css" />
 
 <!-- Include external JS libs. -->
-<script src="../assets/jquery-3.3.1/jquery.min.js"></script>
 <script type="text/javascript"
   src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.25.0/codemirror.min.js"></script>
 <script type="text/javascript"
@@ -91,6 +90,18 @@
             <input type="text" id="writerMain" name="writerMain" value="{{article.writer}}" hidden>
         </div>
         <div class="col-md-auto">
+          <div class="col-md-3 col-12">
+              <div class="row justify-content-center">
+                  <img id="avatar" alt="User Pic" src="{{article.smallAvatar}}" class="img-thumbnail img-fluid">
+                  <div class="img-thumbnail" id="loading" hidden>
+                      <div class="spinner-border" role="status"></div>
+                  </div>
+                  <input type="file" name="file" id="file" hidden>
+              </div> 
+              <div class="row justify-content-center">
+              <button type="button" class="btn btn-sm btn-outline-warning fas fa-image m-1" onclick="handleChangeAvatar()"></button>
+              </div>
+          </div>
           <div class="card mb-3" style="max-width: 18rem;">
             <div class="card-header bg-light ">Đăng bài viêt</div>
             <div class="card-body">
@@ -207,6 +218,15 @@
 
         </div>
         <div class="col-md-auto">
+          <div class="col-md-3 col-12">
+            <div class="row justify-content-center">
+                <img id="avatar" alt="User Pic" src="/images/user.jpg" class="img-thumbnail img-fluid">
+                <input type="file" name="file" id="file" hidden>
+            </div> 
+            <div class="row justify-content-center">
+              <button type="button" class="btn btn-sm btn-outline-warning fas fa-image m-1" onclick="handleChangeAvatar()"></button>
+            </div>
+          </div>
           <div class="card mb-3" style="max-width: 18rem;">
             <div class="card-header bg-light ">Đăng bài viêt</div>
             <div class="card-body">
@@ -214,10 +234,7 @@
                 <label for="categorySub" class="col-12 col-form-label">Chọn chuyên mục</label>
                 <div class="col-8">
                   <select id="categorySub" name="categorySub" class="custom-select" required="required">
-                    {{!-- <option value="rabbit">Rabbit</option>
-                    <option value="duck">Duck</option>
-                    <option value="fish">Fish</option> --}}
-                    <option value="{{article.categorySub}}" selected>Chọn chuyên mục</option>
+                    <option value="" selected>Chọn chuyên mục</option>
                     {{#each listCategory}}
                     <option value="{{_id}}">{{categoryName}}</option>
                     {{/each}}
@@ -244,9 +261,7 @@
 
             </div>
             <div class="card-footer bg-light">
-              {{!-- <button type="button" class="btn btn-outline-secondary btn-sm">Preview</button> --}}
-              {{!-- <button type="button" class="btn btn-info btn-sm">Save Draft</button> --}}
-              <button type="submit" form="articleContent" class="btn btn-primary btn-sm">Save Draft</button>
+              <button id="submit" type="button" class="btn btn-primary btn-sm" onclick="handleSubmitPost('{{actionpost}}')">Save Draft</button>
             </div>
           </div>
 
@@ -261,3 +276,4 @@
 <script src="/javascript/chosen.jquery.min.js" type="text/javascript"></script>
 <script src="/javascript/prism.js" type="text/javascript" charset="utf-8"></script>
 <script src="/javascript/init.js" type="text/javascript" charset="utf-8"></script>
+<script src="/assets/js/writer-post.js" type="text/javascript"></script>
