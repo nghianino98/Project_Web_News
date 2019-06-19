@@ -9,6 +9,7 @@ const admin = require('../../models/user');
 const categoryMain = require('../../models/categoryMain');
 const categorySub = require('../../models/categorySub');
 const article = require('../../models/article');
+const Tag = require('../../models/tag');
 
 const managerTagRouter = require('./manager-tag');
 const managerUserRouter = require('./manager-user');
@@ -266,18 +267,26 @@ router.get('/edit/:id', (req, res, next) => {
     article.findById(req.params.id)
         .then(succ => {
             categorySub.find().then(list => {
-                console.log(succ);
-                let topic = "Chỉnh sửa bài viết";
-                res.render('writer/writer', {
-                    actionpost: "/user/admin/post", action: "/user/admin/edit", listCategory: list, article: succ, topic: topic,
-                    errors: errors,
-                    hasError: errors.length > 0,
-                    success: success,
-                    hasSuccess: success.length > 0,
-                    hasCustomCSS: true,
-                    partial: function () { return 'manager-user-css' },
-                    layout: 'admin-layout', title: 'writer', csrfToken: req.csrfToken()
+                Tag.find()
+                .then(tags => {
+                    let topic = "Chỉnh sửa bài viết";
+                    res.render('writer/writer', {
+                        admin: true,
+                        actionpost: "/user/admin/post", action: "/user/admin/edit", listCategory: list, article: succ, topic: topic,
+                        errors: errors,
+                        hasError: errors.length > 0,
+                        success: success,
+                        hasSuccess: success.length > 0,
+                        hasCustomCSS: true,
+                        partial: function () { return 'manager-user-css' },
+                        layout: 'admin-layout', title: 'writer', csrfToken: req.csrfToken(),
+                        tags:tags,
+                    });
+                }).catch(err => {
+                    err.status = 500;
+                    next(err);
                 });
+
             })
                 .catch(err => {
                     console.log(err);
@@ -328,29 +337,29 @@ router.delete('/delete-article', (req, res, next) => {
 router.get('/post', (req, res, next) => {
     const errors = req.flash('errorPost');
     const success = req.flash('successPost');
-
-    // article.findById(req.params.id)
-    //     .then(succ => {
-    categorySub.find().then(list => {
-        let topic = "Thêm bài viết";
-        res.render('writer/writer', {
-            actionpost: "/user/admin/post", action: "/user/admin/edit", listCategory: list, topic: topic,
-            errors: errors,
-            hasError: errors.length > 0,
-            success: success,
-            hasSuccess: success.length > 0,
-            layout: 'admin-layout', title: 'Admin', csrfToken: req.csrfToken()
-        });
+    categorySub.find().then(succ => {
+        Tag.find()
+            .then(tags => {
+                res.render('writer/writer', {
+                    actionpost: "/user/admin/post",
+                    action: "/user/admin/edit",
+                    listCategory: succ, topic: "Thêm bài viết", layout: 'admin-layout', title: 'Admin'
+                    , csrfToken: req.csrfToken(),
+                    errors: errors,
+                    hasError: errors.length > 0,
+                    success: success,
+                    hasSuccess: success.length > 0,
+                    hasCustomCSS: true,
+                    partial: function () { return 'manager-user-css' },
+                    tags: tags
+                });
+            }).catch(err => {
+                err.status = 500;
+                next(err);
+            });
+    }).catch(err => {
+        console.log(err);
     })
-        .catch(err => {
-            console.log(err);
-        })
-    // })
-    // .catch(err => {
-    //     console.log(err);
-    //     const messagesFailure = err;
-    //     res.render('writer/writer', { actionpost:"/user/admin/post", action:"/user/admin/edit",layout: 'admin-layout', title: 'writer', csrfToken: req.csrfToken(), messagesFailure: messagesFailure, failure: true, success: false });
-    // });
 })
 
 router.post('/post',(req,res,next)=>{
