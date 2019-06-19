@@ -72,11 +72,17 @@ router.get('/post/:id', (req, res, next) => {
                 return next(err);
             }
 
-            Tag.findExceptId(result[0].arrayOfTags.map(item => item.id))
+            var tags = [];
+
+            if (result[0].arrayOfTags) {
+                tag = result[0].arrayOfTags.map(item => item.id);
+            }
+
+            Tag.findExceptId(tags)
                 .then(tags => {
                     res.render('editor/details', {
                         layout: 'editor-layout',
-                        topic: 'Duyệt bài viết',
+                        topic: 'Chi tiết bài viết',
                         hasCustomCSS : true,
                         partial: function(){return 'manager-user-css'},
                         messages: messages,
@@ -167,7 +173,7 @@ router.get('/deny', (req, res, next) => {
         });
 });
 
-// POST user/editor/approve
+// POST /user/editor/approve
 router.post('/approve', (req, res, next) => {
     var propertiesUpdate = {
         arrayOfTags: req.body.tags,
@@ -179,13 +185,47 @@ router.post('/approve', (req, res, next) => {
     CategorySub.findDad(propertiesUpdate.categorySub) 
         .then(categorySub => {
             propertiesUpdate.categoryMain = categorySub.categoryMainID.id;
-            return Article.approve(req.body.id, propertiesUpdate);
+            return Article.update({_id: req.body.id}, propertiesUpdate);
         }).then(result => {
             req.flash('success', "Duyệt bài viết thành công.");
             res.status(200).json({message: 'success'});
         }).catch(err => {
             res.status(500).json({message: err.message});
         })
+});
+
+// POST /user/editor/deny
+router.post('/deny', (req, res, next) => {
+    var propertiesUpdate = {
+        status: 'rejected',
+        reasonForRefusing: req.body.reason,
+        postDate : null
+    }
+
+    Article.update({_id: req.body.id}, propertiesUpdate)
+        .then(result => {
+            req.flash('success', 'Từ chối bài viết thành công.');
+            res.status(200).json({message: 'success'});
+        }).catch(err => {
+            res.status(500).json({message: err.message});
+        });
+});
+
+// GET /user/editor/reason/:id
+router.get('/reason/:id', (req, res, next) => {
+    Article.getReasonForRefusingById(req.params.id)
+        .then(post => {
+            if (!post) {
+                var err = new Error();
+                err.status = 404;
+                err.message = 'Không tìm thấy bài viết';
+                return next(err);
+            }
+
+            res.status(200).json({reason: post.reasonForRefusing});
+        }).catch(err => {
+            res.status(500).json({message: err.message});
+        });
 });
 
 module.exports = router;
