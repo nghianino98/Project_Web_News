@@ -14,6 +14,17 @@ module.exports = {
             .exec();
     },
 
+    findById: (id) => {
+        return new Promise((resolve, reject) => {
+            tag.findById(id).exec((err, succ) => {
+                if (err)
+                    reject(err);
+                else
+                    resolve(succ);
+            })
+        });
+    },
+
     add: (name) => {
         return new Promise((resolve, reject) => {
             var obj = new tag({
