@@ -26,6 +26,8 @@ HandlebarsIntl.registerWith(Handlebars);
 // Tạo kết nối tới database
 require('./utils/db.connection');
 
+require('./utils/upload')(app);
+
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
 app.engine('.hbs', expressHbs({

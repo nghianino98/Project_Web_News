@@ -83,6 +83,15 @@
                 <script> $(function () { $('#content').froalaEditor() }); </script>
               </div>
             </div>
+            <div class="row form-group">
+                            <div class="col col-md-3"><label for="logo" class=" form-control-label">Logo</label></div>
+                            <div class="col-12 col-md-9">
+                                <div class="file-loading">
+                                    <input value=null id="logo" name="logo" type="file" multiple>
+                                </div>
+                            </div>
+                            <input type="hidden" id="imgPath" name="imgPath" value="">
+                        </div>
             <input type="text" id="_csrf" name="_csrf" value="{{csrfToken}}" hidden>
             <input type="text" id="_articleID" name="_articleID" value="{{article._id}}" hidden>
             <input type="text" id="categoryMain" name="categoryMain" value="{{article.categoryMain}}" hidden>
@@ -106,13 +115,13 @@
             <div class="card-header bg-light ">Đăng bài viêt</div>
             <div class="card-body">
               <div class="form-group row">
-                <label for="categorySub" class="col-12 col-form-label">Chọn chuyên mục</label>
+                <label for="categorySub" class="col-12 col-form-label">Chuyên mục {{article.categorySub.categoryName}}</label>
                 <div class="col-8">
                   <select id="categorySub" name="categorySub" class="custom-select" required="required">
                     {{!-- <option value="rabbit">Rabbit</option>
                     <option value="duck">Duck</option>
                     <option value="fish">Fish</option> --}}
-                    <option value="{{article.categorySub}}" selected>Chọn chuyên mục</option>
+                    <option value="{{article.categorySub._id}}" selected> Thay đổi </option>
                     {{#each listCategory}}
                     <option value="{{_id}}">{{categoryName}}</option>
                     {{/each}}
@@ -123,8 +132,8 @@
               <div class="form-group row">
                 <label for="select" class="col-12 col-form-label">Chọn tag</label>
                 <div class="col-8">
-                  <select class="form-control chosen-select" multiple tabindex="4" name="categoryEditor"
-                    id="categoryEditor" data-placeholder="Hãy chọn ít nhất một thẻ tag" style="width: 250px"
+                  <select class="form-control chosen-select" multiple tabindex="4" name="arrayOfTags"
+                    id="arrayOfTags" data-placeholder="Hãy chọn ít nhất một thẻ tag" style="width: 250px"
                     {{# if_equal mode "approve" }}{{ else }} {{/ if_equal }}>
                     <option value=""></option>
                     {{# each tags }}
@@ -214,6 +223,15 @@
                 <script> $(function () { $('#content').froalaEditor() }); </script>
               </div>
             </div>
+            <div class="row form-group">
+                            <div class="col col-md-3"><label for="logo" class=" form-control-label">Logo</label></div>
+                            <div class="col-12 col-md-9">
+                                <div class="file-loading">
+                                    <input value=null id="logo" name="logo" type="file" multiple>
+                                </div>
+                            </div>
+                            <input type="hidden" id="imgPath" name="imgPath" value="">
+                        </div>
             <input type="text" id="_csrf" name="_csrf" value="{{csrfToken}}" hidden>
 
         </div>
@@ -277,3 +295,6 @@
 <script src="/javascript/prism.js" type="text/javascript" charset="utf-8"></script>
 <script src="/javascript/init.js" type="text/javascript" charset="utf-8"></script>
 <script src="/assets/js/writer-post.js" type="text/javascript"></script>
+<script src="/assets/js/multiple.select.js" type="text/javascript"></script>
+
+<script src="/assets/js/upload.img.js" type="text/javascript"></script>

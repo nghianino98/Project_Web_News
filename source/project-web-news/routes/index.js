@@ -359,4 +359,55 @@ router.get('/list-articles/tag/:id', (req, res, next) => {
  
 });
 
+router.get('/single-page/:id', (req, res, next) => {
+  var idArticle = req.params.id;
+  Promise.all([
+    categoryMain.findSub(),
+    articles.findNewest(),
+    articles.findTop10(),
+    tag.find(),
+    articles.findOneById(idArticle),
+    articles.increaseView(idArticle)
+  ]).then(([listCateMain,newestArticles,top10Articles,listTag,article])=>{
+    
+
+    let top5Articles = top10Articles.slice(0,5);
+    let top3Newest = newestArticles.slice(0,3);
+    let idCate = article.categorySub;
+    articles.findNewestCate(idCate).then(listArtCate =>{
+      
+    res.render('single_page', {
+      listCateMain,
+      newestArticles,
+      top5Articles,
+      listArtCate,
+      top3Newest,
+      listTag,
+      article,
+      title: article.title,
+      data: {intl: intlData}
+    });
+  })
+      .catch(err => {
+          console.log(err);
+      });
+  })
+});
+
+router.post('/single-page/:id', (req, res, next) => {
+
+  var id = req.params.id;
+  var entity = req.body;
+  //console.log(entity);
+      articles.addComment(id,entity)
+          .then(succ => {
+            res.redirect('/single-page/'+id);
+          })
+          .catch(err => {
+              console.log(err); 
+              reject(err);                      
+          });
+});
+
+
 module.exports = router;
