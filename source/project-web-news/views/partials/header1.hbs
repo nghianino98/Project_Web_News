@@ -16,9 +16,9 @@
                         </div>
                         <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
                             <ul class="nav navbar-nav navbar-right">
-                                {{# if isLogged}}
-                                    <li><a href="/user/logout">Đăng xuất</a></li>
+                                {{# if isLoggedIn}}
                                     <li><a href="/user/profile">Thông tin cá nhân</a></li>
+                                    <li><a href="/user/logout">Đăng xuất</a></li>
                                 {{ else }}
                                     <li><a href="/user/register">Đăng ký</a></li>
                                     <li><a href="/user/login">Đăng nhập</a></li>

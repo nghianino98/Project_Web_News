@@ -46,6 +46,10 @@ const baibao = mongoose.model('Articles', articleSchema);
 const categorySub = require('./categorySub')
 
 module.exports = {
+    approve: (id, options) => {
+        return baibao.updateOne({_id: id}, {$set: options}).exec();
+    },
+
     findOneById: (id) => {
         return baibao.findOne({_id: id})
             .populate('categoryMain', 'categoryName')

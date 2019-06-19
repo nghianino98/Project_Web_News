@@ -190,7 +190,7 @@ router.post('/forget-pw-step2', notLoggedIn, (req, res, next) => {
 module.exports = router;
 
 function isLoggedIn(req, res, next) {
-    if (req.isLoggedIn) {
+    if (res.locals.isLoggedIn) {
         next();
     } else {
         res.redirect('/');
@@ -198,7 +198,7 @@ function isLoggedIn(req, res, next) {
 }
 
 function notLoggedIn(req, res, next) {
-    if (!req.isLoggedIn) {
+    if (!res.locals.isLoggedIn) {
         next();
     } else {
         res.redirect('/');

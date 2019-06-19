@@ -60,9 +60,9 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 app.use((req, res, next) => {
   if (req.cookies['Authorization']) {
-    req.isLoggedIn = true;
+    res.locals.isLoggedIn = true;
   } else {
-    req.isLoggedIn = false;
+    res.locals.isLoggedIn = false;
   }
   
   next();

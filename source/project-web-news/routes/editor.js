@@ -48,8 +48,8 @@ router.get('/waiting', (req, res, next) => {
         });
 });
 
-// GET user/editor/waiting/:id
-router.get('/waiting/:id', (req, res, next) => {
+// GET user/editor/post/:id
+router.get('/post/:id', (req, res, next) => {
     const messages = req.flash('error');
 
     Promise.all([Article.findOneById(req.params.id), CategorySub.findAll()])
@@ -73,7 +73,8 @@ router.get('/waiting/:id', (req, res, next) => {
                         article: result[0],
                         listCategory: result[1],
                         tags: tags,
-                        mode: 'approve'
+                        mode: 'approve',
+                        csrfToken : req.csrfToken()
                     });
                 }).catch(err => {
                     err.status = 500;
@@ -109,33 +110,6 @@ router.get('/confirmed', (req, res, next) => {
         });
 });
 
-// GET /user/editor/confirmed/:id
-router.get('/confirmed/:id', (req, res, next) => {
-    const messages = req.flash('error');
-    Article.findOneById(req.params.id)
-        .then(article => {
-            if (!article) {
-                var err = new Error();
-                err.status = 404;
-                err.message = 'Không tìm thấy bài viết';
-                return next(err);
-            }
-
-            res.render('editor/details', {
-                layout: 'editor-layout',
-                topic: 'Bài viết đã duyệt',
-                hasCustomCSS : true,
-                partial: function(){return 'manager-user-css'},
-                messages: messages,
-                hasError: messages.length,
-                article: article,
-            });
-        }).catch(err => {
-            err.status = 500;
-            next(err);
-        });
-});
-
 // GET /user/editor/deny
 router.get('/deny', (req, res, next) => {
     if (req.user.categoryEditor.length === 0) {
@@ -160,31 +134,24 @@ router.get('/deny', (req, res, next) => {
         });
 });
 
-// GET /user/editor/deny/:id
-router.get('/deny/:id', (req, res, next) => {
-    const messages = req.flash('error');
-    Article.findOneById(req.params.id)
-        .then(article => {
-            if (!article) {
-                var err = new Error();
-                err.status = 404;
-                err.message = 'Không tìm thấy bài viết';
-                return next(err);
-            }
+// POST user/editor/approve
+router.post('/approve', (req, res, next) => {
+    const propertiesUpdate = {
+        arrayOfTags: req.body.tags,
+        postDate: req.body.postDate,
+        categorySub: req.body.category,
+        status: 'approved'
+    };
 
-            res.render('editor/details', {
-                layout: 'editor-layout',
-                topic: 'Bài viết đã từ chối',
-                hasCustomCSS : true,
-                partial: function(){return 'manager-user-css'},
-                messages: messages,
-                hasError: messages.length,
-                article: article,
-            });
+    CategorySub.findDad(propertiesUpdate.categorySub) 
+        .then(dad => {
+            propertiesUpdate.categoryMain = dad.id;
+            return Article.approve(req.body.id, propertiesUpdate);
+        }).then(result => {
+            res.status(200).json({message: 'success'});
         }).catch(err => {
-            err.status = 500;
-            next(err);
-        });
+            res.status(500).json({message: err.message});
+        })
 });
 
 module.exports = router;
