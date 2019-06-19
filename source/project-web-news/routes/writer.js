@@ -58,7 +58,7 @@ router.get('/post/:id', (req, res, next) => {
 
     article.findById(id)
         .then(succ => {
-            console.log(succ);
+
             categorySub.find().then(list => {
 
                 Tag.findExceptId(succ.arrayOfTags.map(item => item.id))
@@ -124,14 +124,14 @@ router.post('/edit', (req, res, next) => {
     var entity = req.body;
     var accountID = req.user.id;
 
-    article.add(entity, accountID)
+    article.findByIdAndUpdate(entity, accountID)
         .then(succ => {
             req.flash('successPost', 'Chỉnh sửa bài viết thành công');
             // res.status(200).json({message: 'successful'});
             console.log(req.body);
             const messagesSuccess = "Đã đăng bài có tiêu đề \" " + succ.title + " \" thành công";
             // res.render('writer/writer', {actionpost:"/user/writer/post", action:"/user/writer/edit",actionpost:"/user/writer/post",topic: "Thêm bài viết" ,layout: 'writer-layout', title: 'writer', csrfToken: req.csrfToken(), messagesSuccess: messagesSuccess, success: true, failure: false });
-            res.redirect('/user/writer/post');
+            res.redirect('/user/writer/post/'+succ._id);
         })
         .catch(err => {
             req.flash('errorPost', 'Chỉnh sửa bài viết thất bại, thử lại sau.');

@@ -152,6 +152,7 @@ module.exports = {
         return new Promise((resolve, reject) => {
             baibao.findById(id)
             .populate('arrayOfTags', 'tagName')
+            .populate('categorySub','categoryName')
             .exec((err, succ) => {
                 if (err)
                     reject(err);
