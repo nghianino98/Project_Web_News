@@ -26,6 +26,23 @@
           <button type="button" class="btn btn-primary btn-block">Lọc</button>
         </div>
       </div> <!-- end filter-->
+      {{# if hasError }}
+          <div class="alert alert-danger" role="alert">
+              <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+              {{# each messages }}
+                  {{ this }}</br>
+              {{/ each }}
+          </div>
+      {{ else }}
+          {{# if hasSuccess }}
+              <div class="alert alert-success" role="alert">
+                  <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+                  {{# each success }}
+                      {{ this }}</br>
+                  {{/ each }}
+              </div>
+          {{/ if }}
+      {{/ if }}
       <!-- list posts -->
       <div class="row">
         <div class="col-md-12">

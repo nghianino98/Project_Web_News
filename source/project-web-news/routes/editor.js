@@ -26,11 +26,18 @@ router.get('/', (req, res, next) => {
 
 // GET /user/editor/waiting
 router.get('/waiting', (req, res, next) => {
+    const messages = req.flash('error');
+    const success = req.flash('success');
+
     if (req.user.categoryEditor.length === 0) {
         return res.render('editor/waiting', {
             layout: 'editor-layout',
             title: 'Danh sách bài viết chờ duyệt',
-            data: {intl: intlData}
+            data: {intl: intlData},
+            hasError: messages.length > 0,
+            messages: messages,
+            hasSuccess: success.length > 0,
+            success: success
         });
     }
 
@@ -40,7 +47,11 @@ router.get('/waiting', (req, res, next) => {
                 layout: 'editor-layout',
                 title: 'Danh sách bài viết chờ duyệt',
                 listArticles: articles,
-                data: {intl: intlData}
+                data: {intl: intlData},
+                hasError: messages.length > 0,
+                messages: messages,
+                hasSuccess: success.length > 0,
+                success: success
             });
         }).catch(err => {
             err.status = 500;
@@ -88,11 +99,18 @@ router.get('/post/:id', (req, res, next) => {
 
 // GET /user/editor/confirmed
 router.get('/confirmed', (req, res, next) => {
+    const messages = req.flash('error');
+    const success = req.flash('success');
+
     if (req.user.categoryEditor.length === 0) {
         return res.render('editor/confirmed', {
             layout: 'editor-layout',
             title: 'Danh sách bài viết đã duyệt',
-            data: {intl: intlData}
+            data: {intl: intlData},
+            hasError: messages.length > 0,
+            messages: messages,
+            hasSuccess: success.length > 0,
+            success: success
         });
     }
 
@@ -102,7 +120,11 @@ router.get('/confirmed', (req, res, next) => {
                 layout: 'editor-layout',
                 title: 'Danh sách bài viết đã duyệt',
                 listArticles: articles,
-                data: {intl: intlData}
+                data: {intl: intlData},
+                hasError: messages.length > 0,
+                messages: messages,
+                hasSuccess: success.length > 0,
+                success: success
             });
         }).catch(err => {
             err.status = 500;
@@ -112,11 +134,18 @@ router.get('/confirmed', (req, res, next) => {
 
 // GET /user/editor/deny
 router.get('/deny', (req, res, next) => {
+    const messages = req.flash('error');
+    const success = req.flash('success');
+
     if (req.user.categoryEditor.length === 0) {
         return res.render('editor/deny', {
             layout: 'editor-layout',
             title: 'Danh sách bài viết đã từ chối',
-            data: {intl: intlData}
+            data: {intl: intlData},
+            hasError: messages.length > 0,
+            messages: messages,
+            hasSuccess: success.length > 0,
+            success: success
         });
     }
 
@@ -126,7 +155,11 @@ router.get('/deny', (req, res, next) => {
                 layout: 'editor-layout',
                 title: 'Danh sách bài viết đã từ chối',
                 listArticles: articles,
-                data: {intl: intlData}
+                data: {intl: intlData},
+                hasError: messages.length > 0,
+                messages: messages,
+                hasSuccess: success.length > 0,
+                success: success
             });
         }).catch(err => {
             err.status = 500;
@@ -136,7 +169,7 @@ router.get('/deny', (req, res, next) => {
 
 // POST user/editor/approve
 router.post('/approve', (req, res, next) => {
-    const propertiesUpdate = {
+    var propertiesUpdate = {
         arrayOfTags: req.body.tags,
         postDate: req.body.postDate,
         categorySub: req.body.category,
@@ -144,10 +177,11 @@ router.post('/approve', (req, res, next) => {
     };
 
     CategorySub.findDad(propertiesUpdate.categorySub) 
-        .then(dad => {
-            propertiesUpdate.categoryMain = dad.id;
+        .then(categorySub => {
+            propertiesUpdate.categoryMain = categorySub.categoryMainID.id;
             return Article.approve(req.body.id, propertiesUpdate);
         }).then(result => {
+            req.flash('success', "Duyệt bài viết thành công.");
             res.status(200).json({message: 'success'});
         }).catch(err => {
             res.status(500).json({message: err.message});
