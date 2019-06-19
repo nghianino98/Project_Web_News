@@ -480,6 +480,46 @@ module.exports = {
                     resolve(succ);
             })
         })
-    }
+    },
+
+    findByTag: (idTag, limit, offset) => { 
+        return new Promise((resolve, reject) => {
+            
+            baibao.find({               
+                arrayOfTags : mongoose.Types.ObjectId(idTag)
+            },
+                ['_id', 'title', 'bigAvatar', 'smallAvatar','categoryMain','categorySub', 'writeDate', 'postDate', 'views','abstract','arrayOfTags'],
+                {
+                    skip: offset,
+                    limit: limit,
+                    sort: {
+                        postDate: -1
+                    }
+                })
+                .populate('categorySub', '_id categoryName')
+                .populate('categoryMain','_id categoryName')
+                .populate('arrayOfTags','tagName')
+                .exec((err, succ) => {
+                    if (err)
+                        reject(err);
+                    else
+                        resolve(succ);
+                })
+        });
+    },
+
+    countByTag: (idTag) => {
+        return new Promise((resolve, reject) => {
+            baibao.countDocuments({
+                arrayOfTags: mongoose.Types.ObjectId(idTag)
+            })
+                .exec((err, succ) => {
+                    if (err)
+                        reject(err);
+                    else
+                        resolve(succ);
+                })
+        })
+    },
 
 }
