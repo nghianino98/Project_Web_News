@@ -9,6 +9,7 @@ const admin = require('../../models/user');
 const categoryMain = require('../../models/categoryMain');
 const categorySub = require('../../models/categorySub');
 const article = require('../../models/article');
+const Tag = require('../../models/tag');
 
 const managerTagRouter = require('./manager-tag');
 const managerUserRouter = require('./manager-user');
@@ -45,18 +46,18 @@ router.get('/confirm-posts', (req, res, next) => {
 router.get('/manager-category', (req, res, next) => {
     categoryMain.find().then(listCategorys => {
 
-            categorySub.find().then(listCategorySub => {
-                //console.log(listCategorySub);
+        categorySub.find().then(listCategorySub => {
+            //console.log(listCategorySub);
 
-                res.render('admin/admin-manager-category', {
-                    layout: 'admin-layout',
-                    csrfToken: req.csrfToken(),
-                    title: 'Admin | Quản lí chuyên mục',
-                    listCategorys: listCategorys,
-                    listCategorySub: listCategorySub
-                });
+            res.render('admin/admin-manager-category', {
+                layout: 'admin-layout',
+                csrfToken: req.csrfToken(),
+                title: 'Admin | Quản lí chuyên mục',
+                listCategorys: listCategorys,
+                listCategorySub: listCategorySub
             });
-        })
+        });
+    })
         .catch(err => {
             console.log(err);
         });
@@ -65,6 +66,9 @@ router.get('/manager-category', (req, res, next) => {
 router.use('/manager-tag', managerTagRouter);
 
 router.use('/manager-user', managerUserRouter);
+
+
+// Quản lý chuyên mục
 
 
 router.post('/manager-category', (req, res, next) => {
@@ -112,7 +116,7 @@ router.post('/manager-category', (req, res, next) => {
                 const category_parentID = succ._id;
                 categorySub.add(entity, category_parentID)
                     .then(succ => {
-                        const messagesSuccess = "Đã thêm chuyên mục con \" " + entity.category_name + " \" vào chuyên mục \" " + succ.populate('categoryMainID', 'categoryName').categoryName+ " \" thành công !";
+                        const messagesSuccess = "Đã thêm chuyên mục con \" " + entity.category_name + " \" vào chuyên mục \" " + succ.populate('categoryMainID', 'categoryName').categoryName + " \" thành công !";
                         categoryMain.find().then(listCategorys => {
                             categorySub.find().then(listCategorySub => {
 
@@ -240,45 +244,58 @@ router.post('/manager-category/update/categorySub', (req, res, next) => {
 router.get('/manager-post', (req, res, next) => {
     const errors = req.flash('error');
     const success = req.flash('success');
-    article.findAll().then(succ=>{
+    article.findAll().then(succ => {
         console.log(succ);
-        res.render('admin/admin-manager-post', { 
+        res.render('admin/admin-manager-post', {
             errors: errors,
             hasError: errors.length > 0,
             success: success,
-            hasSuccess: success.length > 0,listArticles: succ ,layout: 'admin-layout', title: 'Admin | Quản lí bài viết',  csrfToken: req.csrfToken() });
+            hasSuccess: success.length > 0, listArticles: succ, layout: 'admin-layout', title: 'Admin | Quản lí bài viết', csrfToken: req.csrfToken()
+        });
     })
-    .catch(err=>{
-        console.log(err);
-    })
+        .catch(err => {
+            console.log(err);
+        })
 
-    
+
 });
 
-router.get('/edit/:id',(req,res,next)=>{
+router.get('/edit/:id', (req, res, next) => {
     const errors = req.flash('errorPost');
     const success = req.flash('successPost');
-    
+
     article.findById(req.params.id)
         .then(succ => {
-            categorySub.find().then(list=>{
-                console.log(succ);
-                let topic = "Chỉnh sửa bài viết";
-                res.render('writer/writer', { actionpost:"/user/admin/post", action:"/user/admin/edit", listCategory: list, article: succ, topic: topic,
-                errors: errors,
-        hasError: errors.length > 0,
-        success: success,
-        hasSuccess: success.length > 0 , 
-                layout: 'admin-layout', title: 'writer', csrfToken: req.csrfToken() });
+            categorySub.find().then(list => {
+                Tag.find()
+                .then(tags => {
+                    let topic = "Chỉnh sửa bài viết";
+                    res.render('writer/writer', {
+                        admin: true,
+                        actionpost: "/user/admin/post", action: "/user/admin/edit", listCategory: list, article: succ, topic: topic,
+                        errors: errors,
+                        hasError: errors.length > 0,
+                        success: success,
+                        hasSuccess: success.length > 0,
+                        hasCustomCSS: true,
+                        partial: function () { return 'manager-user-css' },
+                        layout: 'admin-layout', title: 'writer', csrfToken: req.csrfToken(),
+                        tags:tags,
+                    });
+                }).catch(err => {
+                    err.status = 500;
+                    next(err);
+                });
+
             })
-            .catch(err=>{
-                console.log(err);
-            })
+                .catch(err => {
+                    console.log(err);
+                })
         })
         .catch(err => {
             console.log(err);
             const messagesFailure = err;
-            res.render('writer/writer', { actionpost:"/user/admin/post", action:"/user/admin/edit",layout: 'admin-layout', title: 'writer', csrfToken: req.csrfToken(), messagesFailure: messagesFailure, failure: true, success: false });
+            res.render('writer/writer', { actionpost: "/user/admin/post", action: "/user/admin/edit", layout: 'admin-layout', title: 'writer', csrfToken: req.csrfToken(), messagesFailure: messagesFailure, failure: true, success: false });
         });
 });
 
@@ -294,28 +311,77 @@ router.post('/edit', (req, res, next) => {
             console.log(succ);
             const messagesSuccess = "Đã cập nhật bài có tiêu đề \" " + succ.title + " \" thành công";
             // res.render('writer/writer', {actionpost:"/user/admin/post", action:"/user/admin/edit",layout: 'admin-layout', title: 'admin', csrfToken: req.csrfToken(), messagesSuccess: messagesSuccess, success: true, failure: false });
-            res.redirect('/user/admin/edit/'+succ._id);
+            res.redirect('/user/admin/edit/' + succ._id);
         })
         .catch(err => {
             req.flash('errorPost', 'Chỉnh sửa bài viết thất bại, thử lại sau.');
             console.log(err);
             const messagesFailure = err;
-            res.render('writer/writer', { actionpost:"/user/admin/post", action:"/user/admin/edit",action:"/user/admin/edit",layout: 'admin-layout', title: 'admin', csrfToken: req.csrfToken(), messagesFailure: messagesFailure, failure: true, success: false });
+            res.render('writer/writer', { actionpost: "/user/admin/post", action: "/user/admin/edit", action: "/user/admin/edit", layout: 'admin-layout', title: 'admin', csrfToken: req.csrfToken(), messagesFailure: messagesFailure, failure: true, success: false });
         });
 
 });
 
-// DELETE user/admin/delete-article
 router.delete('/delete-article', (req, res, next) => {
     console.log("call router delete");
-    article.deleteOne({_id: req.body.id})
+    article.deleteOne({ _id: req.body.id })
         .then(result => {
             req.flash('success', 'Xóa bài viết thành công');
-            res.status(200).json({message: 'successful'});
+            res.status(200).json({ message: 'successful' });
         }).catch(err => {
             req.flash('error', 'Xóa bài viết thất bại, thử lại sau.');
-            res.status(500).json({message: 'Something wrong!'});
+            res.status(500).json({ message: 'Something wrong!' });
         });
 });
+
+router.get('/post', (req, res, next) => {
+    const errors = req.flash('errorPost');
+    const success = req.flash('successPost');
+    categorySub.find().then(succ => {
+        Tag.find()
+            .then(tags => {
+                res.render('writer/writer', {
+                    actionpost: "/user/admin/post",
+                    action: "/user/admin/edit",
+                    listCategory: succ, topic: "Thêm bài viết", layout: 'admin-layout', title: 'Admin'
+                    , csrfToken: req.csrfToken(),
+                    errors: errors,
+                    hasError: errors.length > 0,
+                    success: success,
+                    hasSuccess: success.length > 0,
+                    hasCustomCSS: true,
+                    partial: function () { return 'manager-user-css' },
+                    tags: tags
+                });
+            }).catch(err => {
+                err.status = 500;
+                next(err);
+            });
+    }).catch(err => {
+        console.log(err);
+    })
+})
+
+router.post('/post',(req,res,next)=>{
+    var entity = req.body;
+    var accountID = req.user.id;
+
+    article.add(entity, accountID)
+        .then(succ => {
+            req.flash('successPost', 'Thêm bài viết thành công');
+            // res.status(200).json({message: 'successful'});
+            // console.log(req.body);
+            // const messagesSuccess = "Đã đăng bài có tiêu đề \" " + succ.title + " \" thành công";
+            // res.render('writer/writer', {actionpost:"/user/writer/post", action:"/user/writer/edit",actionpost:"/user/writer/post",topic: "Thêm bài viết" ,layout: 'writer-layout', title: 'writer', csrfToken: req.csrfToken(), messagesSuccess: messagesSuccess, success: true, failure: false });
+            res.redirect('/user/admin/post');  
+        })
+        .catch(err => {
+            req.flash('errorPost', 'Thêm bài viết thất bại, thử lại sau.');
+            // res.status(500).json({message: 'Something wrong!'});
+            console.log(err);
+            const messagesFailure = err;
+            res.render('writer/writer', {actionpost:"/user/admin/post", layout: 'writer-layout', title: 'writer', csrfToken: req.csrfToken(), messagesFailure: messagesFailure, failure: true, success: false });
+        });
+})
 
 module.exports = router;

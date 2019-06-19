@@ -18,6 +18,9 @@
             </li>               
             <li class="breadcrumb-item active" aria-current="page">{{listArticles.0.categorySub.categoryName}}</li>
             {{/if}}
+            {{#if istag}}
+                  <li class="breadcrumb-item active" aria-current="page"> Tag: #{{tag.tagName}}</li>
+            {{/if}}
           </ol>
         </nav>
       </div>
@@ -52,7 +55,7 @@
             <div>
               <i class="material-icons md-medium">label</i>
               {{#each arrayOfTags}}
-              <a href="#" class="badge badge-dark">#{{tagName}}</a>
+              <a href="/list-articles/tag/{{_id}}" class="badge badge-dark">#{{tagName}}</a>
               {{/each}}
             </div>
           </div>

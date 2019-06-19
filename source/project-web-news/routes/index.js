@@ -4,6 +4,7 @@ var router = express.Router();
 const categoryMain = require('../models/categoryMain');
 const categorySub = require('../models/categorySub');
 const articles = require('../models/article');
+const tag = require('../models/tag');
 const intlData = {
   "locales": "en-US"
 };
@@ -297,5 +298,65 @@ router.get('/search',(req,res,next)=>{
   })
 
 })
+
+router.get('/list-articles/tag/:id', (req, res, next) => {
+
+  let idTag = req.params.id;
+
+  let page = req.query.page || 1;
+
+  if (page < 1) page = 1;
+
+  let limit = 6;
+
+  let offset = (page-1)*limit;
+
+  Promise.all([
+    categoryMain.findSub(),
+    articles.findNewest(),
+    articles.findTop10(),
+    tag.findById(idTag),
+    articles.findByTag(idTag,limit,offset),
+    articles.countByTag(idTag)
+  ]).then(([listCateMain,newestArticles,top10Articles,tag,rows,count_rows])=>{
+    
+    let total = count_rows;
+    let nPages = Math.floor(total/limit);
+    if(total % limit > 0) nPages++;
+
+    let pages = [];
+    for(i=1;i<=nPages;i++){
+      if(i > 1 && i < nPages)
+        obj = {value:i, valuepre:i-1, valuenext: i+1  , active: i === +page};
+      else if( i==1 ){
+        if(nPages == 1){
+          obj = {value:i, active: i === +page};
+        }
+        else {
+          obj = {value:i, valuenext: i+1  , active: i === +page};
+        }
+      }   
+      else if (i == nPages)
+        obj = {value:i,  valuepre:i-1 , active: i === +page};
+      pages.push(obj);
+      
+    }
+
+    //console.log(pages);
+
+    res.render('list_articles', {
+      listCateMain,
+      newestArticles,
+      top10Articles,
+      tag,
+      pages,
+      listArticles: rows,
+      title: 'Danh sách bài viết theo tag',
+      istag: true,
+      data: {intl: intlData}
+    });
+  })
+ 
+});
 
 module.exports = router;

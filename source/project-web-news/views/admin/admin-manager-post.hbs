@@ -6,7 +6,7 @@
             <h4>Danh sách bài viết</h4>
         </div>     
         <div class="col">
-          <button type="button" class="btn btn-sm btn-primary" onclick="window.location='/user/admin/add-posts'">Thêm bài viết</button>
+          <button type="button" class="btn btn-sm btn-primary" onclick="window.location='/user/admin/post'">Thêm bài viết</button>
         </div>   
       </div>
       <!-- filter -->
@@ -166,14 +166,14 @@
 
                 {{!-- <td><small>{{this.arrayOfTags.length}}</small></td> --}}
                 {{!-- <td><a href="#"><small>{{this.comments.length}}</small></a></td> --}}
-                <td><small>{{this.writeDate}}</small></td>
+                <td><small>{{formatDate writeDate day="numeric" month="long" year="numeric"}}</small></td>
                 {{#unless ../notEdit}}
                   <td>
                     <a href="/user/admin/edit/{{this.id}}"><i class="fa fa-edit"></i></a>
                     {{!-- <a href="#"><i class="fa fa-eye"></i></a> --}}
                     {{!-- <a href="#"><i class="fa fa-trash"></i></a> --}}
                     <button type="submit" class="btn btn-link" id="{{this.id}}" onclick="deleteArticle(this.id)"><i class="fa fa-trash" title="Xóa người dùng"></i></button>
-                </td>
+                  </td>
                 {{/unless}}   
               </tr>
               {{!-- <input type="text" id="articleID" name="_csrf" value="{{this._id}}" hidden> --}}
