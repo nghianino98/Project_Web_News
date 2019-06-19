@@ -53,7 +53,12 @@ router.get('/logout', isLoggedIn, (req, res, next) => {
 // Lấy view đăng nhập
 router.get('/login', notLoggedIn, (req, res, next) => {
     const messages = req.flash('error');
-    res.render('user/login', {csrfToken: req.csrfToken(), messages: messages, hasError: messages.length > 0});
+    res.render('user/login', {
+        layout: 'empty-layout',
+        csrfToken: req.csrfToken(), 
+        messages: messages, 
+        hasError: messages.length > 0
+    });
 });
 
 // Xử lí đăng nhập
@@ -80,6 +85,7 @@ router.get('/register',notLoggedIn, (req, res, next) => {
     const messages = req.flash('error');
     const success = req.flash('success');
     res.render('user/registration', {
+        layout: 'empty-layout',
         csrfToken: req.csrfToken(),
         messages: messages,
         hasError: messages.length > 0,
