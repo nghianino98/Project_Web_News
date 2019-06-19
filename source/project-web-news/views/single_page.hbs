@@ -1,11 +1,12 @@
 
   <section id="contentSection">
     <ol class="breadcrumb">
-              <li><a href="/">Home</a></li>
-              <li><a href="#">Technology</a></li>
-              <li class="active">Mobile</li>
+              <li><a href="/"><i class="fa fa-home"></i> Home</a></li>
+              <li><a href="/list-articles/categorymain/{{article.categoryMain._id}}">{{article.categoryMain.categoryName}}</a></li>
+              <li><a href="/list-articles/category/{{article.categorySub._id}}">{{article.categorySub.categoryName}}</a></li>
+              <li class="active">{{article.title}}</li>
             </ol>          
-          <div class="single-big-img img-ovarlay" style="background-image: url(/images/left-pic-article.jpg)">
+          <div class="single-big-img img-ovarlay" style="background-image: url({{article.bigAvatar}})">
             
           </div>
     <div class="row">
@@ -13,44 +14,32 @@
         <div class="left_content">
           <div class="single_page">
             
-            <h1>Thua đắng ở derby London, Tottenham lỡ cơ hội bứt phá top 3</h1>
-            <div class="post_commentbox"> <a href="#"><i class="fa fa-user"></i>Tác giả</a> <span><i class="fa fa-calendar"></i>02/05/2019 6:49 AM</span> <a href="#"><i class="fa fa-tags"></i>Technology</a> </div>
+            <h1>{{article.title}}</h1>
+            <div class="post_commentbox"> <a href="javascript:;"><i class="fa fa-user"></i>{{article.writer.pseudonym}}</a> <span><i class="fa fa-calendar"></i>{{formatDate article.writeDate day="numeric" month="long" year="numeric"}}</span> <a href="#idcomment"><i class="far fa-comment-alt"></i>{{article.comments.length}}</a> </div>
             <div class="single_page_content"> 
-              <p>Sau 35 trận đã đấu của Premier League, Tottenham ung dung xếp ở vị trí thứ ba với 70 điểm, nhiều hơn đội bóng xếp sau Chelsea ba điểm. So với các đội đang đua top 4, Tottenham được thi đấu sớm ở vòng 36, họ được thi đấu trên sân nhà tiếp West Ham, đối thủ đã thua 10 trong 17 trận làm khách tại các sân khách mùa giải năm nay. Đó là thời cơ để Tottenham nới rộng cách biệt và có thể chạm một tay vào top 3.</p>
-              <img class="img-center" src="/images/left-pic-article.jpg" alt="">
-              <blockquote><div class="quote-text">Một trong những cuộc gọi đầu tiên của tôi sau khi được ký hợp đồng là gọi cho Alex Ferguson. Chúng tôi đã nói rất nhiều thứ từ công việc cho đến chuyện riêng tư, nhưng ở đây tôi xin phép không thảo luận về những nội dung đã nói.</div>
+              {{!-- <img class="img-center" src="{{article.bigAvatar}}" alt="{{article.title}}"> --}}
+              
+              {{!-- <blockquote><div class="quote-text">Một trong những cuộc gọi đầu tiên của tôi sau khi được ký hợp đồng là gọi cho Alex Ferguson. Chúng tôi đã nói rất nhiều thứ từ công việc cho đến chuyện riêng tư, nhưng ở đây tôi xin phép không thảo luận về những nội dung đã nói.</div>
               <div class="quote-name">HLV Solskjaer</div>
-               </blockquote>
-              <ul>
-                <li>Nullam vitae nibh odio, non scelerisque nibh</li>
-                <li>Nullam vitae nibh odio, non scelerisque nibh</li>
-             
-              </ul>
-              <p>Rất đáng tiếc Tottenham lại thua ở trận đấu có tính then chốt, bàn thắng duy nhất được ghi bởi Michail Antonio ở phút 67 của trận đấu. Tottenham chơi không hay dù thi đấu với đội hình tốt nhất hiện có của họ, đội chủ nhà kiểm soát bóng tới 67% thời gian nhưng chỉ có 14 pha dứt điểm, vỏn vẹn có bốn lần bóng trúng cầu môn đối phương.
-
-              Chỉ số tấn công của Tottenham kém hơn so với đội khách, West Ham có tới 16 pha dứt điểm, bảy lần bóng trúng cầu môn của đối thủ. Đoàn quân của Pellegrini xứng đáng giành chiến thắng, họ chơi bóng phản công nhanh gọn, song đặc biệt hiệu quả. West Ham chỉ thực hiện có 350 đường chuyền ở trận đấu này, thấp hơn hẳn so với Tottenham - 612 đường chuyền, nhưng đội khách ngoài số lần dứt điểm cầu môn vượt trội thì số phạt góc cũng lớn hơn hẳn đội chủ nhà (7-2).
-
-              Thất bại ở trận của vòng 36 Premier League khiến Tottenham không thể gia tăng cách biệt được với nhóm sau nhưng chắc chắn họ vẫn đứng thứ ba sau vòng 36 trừ phi Chelsea thắng cách biệt trước Man Utd tại Old Trafford với khoảng cách trên 8 bàn, điều này gần như không thể xảy ra. Vì vậy theo lý thuyết Tottenham vẫn có quyền tự quyết vị trí thứ ba, nhưng họ sẽ không dễ dàng khi trận tới họ làm khách trên sân Bournemouth và sau đó một tuần sẽ tiếp Everton.</p>
-
+               </blockquote>  --}}
+              
+              {{{article.content}}}
               <div class="mt-30">
                 <i class="material-icons" id="icon-center">label</i>
-                <!-- <span href="#" class="badge badge-dark">#Ngoại hạng Anh</span> -->
-                <a href="#" class="badge badge-dark">#Ngoại hạng Anh</a>
-                <!-- <span href="#" class="badge badge-dark">#Top4</span> -->
-                <a href="#" class="badge badge-dark">#Top4</a>
-                <!-- <span href="#" class="badge badge-dark">#Derby London</span> -->
-                <a href="#" class="badge badge-dark">#Derby</a>
+                {{#each article.arrayOfTags}}
+                  <a href="/list-articles/tag/{{_id}}" class="badge badge-dark">#{{tagName}}</a>
+                {{/each}}               
               </div>
            
             </div>
             
             <div class="social_link">
               <ul class="sociallink_nav">
-                <li><a href="#"><i class="fab fa-facebook-f"></i></a></li>
-                <li><a href="#"><i class="fab fa-twitter"></i></a></li>
-                <li><a href="#"><i class="fab fa-google"></i></a></li>
-                <li><a href="#"><i class="fab fa-linkedin"></i></a></li>
-                <li><a href="#"><i class="fab fa-pinterest"></i></a></li>
+                <li><a href="javascript:;"><i class="fab fa-facebook-f"></i></a></li>
+                <li><a href="javascript:;"><i class="fab fa-twitter"></i></a></li>
+                <li><a href="javascript:;"><i class="fab fa-google"></i></a></li>
+                <li><a href="javascript:;"><i class="fab fa-linkedin"></i></a></li>
+                <li><a href="javascript:;"><i class="fab fa-pinterest"></i></a></li>
               </ul>
             </div>
 
@@ -59,53 +48,51 @@
                 <h2>Bài viết gần đây <!--<i class="fa fa-thumbs-o-up"></i>--></h2>
               </div>
               <ul class="spost_nav wow fadeInDown animated">
+                {{#each top3Newest}}
                 <li>
-                  <div class="media"> <a class="media-left resize-img" href="/single-page"> <img src="/images/post_img1.jpg" alt=""> </a>
-                    <div class="media-body"> <a class="catg_title" href="/single-page"> Bài viết 1</a> </div>
+                  <div class="media"> <center><a class="media resize-img" href="/single-page/{{_id}}"> <img src="{{bigAvatar}}" alt=""> </a></center>
+                    {{!-- <div class="media-body"> <br>
+                <i class="material-icons md-medium">today</i>
+                <span class="" title="" data-second="">
+                  {{formatDate writeDate day="numeric" month="long" year="numeric"}} </span> </div> --}}
+                  <br>
+                    <a class="catg_title" href="/single-page/{{_id}}"> {{title}}</a>
                   </div>
                 </li>
-                <li>
-                  <div class="media"> <a class="media-left resize-img" href="/single-page"> <img src="/images/post_img2.jpg" alt=""> </a>
-                    <div class="media-body"> <a class="catg_title" href="/single-page"> Bài viết 2</a> </div>
-                  </div>
-                </li>
-                <li>
-                  <div class="media"> <a class="media-left resize-img" href="/single-page"> <img src="/images/post_img1.jpg" alt=""> </a>
-                    <div class="media-body"> <a class="catg_title" href="/single-page"> Bài viết 3</a> </div>
-                  </div>
-                </li>
+                {{/each}}
               </ul>
             </div>
 
-            <h2 class="page-header">Comments</h2>
+            <h2 class="page-header">Ý kiến bạn đọc ({{article.comments.length}})</h2>
             <section class="comment-list">
               <!-- First Comment -->
+              <span id="idcomment"></span>
+              {{#each article.comments}}
               <article class="row">
-                <div class="col-md-2 col-sm-2 hidden-xs">
+                {{!-- <div class="col-md-2 col-sm-2 hidden-xs">
                   <figure class="thumbnail">
                     <img class="img-responsive" src="http://www.tangoflooring.ca/wp-content/uploads/2015/07/user-avatar-placeholder.png" />
-                    <figcaption class="text-center">username</figcaption>
+                    <figcaption class="text-center">{{nameUser}}</figcaption>
                   </figure>
-                </div>
-                <div class="col-md-10 col-sm-10">
+                </div> --}}
+                <div class="col-md-12 col-sm-12">
                   <div class="panel panel-default arrow left">
                     <div class="panel-body">
                       <header class="text-left">
-                        <div class="comment-user"><i class="fa fa-user"></i> That Guy</div>
-                        <time class="comment-date" datetime="16-12-2014 01:05"><i class="fa fa-clock-o"></i> Dec 16, 2014</time>
+                        <div class="comment-user"><i class="fa fa-user"></i> <strong>{{nameUser}}</strong></div>
+                        <time class="comment-date" datetime="{{formatDate commentDate day="numeric" month="long" year="numeric"}}"><i class="fa fa-clock-o"></i> {{formatDate commentDate day="numeric" month="long" year="numeric"}}</time>
                       </header>
                       <div class="comment-post">
-                        <p>
-                          Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
-                        </p>
+                        {{content}}
                       </div>
-                      <p class="text-right"><a href="#" class="btn btn-default btn-sm"><i class="fa fa-reply"></i> reply</a></p>
+                      {{!-- <p class="text-right"><a href="#" class="btn btn-default btn-sm"><i class="fa fa-reply"></i> reply</a></p> --}}
                     </div>
                   </div>
                 </div>
               </article>
+              {{/each}}
               <!-- Second Comment Reply -->
-              <article class="row">
+              {{!-- <article class="row">
                 <div class="col-md-2 col-sm-2 col-md-offset-1 col-sm-offset-0 hidden-xs">
                   <figure class="thumbnail">
                     <img class="img-responsive" src="http://www.tangoflooring.ca/wp-content/uploads/2015/07/user-avatar-placeholder.png" />
@@ -129,50 +116,27 @@
                     </div>
                   </div>
                 </div>
-              </article>
-              <!-- Third Comment -->
-              <article class="row">
-                <div class="col-md-2 col-sm-2 hidden-xs">
-                  <figure class="thumbnail">
-                    <img class="img-responsive" src="http://www.tangoflooring.ca/wp-content/uploads/2015/07/user-avatar-placeholder.png" />
-                    <figcaption class="text-center">username</figcaption>
-                  </figure>
-                </div>
-                <div class="col-md-10 col-sm-10 col-xs-12">
-                  <div class="panel panel-default arrow left">
-                    <div class="panel-body">
-                      <header class="text-left">
-                        <div class="comment-user"><i class="fa fa-user"></i> That Guy</div>
-                        <time class="comment-date" datetime="16-12-2014 01:05"><i class="fa fa-clock-o"></i> Dec 16, 2014</time>
-                      </header>
-                      <div class="comment-post">
-                        <p>
-                          Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
-                        </p>
-                      </div>
-                      <p class="text-right"><a href="#" class="btn btn-default btn-sm"><i class="fa fa-reply"></i> reply</a></p>
-                    </div>
-                  </div>
-                </div>
-              </article>
+              </article> --}}
+              
             </section>
 
 
-            <h2 class="page-header">Ý kiến bạn đọc</h2>
+            <h2 class="page-header" for="name">Đăng tải bình luận</h2>
             <div class="contact-form-area">
-                <form action="#" method="post">
+                <form action="/single-page/{{article._id}}" method="POST">
                   <div class="row">
                       <div class="col-12 col-lg-6">
-                          <input type="text" class="comment-form form-control" id="name" placeholder="Your Name*" required="">
+                          <input type="text" class="comment-form form-control input-md" id="name" name="name" placeholder="Họ tên*" required="">
                       </div>
                       <div class="col-12 col-lg-6">
-                          <input type="email" class="comment-form form-control" id="email" placeholder="Your Email*" required="">
+                          <input type="email" class="comment-form form-control input-md" id="email" name="email" placeholder="Email">                       
                       </div>
                       <div class="col-lg-12">
-                          <textarea name="message" class="comment-form form-control" id="message" cols="20" rows="10" placeholder="Message*" required=""></textarea>
+                          <textarea name="message" class="comment-form form-control" id="message" cols="20" rows="10" placeholder="Viết bình luận..." required=""></textarea>
                       </div>
+                    
                       <div class="col-lg-12 mb-30 text-align-r">
-                          <button class="btn default-btn" type="submit">Submit Comment</button>
+                          <button class="btn btn-info" type="submit">Gửi bình luận</button>
                       </div>
                   </div>
               </form>
@@ -191,66 +155,49 @@
         </a> </nav>
       <div class="col-lg-4 col-md-4 col-sm-4">
         <aside class="right_content">
+          <br>
           <div class="single_sidebar">
             <h2><span>Tin hot</span></h2>
             <ul class="spost_nav">
-              <li>
-                <div class="media wow fadeInDown"> <a href="/single-page" class="media-left"> <img alt="" src="/images/post_img1.jpg"> </a>
-                  <div class="media-body"> <a href="/single-page" class="catg_title"> Tin hot 1</a> </div>
+              {{#each top5Articles}}
+            <li>
+              <div class="media-new">
+                <a href="/single-page/{{_id}}" class="media-left"> <img alt="" src="{{bigAvatar}}"> </a>
+                <div class="media-body-new">
+                  <div class="title-mini">
+                    <a href="/single-page/{{_id}}" class="catg_title"> <strong>{{title}}</strong></a>
+                  </div>
+                  <div>
+                    <i class="fas fa-eye"></i> {{views}} lượt xem
+                  </div>
                 </div>
-              </li>
-              <li>
-                <div class="media wow fadeInDown"> <a href="/single-page" class="media-left"> <img alt="" src="/images/post_img2.jpg"> </a>
-                  <div class="media-body"> <a href="/single-page" class="catg_title"> Tin hot 2</a> </div>
-                </div>
-              </li>
-              <li>
-                <div class="media wow fadeInDown"> <a href="/single-page" class="media-left"> <img alt="" src="/images/post_img1.jpg"> </a>
-                  <div class="media-body"> <a href="/single-page" class="catg_title"> Tin hot 3</a> </div>
-                </div>
-              </li>
-              <li>
-                <div class="media wow fadeInDown"> <a href="/single-page" class="media-left"> <img alt="" src="/images/post_img2.jpg"> </a>
-                  <div class="media-body"> <a href="/single-page" class="catg_title"> Tin hot 4</a> </div>
-                </div>
-              </li>
-              <li>
-                <div class="media wow fadeInDown"> <a href="/single-page" class="media-left"> <img alt="" src="/images/post_img2.jpg"> </a>
-                  <div class="media-body"> <a href="/single-page" class="catg_title"> Tin hot 5</a> </div>
-                </div>
-              </li>
+              </div>
+            </li>
+            {{/each}}
             </ul>
           </div>
+          <br>
           <div class="single_sidebar">
             <h2><span>Cùng chuyên mục</span></h2>
             <ul class="spost_nav">
+              {{#each listArtCate}}
               <li>
-                <div class="media wow fadeInDown"> <a href="/single-page" class="media-left"> <img alt="" src="/images/post_img1.jpg"> </a>
-                  <div class="media-body"> <a href="/single-page" class="catg_title"> Bài viết 1</a> </div>
-                </div>
+                <div class="media-new"> <a href="/single-page/{{_id}}" class="media-left"> <img alt="" src="{{bigAvatar}}"> </a>
+                  <div class="media-body-new"> 
+                    <div class="title-mini"><a href="/single-page/{{_id}}" class="catg_title"> {{title}}</a></div>
+                    <div>
+                      <i class="material-icons md-medium">today</i>
+                      <span class="" title="" data-second="">
+                      {{formatDate writeDate day="numeric" month="long" year="numeric"}} </span> </div>
+                      
+                    </div>
+                  </div>
+                
               </li>
-              <li>
-                <div class="media wow fadeInDown"> <a href="/single-page" class="media-left"> <img alt="" src="/images/post_img2.jpg"> </a>
-                  <div class="media-body"> <a href="/single-page" class="catg_title"> Bài viết 2</a> </div>
-                </div>
-              </li>
-              <li>
-                <div class="media wow fadeInDown"> <a href="/single-page" class="media-left"> <img alt="" src="/images/post_img1.jpg"> </a>
-                  <div class="media-body"> <a href="/single-page" class="catg_title">Bài viết 3</a> </div>
-                </div>
-              </li>
-              <li>
-                <div class="media wow fadeInDown"> <a href="/single-page" class="media-left"> <img alt="" src="/images/post_img2.jpg"> </a>
-                  <div class="media-body"> <a href="/single-page" class="catg_title"> Bài viết 4</a> </div>
-                </div>
-              </li>
-              <li>
-                <div class="media wow fadeInDown"> <a href="/single-page" class="media-left"> <img alt="" src="/images/post_img2.jpg"> </a>
-                  <div class="media-body"> <a href="/single-page" class="catg_title"> Bài viết 5</a> </div>
-                </div>
-              </li>
+              {{/each}}
             </ul>
           </div>
+          <br>
           <div class="single_sidebar">
             <ul class="nav nav-tabs" role="tablist">
               <li role="presentation" class="active"><a href="#category" aria-controls="home" role="tab" data-toggle="tab">Category</a></li>
@@ -260,24 +207,19 @@
             <div class="tab-content">
               <div role="tabpanel" class="tab-pane active" id="category">             
                   <ul class="catagory-widgets">
-                    <li><a href="#"><span><i class="fa fa-angle-double-right" aria-hidden="true"></i> Life Style</span> <span style="float: right;">35</span></a></li>
-                    <li><a href="#"><span><i class="fa fa-angle-double-right" aria-hidden="true"></i> Travel</span> <span style="float: right;">30</span></a></li>
-                    <li><a href="#"><span><i class="fa fa-angle-double-right" aria-hidden="true"></i> Foods</span> <span style="float: right;">13</span></a></li>
-                    <li><a href="#"><span><i class="fa fa-angle-double-right" aria-hidden="true"></i> Game</span> <span style="float: right;">06</span></a></li>
-                    <li><a href="#"><span><i class="fa fa-angle-double-right" aria-hidden="true"></i> Sports</span> <span style="float: right;">28</span></a></li>
-                    <li><a href="#"><span><i class="fa fa-angle-double-right" aria-hidden="true"></i> Football</span> <span style="float: right;">08</span></a></li>
-                    <li><a href="#"><span><i class="fa fa-angle-double-right" aria-hidden="true"></i> TV Show</span> <span style="float: right;">13</span></a></li>
+                    {{#each listCateMain}}
+                            {{#each arrayOfCategorySub}}
+                                <li><a href="/list-articles/category/{{_id}}"><span><i class="fa fa-angle-double-right" aria-hidden="true"></i>{{../categoryName}} / {{categoryName}}</span></a></li>
+                            {{/each}}
+                    {{/each}}
+                    {{!-- <li><a href="#"><span><i class="fa fa-angle-double-right" aria-hidden="true"></i> Life Style</span> <span style="float: right;">35</span></a></li> --}}
                   </ul>
               </div>
               <div role="tabpanel" class="tab-pane" id="tags">
                 <ul>
-                  <li class="cat-item"><a href="#">the thao</a></li>
-                  <li class="cat-item"><a href="#">giao duc</a></li>
-                  <li class="cat-item"><a href="#">cong nghe</a></li>
-                  <li class="cat-item"><a href="#">tin hot</a></li>
-                  <li class="cat-item"><a href="#">truyen</a></li>
-                  <li class="cat-item"><a href="#">tuyen sinh</a></li>
-                  <li class="cat-item"><a href="#">cong nhan</a></li>
+                  {{#each listTag}}
+                  <li class="cat-item"><a href="/list-articles/tag/{{_id}}">{{tagName}}</a></li>
+                  {{/each}} 
                 </ul>
               </div>
               <div role="tabpanel" class="tab-pane" id="video">
@@ -300,7 +242,7 @@
               <option>Treads</option>
             </select>
           </div>-->
-          <div class="single_sidebar wow fadeInDown">
+          {{!-- <div class="single_sidebar wow fadeInDown">
             <h2><span>Links</span></h2>
             <ul>
               <li><a href="#">Blog</a></li>
@@ -308,7 +250,7 @@
               <li><a href="#">Login</a></li>
               <li><a href="#">Life &amp; Style</a></li>
             </ul>
-          </div>
+          </div> --}}
         </aside>
       </div>
     </div>

@@ -23,7 +23,12 @@ var articleSchema = Schema({
     bigAvatar: { type: String, default: '/images/photograph_img2.jpg' },
     arrayOfTags: [{type: Schema.Types.ObjectId, ref: 'Tags', require: true}],
     isPremiumArticle: { type: String },
-    comments: [JSON],
+    comments: [{
+        nameUser: {type: String},
+        email: {type: String},
+        commentDate: {type: Date},
+        content: {type: String}
+    }],
 })
 
 articleSchema.index({
@@ -361,7 +366,7 @@ module.exports = {
             baibao.find({
                 //filter   
             },
-                ['_id', 'title', 'smallAvatar', 'categorySub', 'writeDate', 'postDate', 'views'],
+                ['_id', 'title', 'smallAvatar', 'bigAvatar', 'categorySub', 'writeDate', 'postDate', 'views'],
                 {
                     skip: 0,
                     limit: 10,
@@ -376,6 +381,70 @@ module.exports = {
                     else
                         resolve(succ);
                 })
+        });
+    },
+
+    findNewestCate: (idCate) => {
+        return new Promise((resolve, reject) => {
+            baibao.find({
+                //filter   
+                categorySub : idCate
+            },
+                ['_id', 'title', 'smallAvatar', 'bigAvatar', 'categorySub', 'writeDate', 'postDate', 'views'],
+                {
+                    skip: 0,
+                    limit: 5,
+                    sort: {
+                        writeDate: -1
+                    }
+                })
+                .populate('categorySub', '_id categoryName')
+                .exec((err, succ) => {
+                    if (err)
+                        reject(err);
+                    else
+                        resolve(succ);
+                })
+        });
+    },
+    
+    increaseView: (id) => {
+        return new Promise((resolve, reject) => {
+            baibao.findByIdAndUpdate(id, {
+                $inc: {views: 1}
+            })           
+            .exec((err, succ) => {
+                if (err)
+                    reject(err);
+                else
+                    resolve(succ);
+            })
+        });
+    },
+
+    addComment: (id, entity) => {
+        return new Promise((resolve, reject) => {
+            
+                var obj = {
+                    nameUser : entity.name,
+                    email: entity.email,
+                    content: entity.message,
+                    commentDate: new Date(),
+                };
+             
+                baibao.findById(id).exec((err, succ) => {
+                    //console.log(succ);
+                    succ.comments.push(obj);
+                    succ.save(function(err){
+                        if (err)
+                            reject(err);
+                        else {
+                            resolve(succ);
+                    }
+                    });
+                    console.log(err);
+                 });
+
         });
     },
 
