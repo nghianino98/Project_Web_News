@@ -274,6 +274,8 @@ router.get('/edit/:id', (req, res, next) => {
                     hasError: errors.length > 0,
                     success: success,
                     hasSuccess: success.length > 0,
+                    hasCustomCSS: true,
+                    partial: function () { return 'manager-user-css' },
                     layout: 'admin-layout', title: 'writer', csrfToken: req.csrfToken()
                 });
             })

@@ -194,11 +194,18 @@ router.get('/notApproved', (req, res, next) => {
 
     let _writerID = req.user.id;
 
+    const errors = req.flash('errorDelete');
+    const success = req.flash('successDelete');
+
     article.find("notApproved", _writerID).then(listArticles => {
         let _writerName = req.user.userName;
         console.log(listArticles);
         res.render('writer/writer-list',
          { data: { intl: intlData },
+         errors: errors,
+         hasError: errors.length > 0,
+         success: success,
+         hasSuccess: success.length > 0,
           topic: "Danh sách bài viết chưa được duyệt",
            layout: 'writer-layout', title: 'writer', listArticles: listArticles, writerName: _writerName,
            csrfToken: req.csrfToken() });
@@ -213,10 +220,10 @@ router.delete('/delete-article', (req, res, next) => {
     console.log("call router delete");
     article.deleteOne({ _id: req.body.id })
         .then(result => {
-            req.flash('success', 'Xóa bài viết thành công');
+            req.flash('successDelete', 'Xóa bài viết thành công');
             res.status(200).json({ message: 'successful' });
         }).catch(err => {
-            req.flash('error', 'Xóa bài viết thất bại, thử lại sau.');
+            req.flash('errorDelete', 'Xóa bài viết thất bại, thử lại sau.');
             res.status(500).json({ message: 'Something wrong!' });
         });
 });
