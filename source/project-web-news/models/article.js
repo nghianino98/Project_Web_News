@@ -140,7 +140,9 @@ module.exports = {
 
     findById: (id) => {
         return new Promise((resolve, reject) => {
-            baibao.findById(id).exec((err, succ) => {
+            baibao.findById(id)
+            .populate('arrayOfTags', 'tagName')
+            .exec((err, succ) => {
                 if (err)
                     reject(err);
                 else

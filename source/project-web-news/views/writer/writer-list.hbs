@@ -3,11 +3,11 @@
     <div class="card-body">
       <div class="row">
         <div class="col-md-3 border-right">
-            <h5>{{topic}}</h5>
+          <h5>{{topic}}</h5>
         </div>
         <div class="col">
-          <button type="button" class="btn btn-sm btn-primary">Thêm bài viết</button>
-        </div>      
+          <a <button href="/user/writer/post" type="button" class="btn btn-sm btn-primary">Thêm bài viết</button></a>
+        </div>
       </div>
       <!-- filter -->
       <div class="row align-items-center justify-content-center">
@@ -45,11 +45,11 @@
               <tr>
                 <th>
                   <div class="form-check-inline">
-                      <label class="form-check-label">
-                        <input type="checkbox" class="form-check-input" value="">
-                       </label>
-                   </div>
-                </th>  
+                    <label class="form-check-label">
+                      <input type="checkbox" class="form-check-input" value="">
+                    </label>
+                  </div>
+                </th>
                 <th>Title</th>
                 <th>Author</th>
                 <th>Categories</th>
@@ -57,8 +57,8 @@
                 <th>Comments</th>
                 <th>Ngày viết</th>
                 {{#unless notEdit}}
-                  <th>Edit</th>
-                {{/unless}}   
+                <th>Edit</th>
+                {{/unless}}
               </tr>
             </thead>
             <tbody>
@@ -66,12 +66,12 @@
               {{!-- Aritcle --}}
               <tr>
                 <td>
-                    <div class="form-check-inline">
-                      <label class="form-check-label">
-                        <input type="checkbox" class="form-check-input" value="">
-                       </label>
-                   </div>
-                </td>  
+                  <div class="form-check-inline">
+                    <label class="form-check-label">
+                      <input type="checkbox" class="form-check-input" value="">
+                    </label>
+                  </div>
+                </td>
                 <td><a href="#"><small>{{this.title}}</small></a></td>
                 <td><small>{{../writerName}}</small></td>
                 <td><small>{{this.categoryMain.categoryName}} / {{this.categorySub.categoryName}}</small></td>
@@ -79,14 +79,16 @@
                 <td><a href="#"><small>{{this.comments.length}}</small></a></td>
                 <td><small>{{formatDate writeDate day="numeric" month="long" year="numeric"}}</small></td>
                 {{#unless ../notEdit}}
-                  <td>
-                    <a href="/user/writer/post/{{this.id}}"><i class="fa fa-edit"></i></a>
-                    <a href="#"><i class="fa fa-eye"></i></a>
-                    <a href="#"><i class="fa fa-trash"></i></a>
+                <td>
+                  <a href="/user/writer/post/{{this.id}}"><i class="fa fa-edit"></i></a>
+                  {{!-- <a href="#"><i class="fa fa-eye"></i></a> --}}
+                  {{!-- <a href="#"><i class="fa fa-trash"></i></a> --}}
+                  <button type="submit" class="btn btn-link" id="{{this.id}}" onclick="deleteArticleByWriter(this.id)"><i
+                  class="fa fa-trash" title="Xóa bài viết"></i></button>
                 </td>
-                {{/unless}}   
+                {{/unless}}
               </tr>
-              {{!-- <input type="text" id="articleID" name="_csrf" value="{{this._id}}" hidden> --}}
+              <input type="text" id="articleID" name="_csrf" value="{{this._id}}" hidden>
               {{!-- Aritcle End --}}
               {{else}}
               <div class="alert alert-danger" role="alert">
@@ -99,6 +101,8 @@
       </div>
     </div>
   </div>
+  <input type="text" id="_csrf" name="_csrf" value="{{csrfToken}}" hidden>
 </div>
 
 <script src="../../public/handlebars-intl/dist/handlebars-intl.min.js"></script>
+<script src="/assets/js/writer.js"></script>
