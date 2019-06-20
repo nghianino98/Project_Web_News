@@ -190,14 +190,19 @@ router.post('/forget-pw-step2', notLoggedIn, (req, res, next) => {
 router.get('/auth/facebook', notLoggedIn, passport.authenticate('facebook.login', {
     session: false,
     successRedirect: '/',
-    failureRedirect: '/user/singin'
+    failureRedirect: '/user/login'
   }));
   
   router.get('/auth/facebook/callback', notLoggedIn, passport.authenticate('facebook.login', {
     session: false,
-    successRedirect: '/',
-    failureRedirect: '/user/singin'
-  }));
+    failureRedirect: '/user/login'
+  }), (req, res, next) => {
+    const token = jwt.generateJWT(req.user, 'fit-hcmus', '1h');
+
+    res.cookie('Authorization', 'Bearer ' + token, {httpOnly: true});
+
+    res.redirect('/');
+  });
 
 module.exports = router;
 

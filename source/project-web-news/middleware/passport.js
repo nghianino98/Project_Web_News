@@ -5,6 +5,7 @@ const bcrypt = require('bcrypt');
 const mailer = require('../config/mail');
 const jwt = require('../FunctionHelper/jwt');
 const FacebookStrategy = require('passport-facebook').Strategy;
+const mongoose = require('mongoose');
 
 module.exports = (app) => {
     passport.serializeUser((user, done) => {
@@ -104,17 +105,41 @@ module.exports = (app) => {
                 done(err);
             });
     }));
-
+ 
+    // Kịch bản đăng nhập bằng facebook
     passport.use('facebook.login', new FacebookStrategy({
         clientID: '2311353459079848',
         clientSecret: 'a94e98e36c2d31b25b9d0107e8d6eb78',
         callbackURL: "/user/auth/facebook/callback",
+        profileFields: ['id', 'email', 'displayName']
       },
       function(accessToken, refreshToken, profile, done) {
-        console.log('token: ' + accessToken);
-        console.log(profile);
-        done(null, profile);
-        
+        User.findByFbId(profile.id)
+            .then(user => {
+                // Kiểm rea nếu chưa có thông tin tài khoản này thì lưu
+                // vào db
+                if (!user) {
+                    const newUser = {
+                        userName: profile.displayName,
+                        fbId: profile.id
+                    };
+                    bcrypt.hash(mongoose.Types.ObjectId().toHexString(), 5, (err, hash) => {
+                        if (err) {
+                            return done(null, false, {message: err.message});
+                        }
+                        User.saveFacebookAccount(newUser, hash)
+                            .then(userFb => {
+                                done(null, userFb);
+                            }).catch(err => {
+                                done(null, false, {message: err.message});
+                            })
+                    });
+                } else {
+                    done(null, user);
+                }
+            }).catch(err => {
+                done(null, false, {message: err.message});
+            });
       }
     ));
 
