@@ -142,7 +142,6 @@ module.exports = {
                         reject(err);
                     }
                     else {
-                        console.log(succ);
                         resolve(succ);
                     }
                 })

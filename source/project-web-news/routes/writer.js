@@ -58,6 +58,8 @@ router.get('/post', (req, res, next) => {
 router.get('/post/:id', (req, res, next) => {
 
     let id = req.params.id;
+    const errors = req.flash('errorPost');
+    const success = req.flash('successPost');
 
     article.findById(id)
         .then(succ => {
@@ -83,7 +85,11 @@ router.get('/post/:id', (req, res, next) => {
                                 csrfToken: req.csrfToken(),
                                 tags: tags,
                                 hasCustomCSS: true,
-                                partial: function () { return 'manager-user-css' }
+                                partial: function () { return 'manager-user-css' },
+                                errors: errors,
+                                hasError: errors.length > 0,
+                                success: success,
+                                hasSuccess: success.length > 0,
                             });
                     }).catch(err => {
                         err.status = 500;
@@ -114,7 +120,6 @@ router.post('/post', multer.single('avatar'), (req, res, next) => {
 
     entity.bigAvatar = req.file.path.substring(req.file.path.indexOf('\\'));
     entity.smallAvatar = '/uploads/thumbnail-' + req.file.filename;
-    console.log(entity.smallAvatar);
 
     Promise.all([sharp(req.file.path).resize({width: 150}).toFile(`./public${entity.smallAvatar}`), article.add(entity, accountID)])
         .then(succ => {
@@ -129,24 +134,22 @@ router.post('/post', multer.single('avatar'), (req, res, next) => {
 router.post('/edit', multer.single('avatar'), (req, res, next) => {
 
     var entity = req.body;
+    entity.smallAvatar = req.body.oldSmallAvatar;
+    entity.bigAvatar = req.body.oldBigAvatar;
     var accountID = req.user.id;
+    var updateSmallAvatar;
 
-    article.findByIdAndUpdate(entity, accountID)
-        .then(succ => {
+    if (req.file) {
+        updateSmallAvatar = sharp(req.file.path).resize({width: 150}).toFile(`./public${entity.smallAvatar}`);
+    }
+
+    Promise.all([updateSmallAvatar, article.findByIdAndUpdate(entity, accountID)])
+        .then(result => {
             req.flash('successPost', 'Chỉnh sửa bài viết thành công');
-            // res.status(200).json({message: 'successful'});
-            console.log(req.body);
-            const messagesSuccess = "Đã đăng bài có tiêu đề \" " + succ.title + " \" thành công";
-            // res.render('writer/writer', {actionpost:"/user/writer/post", action:"/user/writer/edit",actionpost:"/user/writer/post",topic: "Thêm bài viết" ,layout: 'writer-layout', title: 'writer', csrfToken: req.csrfToken(), messagesSuccess: messagesSuccess, success: true, failure: false });
-            res.redirect('/user/writer/post/'+succ._id);
-        })
-        .catch(err => {
-            req.flash('errorPost', 'Chỉnh sửa bài viết thất bại, thử lại sau.');
-            // res.status(500).json({message: 'Something wrong!'});
-            console.log(err);
-            const messagesFailure = err;
-            res.render('writer/writer', { actionpost: "/user/writer/post", layout: 'writer-layout', title: 'writer', csrfToken: req.csrfToken(), messagesFailure: messagesFailure, failure: true, success: false });
-        })
+            res.status(200).json({message: 'success'});
+        }).catch(err => {
+            res.status(500).json({message: err.message});
+        });
 });
 
 router.get('/waiting', (req, res, next) => {

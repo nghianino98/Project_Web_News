@@ -97,6 +97,10 @@
             <input type="text" id="categoryMain" name="categoryMain" value="{{article.categoryMain}}" hidden>
             <input type="text" id="writeDate" name="writeDate" value="{{article.writeDate}}" hidden>
             <input type="text" id="writerMain" name="writerMain" value="{{article.writer}}" hidden>
+            <input type="text" id="oldBigAvatar" name="oldBigAvatar" value="{{article.bigAvatar}}" hidden>
+            <input type="text" id="oldSmallAvatar" name="oldSmallAvatar" value="{{article.smallAvatar}}" hidden>
+            <input type="text" id="mode" value="edit" hidden>
+            
         </div>
         <div class="col-md-auto">
           <div class="col-md-3 col-12">
@@ -155,7 +159,7 @@
                         <div class="card-footer bg-light">
               {{!-- <button type="button" class="btn btn-outline-secondary btn-sm">Preview</button> --}}
               
-              <button type="submit" form="articleContent" class="btn btn-primary btn-sm">Save Draft</button>
+              <button type="button" class="btn btn-primary btn-sm" onclick="handleSubmitPost('{{action}}')">Save Draft</button>
               {{#if admin}}
                 <button type="button" class="btn btn-info btn-sm">Xuất bản</button>
               {{/if}}
@@ -233,7 +237,7 @@
                             <input type="hidden" id="imgPath" name="imgPath" value="">
                         </div>
             <input type="text" id="_csrf" name="_csrf" value="{{csrfToken}}" hidden>
-
+            <input type="text" id="mode" value="create" hidden>
         </div>
         <div class="col-md-auto">
           <div class="col-md-3 col-12">

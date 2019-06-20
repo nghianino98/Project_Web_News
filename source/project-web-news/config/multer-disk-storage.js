@@ -6,6 +6,12 @@ const storage = multer.diskStorage({
         cb(null, './public/uploads');
     },
     filename: function(req, file, cb) {
+        if (req.body.oldBigAvatar) {
+            const filename = req.body.oldBigAvatar.split('\\')[2];
+            console.log(filename);
+            return cb(null, filename);
+        }
+
         cb(null, mongoose.Types.ObjectId().toHexString() + '-' + file.originalname);
     }
 });

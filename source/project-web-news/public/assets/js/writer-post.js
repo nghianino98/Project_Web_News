@@ -37,6 +37,11 @@ function handleSubmitPost(urlHandle) {
     const avatar = $('#file').prop('files')[0];
     const categorySub = $('#categorySub').val();
     const arrayOfTags = $('#arrayOfTags').val();
+    const oldBigAvatar = $('#oldBigAvatar').val();
+    const oldSmallAvatar = $('#oldSmallAvatar').val();
+    const _articleID = $('#_articleID').val();
+    const mode = $('#mode').val();
+    
 
     if (!title) {
         alert('Tiêu đề bài viết không được để trống');
@@ -53,7 +58,7 @@ function handleSubmitPost(urlHandle) {
         return false;
     }
 
-    if (!validateImage(avatar)) {
+    if (!validateImage(avatar) && mode === 'create') {
         alert('Ảnh đại diện phải là ảnh jpg hoặc png');
         return false;
     }
@@ -69,15 +74,23 @@ function handleSubmitPost(urlHandle) {
     }
 
     $('#submit').prop('disabled', true);
-
     var data = new FormData();
+
+    if (oldBigAvatar) {
+        data.append('oldBigAvatar', oldBigAvatar);
+        data.append('oldSmallAvatar', oldSmallAvatar);
+        data.append('_articleID', _articleID);
+    }
+    
     data.append('title', title);
     data.append('abstract', abstract);
     data.append('content', content);
-    data.append('avatar', avatar);
     data.append('categorySub', categorySub);
     data.append('arrayOfTags', arrayOfTags);
-
+    
+    if (avatar) {
+        data.append('avatar', avatar);
+    }
     fetch(urlHandle, {
         method: 'POST',
         credentials: 'same-origin',
@@ -87,7 +100,7 @@ function handleSubmitPost(urlHandle) {
         body: data
     }).then(res => {
         if (res.status === 200) {
-            window.location.href = '/user/writer/post';
+            mode === 'create' ? window.location.href = '/user/writer/post' : window.location.href = `/user/writer/post/${_articleID}`;
         } else {
             alert('Submit bài viết thất bại, thử lại sau.');
         }
@@ -95,5 +108,5 @@ function handleSubmitPost(urlHandle) {
         alert('Submit bài viết thất bại, thử lại sau.');
     }).finally(() => {
         $('#submit').prop('disabled', false);
-    })
+    });
 }
