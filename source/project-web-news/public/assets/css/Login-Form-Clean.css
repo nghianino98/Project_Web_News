@@ -38,25 +38,6 @@ body
   height: 42px;
 }
 
-.login-clean form .btn-primary {
-  background: #cf82ce;
-  border: none;
-  border-radius: 4px;
-  padding: 11px;
-  box-shadow: none;
-  margin-top: 26px;
-  text-shadow: none;
-  outline: none !important;
-}
-
-.login-clean form .btn-primary:hover, .login-clean form .btn-primary:active {
-  background: #b274b1;
-}
-
-.login-clean form .btn-primary:active {
-  transform: translateY(1px);
-}
-
 .login-clean form .forgot {
   display: block;
   text-align: center;

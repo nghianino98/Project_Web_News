@@ -187,6 +187,18 @@ router.post('/forget-pw-step2', notLoggedIn, (req, res, next) => {
     });
 });
 
+router.get('/auth/facebook', notLoggedIn, passport.authenticate('facebook.login', {
+    session: false,
+    successRedirect: '/',
+    failureRedirect: '/user/singin'
+  }));
+  
+  router.get('/auth/facebook/callback', notLoggedIn, passport.authenticate('facebook.login', {
+    session: false,
+    successRedirect: '/',
+    failureRedirect: '/user/singin'
+  }));
+
 module.exports = router;
 
 function isLoggedIn(req, res, next) {

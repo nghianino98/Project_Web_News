@@ -4,6 +4,7 @@ const LocalStrategy = require('passport-local').Strategy;
 const bcrypt = require('bcrypt');
 const mailer = require('../config/mail');
 const jwt = require('../FunctionHelper/jwt');
+const FacebookStrategy = require('passport-facebook').Strategy;
 
 module.exports = (app) => {
     passport.serializeUser((user, done) => {
@@ -103,6 +104,19 @@ module.exports = (app) => {
                 done(err);
             });
     }));
+
+    passport.use('facebook.login', new FacebookStrategy({
+        clientID: '2311353459079848',
+        clientSecret: 'a94e98e36c2d31b25b9d0107e8d6eb78',
+        callbackURL: "/user/auth/facebook/callback",
+      },
+      function(accessToken, refreshToken, profile, done) {
+        console.log('token: ' + accessToken);
+        console.log(profile);
+        done(null, profile);
+        
+      }
+    ));
 
     app.use(passport.initialize());
     app.use(passport.session());

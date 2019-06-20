@@ -118,7 +118,7 @@ router.post('/post', multer.single('avatar'), (req, res, next) => {
         return res.status(500).json({message: 'Something wrong !!!'});
     }
 
-    entity.bigAvatar = req.file.path.substring(req.file.path.indexOf('\\'));
+    entity.bigAvatar = req.file.path.substring(req.file.path.indexOf('\\')).replace(/\\/g,'/');
     entity.smallAvatar = '/uploads/thumbnail-' + req.file.filename;
 
     Promise.all([sharp(req.file.path).resize({width: 150}).toFile(`./public${entity.smallAvatar}`), article.add(entity, accountID)])

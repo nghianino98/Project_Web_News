@@ -10,7 +10,7 @@ const session = require('express-session');
 const flash = require('connect-flash');
 const validator = require('express-validator');
 const MongoStore = require('connect-mongo')(session);
-const csrf = require('csurf');
+const getPayloadToken = require('./middleware/get-payload-token');
 
 var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/user/user');
@@ -61,8 +61,9 @@ app.use(flash());
 require('./middleware/passport')(app);
 app.use(express.static(path.join(__dirname, 'public')));
 
+app.use(getPayloadToken);
 app.use((req, res, next) => {
-  if (req.cookies['Authorization']) {
+  if (req.user) {
     res.locals.isLoggedIn = true;
   } else {
     res.locals.isLoggedIn = false;
