@@ -175,9 +175,10 @@ img:hover{opacity:0.75}
 .media-left > img{height:70px; width:90px}
 .resize-img > img{height:90px !important; width:120px !important}
 /* Tạ Đăng Hiếu Nghĩa added */
-.pic-left-articles > img{height:auto; width:300px; margin: 0 20 0 0 }
+.flex-1{display: flex; flex-direction: row}
+.pic-left-articles > img{width: 40%;height:auto}
 .pic-top-week > img {height:auto; width:100%}
-.articles_one { display: flex}
+.articles_one {display: flex}
 .spost_nav .media-body > a{font-family:"Arial",sans-serif}
 .featured_img{position:relative}
 .overlay:hover{ background:none repeat scroll 0 0 rgba(0,0,0,0.4)}
@@ -332,7 +333,8 @@ figure.effect-layla:hover figcaption::after, figure.effect-layla:hover h2, figur
 .material-icons.md-48 { font-size: 48px; }
 
 /* .content-article {display:flex;flex-direction:column} */
-.content-article {display:flex; flex-direction:column;justify-content:space-between; margin-left: 5px}
+.content-article-dad{display:flex}
+.content-article {display:flex;flex-direction:row;justify-content:space-between; margin-left: 5px}
 .content-article-around {display:flex; flex-direction:column;justify-content:space-around}
 .tag-text{display:flex;flex-direction:column;justify-content: space-around}
 .badge {margin: 0 0 0 0}

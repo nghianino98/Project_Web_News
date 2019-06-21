@@ -3,103 +3,107 @@
         <div class="card-body">
             <div class="row">
                 <div class="col-md-3">
-                <h4>{{topic}}</h4>
+                    <h4>{{topic}}</h4>
                 </div>
             </div>
             <hr>
             <div class="row">
                 <div class="col">
                     {{# if hasError }}
-                        <div class="alert alert-danger" role="alert">
-                            <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
-                            {{# each messages }}
-                                {{ this }}</br>
-                            {{/ each }}
-                        </div>
+                    <div class="alert alert-danger" role="alert">
+                        <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+                        {{# each messages }}
+                        {{ this }}</br>
+                        {{/ each }}
+                    </div>
                     {{ else }}
-                        {{# if hasSuccess }}
-                            <div class="alert alert-success" role="alert">
-                                <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
-                                {{# each success }}
-                                    {{ this }}</br>
-                                {{/ each }}
-                            </div>
-                        {{/ if }}
+                    {{# if hasSuccess }}
+                    <div class="alert alert-success" role="alert">
+                        <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+                        {{# each success }}
+                        {{ this }}</br>
+                        {{/ each }}
+                    </div>
                     {{/ if }}
-                <form style="min-width: 20rem;" id="articleContent" action="/user/editor/waiting" method="POST">
-                    <div class="form-group row">
-                        <label for="text" class="col-12 col-form-label">Tiêu đề bài viết</label>
-                        <div class="col-12">
-                            <input id="title" placeholder="Nhập tiêu đề tại đây" class="form-control here"
-                                required="required" type="text" value="{{article.title}}" disabled>
+                    {{/ if }}
+                    <form style="min-width: 20rem;" id="articleContent" action="/user/editor/waiting" method="POST">
+                        <div class="form-group row">
+                            <label for="text" class="col-12 col-form-label">Tiêu đề bài viết</label>
+                            <div class="col-12">
+                                <input id="title" placeholder="Nhập tiêu đề tại đây" class="form-control here"
+                                    required="required" type="text" value="{{article.title}}" disabled>
+                            </div>
+                            <label for="text" class="col-12 col-form-label">Nội dung tóm tắt</label>
+                            <div class="col-12">
+                                <textarea id="abstract" placeholder="Nhập nội dung tóm tắt tại đây" cols="40" rows="3"
+                                    class="form-control" required="required" disabled>{{article.abstract}}</textarea>
+                            </div>
                         </div>
-                        <label for="text" class="col-12 col-form-label">Nội dung tóm tắt</label>
-                        <div class="col-12">
-                            <textarea id="abstract" placeholder="Nhập nội dung tóm tắt tại đây" cols="40" rows="3"
-                                class="form-control" required="required" disabled>{{article.abstract}}</textarea>
+                        <div class="form-group row">
+                            <label for="textarea" class="col-12 col-form-label"><strong>Nội dung chính bài viết:
+                                </strong></label>
+                            <div class="col-12">
+                                {{{article.content}}}
+                            </div>
                         </div>
-                    </div>
-                    <div class="form-group row">
-                        <label for="textarea" class="col-12 col-form-label"><strong>Nội dung chính bài viết: </strong></label>
-                        <div class="col-12" >
-                            {{{article.content}}}
-                        </div>
-                    </div>
-                    <input type="text" id="_csrf" name="_csrf" value="{{csrfToken}}" hidden>
-                    <input type="text" id="_articleID"  value="{{article._id}}" hidden>
-                    <input type="text" id="categoryMain"  value="{{article.categoryMain}}" hidden>
-                    <input type="text" id="writeDate"  value="{{article.writeDate}}" hidden>
-                    <input type="text" id="writerMain"  value="{{article.writer}}" hidden>
+                        <input type="text" id="_csrf" name="_csrf" value="{{csrfToken}}" hidden>
+                        <input type="text" id="_articleID" value="{{article._id}}" hidden>
+                        <input type="text" id="categoryMain" value="{{article.categoryMain}}" hidden>
+                        <input type="text" id="writeDate" value="{{article.writeDate}}" hidden>
+                        <input type="text" id="writerMain" value="{{article.writer}}" hidden>
                 </div>
-                    <div class="col-md-auto">
-                        <img id="avatar" alt="User Pic" src="{{article.smallAvatar}}" class="img-thumbnail img-fluid">
-                        <div class="card mb-3" style="max-width: 18rem;">
-                            <div class="card-header bg-light ">Đăng bài viêt</div>
-                            <div class="card-body">
-                                <div class="form-group row">
-                                    <label for="categorySub" class="col-12 col-form-label">Chọn chuyên mục</label>
-                                    <div class="col-8">
-                                        <select id="category" name="categorySub" class="custom-select"  required="required"
-                                            style="width: 250px" {{# if_equal mode "approve" }}{{ else }} disabled {{/ if_equal }}>
-                                            <option value="{{article.categorySub._id}}" selected>{{article.categorySub.categoryName}}</option>
-                                            {{#each listCategory}}
-                                                {{# if_equal ../article.categorySub.id this.id }}
-                                                {{ else }}
-                                                    <option value="{{this._id}}">{{this.categoryName}}</option>
-                                                {{/ if_equal }}
-                                            {{/each}}
-                                        </select>
-                                    </div>
-                                </div>
-                                <div class="form-group row">
-                                    <label for="select" class="col-12 col-form-label">Chọn tag</label>
-                                    <div class="col-8">
-                                        <select class="form-control chosen-select" multiple tabindex="4" 
-                                            name="tag" id="tag" 
-                                            data-placeholder="Hãy chọn ít nhất một thẻ tag"
-                                            style="width: 250px" {{# if_equal mode "approve" }}{{ else }} disabled {{/ if_equal }}>
-                                            <option value=""></option>
-                                            {{# each tags }}
-                                                <option value="{{this._id}}">{{this.tagName}}</option>
-                                            {{/ each }}
-                                            {{# each article.arrayOfTags }}
-                                                <option value="{{this._id}}" selected>{{this.tagName}}</option>
-                                            {{/ each }}
-                                        </select>
-                                    </div>
+                <div class="col-md-auto">
+                    <img id="avatar" alt="User Pic" src="{{article.smallAvatar}}" class="img-thumbnail img-fluid">
+                    <div class="card mb-3" style="max-width: 18rem;">
+                        <div class="card-header bg-light ">Đăng bài viêt</div>
+                        <div class="card-body">
+                            <div class="form-group row">
+                                <label for="categorySub" class="col-12 col-form-label">Chọn chuyên mục</label>
+                                <div class="col-8">
+                                    <select id="category" name="categorySub" class="custom-select" required="required"
+                                        style="width: 250px" {{# if_equal mode "approve" }}{{ else }} disabled
+                                        {{/ if_equal }}>
+                                        <option value="{{article.categorySub._id}}" selected>
+                                            {{article.categorySub.categoryName}}</option>
+                                        {{#each listCategory}}
+                                        {{# if_equal ../article.categorySub.id this.id }}
+                                        {{ else }}
+                                        <option value="{{this._id}}">{{this.categoryName}}</option>
+                                        {{/ if_equal }}
+                                        {{/each}}
+                                    </select>
                                 </div>
                             </div>
-                            <div class="card-footer bg-light text-center">
-                                {{# if_equal mode "approve" }}
-                                    <button type="button" class="btn btn-info btn-sm" onclick="openDenyModal()">Từ chối</button>
-                                    <button type="button" class="btn btn-primary btn-sm" onclick="openApproveModal()">Duyệt</button>
-                                {{ else }}
-                                    <button type="button" class="btn btn-info btn-sm" disabled>Từ chối</button>
-                                    <button type="button" form="articleContent" class="btn btn-primary btn-sm" disabled>Duyệt</button>
-                                {{/ if_equal }}
+                            <div class="form-group row">
+                                <label for="select" class="col-12 col-form-label">Chọn tag</label>
+                                <div class="col-8">
+                                    <select class="form-control chosen-select" multiple tabindex="4" name="tag" id="tag"
+                                        data-placeholder="Hãy chọn ít nhất một thẻ tag" style="width: 250px"
+                                        {{# if_equal mode "approve" }}{{ else }} disabled {{/ if_equal }}>
+                                        <option value=""></option>
+                                        {{# each tags }}
+                                        <option value="{{this._id}}">{{this.tagName}}</option>
+                                        {{/ each }}
+                                        {{# each article.arrayOfTags }}
+                                        <option value="{{this._id}}" selected>{{this.tagName}}</option>
+                                        {{/ each }}
+                                    </select>
+                                </div>
                             </div>
                         </div>
+                        <div class="card-footer bg-light text-center">
+                            {{# if_equal mode "approve" }}
+                            <button type="button" class="btn btn-info btn-sm" onclick="openDenyModal()">Từ chối</button>
+                            <button type="button" class="btn btn-primary btn-sm"
+                                onclick="openApproveModal()">Duyệt</button>
+                            {{ else }}
+                            <button type="button" class="btn btn-info btn-sm" disabled>Từ chối</button>
+                            <button type="button" form="articleContent" class="btn btn-primary btn-sm"
+                                disabled>Duyệt</button>
+                            {{/ if_equal }}
+                        </div>
                     </div>
+                </div>
                 </form>
             </div>
         </div>
@@ -112,24 +116,25 @@
             <div class="modal-header">
                 <h5 class="modal-title">Duyệt bài viết</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                <span aria-hidden="true">&times;</span>
+                    <span aria-hidden="true">&times;</span>
                 </button>
             </div>
             <div class="modal-body">
                 <form action="" method="POST" onsubmit="" id="approveForm">
                     <div class="form-group">
-                        <label for="date">Chọn ngày</label>   
+                        <label for="date">Chọn ngày</label>
                         <input id="date" type="date" class="form-control" required>
                     </div> <!-- form-group end.// -->
                     <div class="form-group">
-                        <label for="time">Chọn giờ</label>   
+                        <label for="time">Chọn giờ</label>
                         <input id="time" type="time" class="form-control" required>
-                    </div> <!-- form-group end.// -->                      
+                    </div> <!-- form-group end.// -->
                 </form>
             </div>
             <div class="modal-footer">
                 <button type="button" id="cancel" class="btn btn-danger" data-dismiss="modal">Đóng</button>
-                <button type="button" id="save" class="btn btn-success" onclick="handleApprove('{{article.id}}')" >Xác nhận</button>
+                <button type="button" id="save" class="btn btn-success" onclick="handleApprove('{{article.id}}')">Xác
+                    nhận</button>
             </div>
         </div>
     </div>
@@ -141,20 +146,22 @@
             <div class="modal-header">
                 <h5 class="modal-title">Từ chối bài viết</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                <span aria-hidden="true">&times;</span>
+                    <span aria-hidden="true">&times;</span>
                 </button>
             </div>
             <div class="modal-body">
-                <form action="" method="POST"  id="denyForm">
+                <form action="" method="POST" id="denyForm">
                     <div class="form-group">
-                        <label for="reason">Lý do từ chối</label>   
-                        <textarea name="reason" id="reason" cols="30" rows="10" class="form-control" required></textarea>
-                    </div> <!-- form-group end.// -->                      
+                        <label for="reason">Lý do từ chối</label>
+                        <textarea name="reason" id="reason" cols="30" rows="10" class="form-control"
+                            required></textarea>
+                    </div> <!-- form-group end.// -->
                 </form>
             </div>
             <div class="modal-footer">
                 <button type="button" id="cancelDeny" class="btn btn-danger" data-dismiss="modal">Đóng</button>
-                <button type="button" id="saveDeny" class="btn btn-success" onclick="handleDeny('{{article.id}}')" >Xác nhận</button>
+                <button type="button" id="saveDeny" class="btn btn-success" onclick="handleDeny('{{article.id}}')">Xác
+                    nhận</button>
             </div>
         </div>
     </div>

@@ -142,6 +142,7 @@ module.exports = {
                         reject(err);
                     }
                     else {
+                        console.log(err);
                         resolve(succ);
                     }
                 })
@@ -171,6 +172,7 @@ module.exports = {
         return new Promise((resolve, reject) => {
             categorySub.findDad(entity.categorySub).then(succ => {
                 entity.categoryMain = succ.categoryMainID.id;
+                console.log(entity.arrayOfTags);
                 var obj = {
                     title: entity.title,
                     content: entity.content,
@@ -195,6 +197,7 @@ module.exports = {
                     if (err)
                         reject(err);
                     else {
+                        console.log(err);
                         resolve(succ);
                     }
                 })

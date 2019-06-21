@@ -92,12 +92,15 @@ module.exports = {
 
     findDad: (id) => {
         return new Promise((resolve, reject) => {
+            console.log("findDad");
             categorySub.findById({_id:id})
                 //.select('categoryName')
                 .populate('categoryMainID', 'categoryName')
                 .exec((err, succ) => {
-                    if (err)
+                    if (err){
+                        console.log(err);
                         reject(err);
+                    }
                     else
                         resolve(succ);
                     //console.log(succ);

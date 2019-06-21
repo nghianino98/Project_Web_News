@@ -1,6 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const checkRole = require('../middleware/check-role');
+
 const multer = require('../config/multer-disk-storage');
 const sharp = require('sharp');
 
@@ -114,6 +115,8 @@ router.post('/post', multer.single('avatar'), (req, res, next) => {
     var entity = req.body;
     var accountID = req.user.id;
 
+    console.log(req.body.arrayOfTags);
+
     if (!req.file) {
         return res.status(500).json({message: 'Something wrong !!!'});
     }
@@ -151,6 +154,8 @@ router.post('/edit', multer.single('avatar'), (req, res, next) => {
             res.status(500).json({message: err.message});
         });
 });
+
+
 
 router.get('/waiting', (req, res, next) => {
     let _writerID = req.user.id;

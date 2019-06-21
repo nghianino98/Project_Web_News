@@ -7,7 +7,7 @@ const storage = multer.diskStorage({
     },
     filename: function(req, file, cb) {
         if (req.body.oldBigAvatar) {
-            const filename = req.body.oldBigAvatar.split('\\')[2];
+            const filename = req.body.oldBigAvatar.split('/')[2];
             console.log(filename);
             return cb(null, filename);
         }

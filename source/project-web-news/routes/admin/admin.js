@@ -4,6 +4,9 @@ const checkRole = require('../../middleware/check-role');
 const csrf = require('csurf');
 const csurfProtection = csrf();
 
+const multer = require('../../config/multer-disk-storage');
+const sharp = require('sharp');
+
 
 const admin = require('../../models/user');
 const categoryMain = require('../../models/categoryMain');
@@ -13,6 +16,10 @@ const Tag = require('../../models/tag');
 
 const managerTagRouter = require('./manager-tag');
 const managerUserRouter = require('./manager-user');
+
+const intlData = {
+    "locales": "en-US"
+};
 
 // Kiểm tra nếu là admin mới cho qua
 router.use(checkRole.isAdmin);
@@ -249,6 +256,7 @@ router.get('/manager-post', (req, res, next) => {
         res.render('admin/admin-manager-post', {
             errors: errors,
             hasError: errors.length > 0,
+            data: {intl: intlData},
             success: success,
             hasSuccess: success.length > 0, listArticles: succ, layout: 'admin-layout', title: 'Admin | Quản lí bài viết', csrfToken: req.csrfToken()
         });
@@ -260,12 +268,17 @@ router.get('/manager-post', (req, res, next) => {
 
 });
 
+// Chỉnh sửa bài viết by Admin
+
 router.get('/edit/:id', (req, res, next) => {
     const errors = req.flash('errorPost');
     const success = req.flash('successPost');
 
+    const successPost = req.flash('successPublish');
+
     article.findById(req.params.id)
         .then(succ => {
+            
             categorySub.find().then(list => {
                 Tag.find()
                 .then(tags => {
@@ -277,6 +290,8 @@ router.get('/edit/:id', (req, res, next) => {
                         hasError: errors.length > 0,
                         success: success,
                         hasSuccess: success.length > 0,
+                        successPost: successPost,
+                        hasSuccessPost: successPost.length > 0,
                         hasCustomCSS: true,
                         partial: function () { return 'manager-user-css' },
                         layout: 'admin-layout', title: 'writer', csrfToken: req.csrfToken(),
@@ -299,48 +314,48 @@ router.get('/edit/:id', (req, res, next) => {
         });
 });
 
-router.post('/edit', (req, res, next) => {
+
+router.post('/edit', multer.single('avatar'), (req, res, next) => {
 
     var entity = req.body;
+    entity.smallAvatar = req.body.oldSmallAvatar;
+    entity.bigAvatar = req.body.oldBigAvatar;
+    var accountID = req.user.id;
+    var updateSmallAvatar;
+    
+    entity.arrayOfTags = JSON.parse(req.body.arrayOfTags);
 
-    var accountID = req.body.writerMain;
 
-    article.findByIdAndUpdate(entity, accountID)
-        .then(succ => {
-            req.flash('successPost', 'Chỉnh sửa bài viết thành công');
-            console.log(succ);
-            const messagesSuccess = "Đã cập nhật bài có tiêu đề \" " + succ.title + " \" thành công";
-            // res.render('writer/writer', {actionpost:"/user/admin/post", action:"/user/admin/edit",layout: 'admin-layout', title: 'admin', csrfToken: req.csrfToken(), messagesSuccess: messagesSuccess, success: true, failure: false });
-            res.redirect('/user/admin/edit/' + succ._id);
-        })
-        .catch(err => {
-            req.flash('errorPost', 'Chỉnh sửa bài viết thất bại, thử lại sau.');
-            console.log(err);
-            const messagesFailure = err;
-            res.render('writer/writer', { actionpost: "/user/admin/post", action: "/user/admin/edit", action: "/user/admin/edit", layout: 'admin-layout', title: 'admin', csrfToken: req.csrfToken(), messagesFailure: messagesFailure, failure: true, success: false });
-        });
+    console.log(req.body);
 
-});
+    if (req.file) {
+        updateSmallAvatar = sharp(req.file.path).resize({width: 150}).toFile(`./public${entity.smallAvatar}`);
+    }
 
-router.delete('/delete-article', (req, res, next) => {
-    console.log("call router delete");
-    article.deleteOne({ _id: req.body.id })
+    Promise.all([updateSmallAvatar, article.findByIdAndUpdate(entity, accountID)])
         .then(result => {
-            req.flash('success', 'Xóa bài viết thành công');
-            res.status(200).json({ message: 'successful' });
+            req.flash('successPost', 'Chỉnh sửa bài viết thành công');
+            res.status(200).json({message: 'success'});
         }).catch(err => {
-            req.flash('error', 'Xóa bài viết thất bại, thử lại sau.');
-            res.status(500).json({ message: 'Something wrong!' });
+            console.log(err);
+            res.status(500).json({message: err.message});
         });
 });
+
+
+// Viết bài viết by Admin
 
 router.get('/post', (req, res, next) => {
     const errors = req.flash('errorPost');
     const success = req.flash('successPost');
+
+   
+
     categorySub.find().then(succ => {
         Tag.find()
             .then(tags => {
                 res.render('writer/writer', {
+                    admin: true,
                     actionpost: "/user/admin/post",
                     action: "/user/admin/edit",
                     listCategory: succ, topic: "Thêm bài viết", layout: 'admin-layout', title: 'Admin'
@@ -362,26 +377,69 @@ router.get('/post', (req, res, next) => {
     })
 })
 
-router.post('/post',(req,res,next)=>{
+router.post('/post', multer.single('avatar'), (req, res, next) => {
+
     var entity = req.body;
     var accountID = req.user.id;
 
-    article.add(entity, accountID)
+    entity.arrayOfTags = JSON.parse(req.body.arrayOfTags);
+
+    if (!req.file) {
+        return res.status(500).json({message: 'Something wrong !!!'});
+    }
+
+    entity.bigAvatar = req.file.path.substring(req.file.path.indexOf('\\')).replace(/\\/g,'/');
+    entity.smallAvatar = '/uploads/thumbnail-' + req.file.filename;
+
+    Promise.all([sharp(req.file.path).resize({width: 150}).toFile(`./public${entity.smallAvatar}`), article.add(entity, accountID)])
         .then(succ => {
             req.flash('successPost', 'Thêm bài viết thành công');
-            // res.status(200).json({message: 'successful'});
-            // console.log(req.body);
-            // const messagesSuccess = "Đã đăng bài có tiêu đề \" " + succ.title + " \" thành công";
-            // res.render('writer/writer', {actionpost:"/user/writer/post", action:"/user/writer/edit",actionpost:"/user/writer/post",topic: "Thêm bài viết" ,layout: 'writer-layout', title: 'writer', csrfToken: req.csrfToken(), messagesSuccess: messagesSuccess, success: true, failure: false });
-            res.redirect('/user/admin/post');  
+            res.status(200).json({message: 'success'});
         })
         .catch(err => {
-            req.flash('errorPost', 'Thêm bài viết thất bại, thử lại sau.');
-            // res.status(500).json({message: 'Something wrong!'});
             console.log(err);
-            const messagesFailure = err;
-            res.render('writer/writer', {actionpost:"/user/admin/post", layout: 'writer-layout', title: 'writer', csrfToken: req.csrfToken(), messagesFailure: messagesFailure, failure: true, success: false });
+            res.status(500).json({message: err.message});
         });
-})
+});
+
+router.delete('/delete-article', (req, res, next) => {
+    console.log("call router delete");
+    article.deleteOne({ _id: req.body.id })
+        .then(result => {
+            req.flash('success', 'Xóa bài viết thành công');
+            res.status(200).json({ message: 'successful' });
+        }).catch(err => {
+            req.flash('error', 'Xóa bài viết thất bại, thử lại sau.');
+            res.status(500).json({ message: 'Something wrong!' });
+        });
+});
+
+
+//Duyệt
+
+// POST /user/admin/approve
+router.post('/approve', (req, res, next) => {
+
+    
+    var propertiesUpdate = {
+        arrayOfTags: req.body.tags,
+        postDate: req.body.postDate,
+        categorySubID: req.body.category,
+        status: 'approved'
+    };
+
+    categorySub.findDad(propertiesUpdate.categorySubID) 
+        .then(categorySub => {
+            console.log("****");
+            propertiesUpdate.categoryMain = categorySub.categoryMainID.id;
+            return article.update({_id: req.body.id}, propertiesUpdate);
+        }).then(result => {
+            req.flash('successPublish', "Duyệt bài viết thành công.");
+            res.status(200).json({message: 'success'});
+        }).catch(err => {
+            console.log(err);
+            res.status(500).json({message: err.message});
+        })
+});
 
 module.exports = router;

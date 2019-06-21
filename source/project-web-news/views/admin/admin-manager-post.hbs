@@ -131,43 +131,39 @@
           <table class="table table-hover ">
             <thead class="bg-light ">
               <tr>
-                <th>
+                {{!-- <th>
                   <div class="form-check-inline">
                       <label class="form-check-label">
                         <input type="checkbox" class="form-check-input" value="">
                        </label>
                    </div>
-                </th>  
+                </th>   --}}
+                                {{#unless notEdit}}
+                  <th>Edit</th>
+                {{/unless}}   
                 <th>Title</th>
                 <th>Author</th>
                 <th>Categories</th>
                 {{!-- <th>Tags</th> --}}
                 {{!-- <th>Comments</th> --}}
                 <th>Ngày viết</th>
-                {{#unless notEdit}}
-                  <th>Edit</th>
-                {{/unless}}   
+                <th>Trạng thái</th>
+                <th>Ngày đăng</th>
+
               </tr>
             </thead>
             <tbody>
               {{#each listArticles}}
               {{!-- Aritcle --}}
               <tr>
-                <td>
+                {{!-- <td>
                     <div class="form-check-inline">
                       <label class="form-check-label">
                         <input type="checkbox" class="form-check-input" value="">
                        </label>
                    </div>
-                </td>  
-                <td><a href="#"><small>{{this.title}}</small></a></td>
-                <td><small>{{this.writer.pseudonym}}</small></td>
-                <td><small>{{this.categoryMain.categoryName}} / {{this.categorySub.categoryName}}</small></td>
-
-                {{!-- <td><small>{{this.arrayOfTags.length}}</small></td> --}}
-                {{!-- <td><a href="#"><small>{{this.comments.length}}</small></a></td> --}}
-                <td><small>{{formatDate writeDate day="numeric" month="long" year="numeric"}}</small></td>
-                {{#unless ../notEdit}}
+                </td>   --}}
+                                {{#unless ../notEdit}}
                   <td>
                     <a href="/user/admin/edit/{{this.id}}"><i class="fa fa-edit"></i></a>
                     {{!-- <a href="#"><i class="fa fa-eye"></i></a> --}}
@@ -175,6 +171,26 @@
                     <button type="submit" class="btn btn-link" id="{{this.id}}" onclick="deleteArticle(this.id)"><i class="fa fa-trash" title="Xóa người dùng"></i></button>
                   </td>
                 {{/unless}}   
+                <td><a href="#"><small>{{this.title}}</small></a></td>
+                <td><small>{{this.writer.pseudonym}}</small></td>
+                <td><small>{{this.categoryMain.categoryName}} / {{this.categorySub.categoryName}}</small></td>
+
+                {{!-- <td><small>{{this.arrayOfTags.length}}</small></td> --}}
+                {{!-- <td><a href="#"><small>{{this.comments.length}}</small></a></td> --}}
+                <td><small>{{formatDate writeDate day="numeric" month="long" year="numeric"}}</small></td>
+                <td><small>
+                  {{#if_equal status "approved"}}
+                  Đã xuất bản
+                  {{else}}
+                  Chưa xuất bản
+                  {{/if_equal}}
+                </small></td>
+                {{#if postDate}}
+                <td><small>{{formatDate postDate day="numeric" month="long" year="numeric"}}</small></td>
+                {{else}}
+                <td><small>Chưa xuất bản</small></td>
+                {{/if}}
+
               </tr>
               {{!-- <input type="text" id="articleID" name="_csrf" value="{{this._id}}" hidden> --}}
               {{!-- <input type="text" id="_csrf" name="_csrf" value="{{csrfToken}}" hidden> --}}
@@ -194,3 +210,5 @@
 </div>
 
 <script src="/assets/js/writer.js"></script>
+<script src="/javascript/prism.js" type="text/javascript" charset="utf-8"></script>
+<script src="/javascript/init.js" type="text/javascript" charset="utf-8"></script>
