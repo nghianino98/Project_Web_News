@@ -86,7 +86,8 @@ function handleSubmitPost(urlHandle) {
     data.append('abstract', abstract);
     data.append('content', content);
     data.append('categorySub', categorySub);
-    data.append('arrayOfTags', arrayOfTags);
+    data.append('arrayOfTags', JSON.stringify(arrayOfTags));
+    
     
     if (avatar) {
         data.append('avatar', avatar);

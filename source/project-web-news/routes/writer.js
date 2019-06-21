@@ -115,6 +115,8 @@ router.post('/post', multer.single('avatar'), (req, res, next) => {
     var entity = req.body;
     var accountID = req.user.id;
 
+    entity.arrayOfTags = JSON.parse(req.body.arrayOfTags);
+
     console.log(req.body.arrayOfTags);
 
     if (!req.file) {
@@ -141,6 +143,7 @@ router.post('/edit', multer.single('avatar'), (req, res, next) => {
     entity.bigAvatar = req.body.oldBigAvatar;
     var accountID = req.user.id;
     var updateSmallAvatar;
+    entity.arrayOfTags = JSON.parse(req.body.arrayOfTags);
 
     if (req.file) {
         updateSmallAvatar = sharp(req.file.path).resize({width: 150}).toFile(`./public${entity.smallAvatar}`);
