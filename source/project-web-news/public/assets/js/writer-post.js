@@ -105,9 +105,11 @@ function handleSubmitPost(urlHandle) {
         if (res.status === 200) {
             mode === 'create' ? window.location.href = '/user/writer/post' : window.location.href = `/user/writer/post/${_articleID}`;
         } else {
+            console.log(res.status);
             alert('Submit bài viết thất bại, thử lại sau.');
         }
     }).catch(err => {
+        console.log(err);
         alert('Submit bài viết thất bại, thử lại sau.');
     }).finally(() => {
         $('#submit').prop('disabled', false);
