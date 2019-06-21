@@ -6,7 +6,28 @@ const categorySub = require('../models/categorySub');
 const articles = require('../models/article');
 const tag = require('../models/tag');
 const intlData = {
-  "locales": "en-US"
+  "locales": "en-US",
+    "formats": {
+        "date": {
+            "short": {
+                "day": "numeric",
+                "month": "long",
+                "year": "numeric"
+            }
+        },
+        "time": {
+            "hhmm": {
+                "hour": "numeric",
+                "minute": "numeric"
+            }
+        },
+        "relative": {
+            "hours": {
+                "units": "hour",
+                "style": "numeric"
+            }
+        }
+    }
 };
 
 /* GET home page. */
@@ -63,7 +84,7 @@ router.get('/', (req, res, next) => {
     // let Top10CategoryLeft = temp.slice(0,5);
     // let Top10CategoryRight = temp.slice(5,10);
 
-    console.log(listCateMain);
+    //console.log(listCateMain);
  
       res.render('index', {
         title: 'Express',
@@ -143,7 +164,7 @@ router.get('/list-articles/category/:id', (req, res, next) => {
       
     }
 
-    console.log(pages);
+    //console.log(pages);
 
     res.render('list_articles', {
       listCateMain,
@@ -202,7 +223,7 @@ router.get('/list-articles/categorymain/:id', (req, res, next) => {
       
     }
 
-    console.log(rows);
+    //console.log(rows);
 
     res.render('list_articles', {
       listCateMain,
@@ -282,7 +303,7 @@ router.get('/search',(req,res,next)=>{
       
     }
 
-    console.log(pages);
+    //console.log(pages);
 
     res.render('list_articles', {
       listCateMain,
@@ -374,8 +395,23 @@ router.get('/single-page/:id', (req, res, next) => {
     let top5Articles = top10Articles.slice(0,5);
     let top3Newest = newestArticles.slice(0,3);
     let idCate = article.categorySub;
+    let hasCustomCSS; 
+    let partial;
+    let isReaded ;
+
+    if(article.isPremiumArticle){
+      if(req.user == undefined){
+        isReaded = false;
+        hasCustomCSS = true;
+        partial = function () { return 'popup-disable' };
+      }
+      else{
+        isReaded = true;
+      }
+    }
+
     articles.findNewestCate(idCate).then(listArtCate =>{
-      
+  
     res.render('single_page', {
       listCateMain,
       newestArticles,
@@ -383,9 +419,12 @@ router.get('/single-page/:id', (req, res, next) => {
       listArtCate,
       top3Newest,
       listTag,
-      article,
+      article,    
       title: article.title,
-      data: {intl: intlData}
+      data: {intl: intlData},
+      hasCustomCSS,
+      partial,
+      isReaded
     });
   })
       .catch(err => {

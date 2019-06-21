@@ -22,7 +22,7 @@ var articleSchema = Schema({
     smallAvatar: { type: String, default: '/images/news_thumbnail2.jpg' },
     bigAvatar: { type: String, default: '/images/photograph_img2.jpg' },
     arrayOfTags: [{type: Schema.Types.ObjectId, ref: 'Tags', require: true}],
-    isPremiumArticle: { type: String },
+    isPremiumArticle: { type: Boolean },
     comments: [{
         nameUser: {type: String},
         email: {type: String},
@@ -126,7 +126,7 @@ module.exports = {
                     postDate: entity.postDate,                      // Editor add
                     categoryMain: entity.categoryMain,              // Update
                     categorySub: entity.categorySub,                // Update
-                    views: entity.views,                            // Guest add
+                    views: 0,                                       // Guest add
                     smallAvatar: entity.smallAvatar,                // Update
                     bigAvatar: entity.bigAvatar,                    // Update
                     arrayOfTags: entity.arrayOfTags,                // Update
@@ -177,7 +177,7 @@ module.exports = {
                     title: entity.title,
                     content: entity.content,
                     abstract: entity.abstract,
-                    writeDate: entity.writeDate,
+                    //writeDate: entity.writeDate,
                     writer: writer,
                     editor: entity.editor,                          // Editor add
                     status: "notApproved",
@@ -185,7 +185,7 @@ module.exports = {
                     postDate: entity.postDate,                      // Editor add
                     categoryMain: entity.categoryMain,              // Update
                     categorySub: entity.categorySub,                // Update
-                    views: entity.views,                            // Guest add
+                    //views: entity.views,                            // Guest add
                     smallAvatar: entity.smallAvatar,                // Update
                     bigAvatar: entity.bigAvatar,                    // Update
                     arrayOfTags: entity.arrayOfTags,                // Update
@@ -432,7 +432,7 @@ module.exports = {
                     nameUser : entity.name,
                     email: entity.email,
                     content: entity.message,
-                    commentDate: new Date(),
+                    commentDate: new Date().toLocaleString(),
                 };
              
                 baibao.findById(id).exec((err, succ) => {
