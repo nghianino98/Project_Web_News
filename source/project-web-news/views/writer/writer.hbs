@@ -96,6 +96,7 @@
             <input type="text" id="_articleID" name="_articleID" value="{{article._id}}" hidden>
             <input type="text" id="categoryMain" name="categoryMain" value="{{article.categoryMain}}" hidden>
             <input type="text" id="writeDate" name="writeDate" value="{{article.writeDate}}" hidden>
+            <input type="text" id="postDate" name="postDate" value="{{article.postDate}}" hidden>
             <input type="text" id="writerMain" name="writerMain" value="{{article.writer}}" hidden>
             <input type="text" id="oldBigAvatar" name="oldBigAvatar" value="{{article.bigAvatar}}" hidden>
             <input type="text" id="oldSmallAvatar" name="oldSmallAvatar" value="{{article.smallAvatar}}" hidden>
@@ -166,7 +167,7 @@
               <button type="button" class="btn btn-primary btn-sm" onclick="handleSubmitPost2('{{action}}')">Save
                 Draft</button>
                       {{#if_equal article.status "approved"}}
-                      <button type="button" class="btn btn-success btn-sm" onclick="openApproveModal()" disabled>Đã xuất
+                      <button type="button" class="btn btn-success btn-sm" onclick="openApproveModal()" >Đổi ngày xuất
                         bản</button>
 
                       {{else}}

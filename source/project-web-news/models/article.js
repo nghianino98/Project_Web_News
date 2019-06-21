@@ -216,8 +216,12 @@ module.exports = {
     // Trang chủ
     findTop10: () => {
         return new Promise((resolve, reject) => {
+            var recentDate = new Date();
+            
             baibao.find({
-                //filter   
+                status: "approved",
+                postDate: {'$lt': recentDate}
+                //filter
             },
                 ['_id', 'title', 'bigAvatar', 'smallAvatar', 'categorySub', 'writeDate', 'postDate', 'views'],
                 {
@@ -237,113 +241,16 @@ module.exports = {
         });
     },
 
-    findBestInCate: (idCate) => {
-        return new Promise((resolve, reject) => {
-            baibao.find({
-                //filter
-                categorySub: idCate
-            },
-                ['_id', 'title', 'bigAvatar', 'smallAvatar', 'categorySub', 'writeDate', 'postDate', 'views'],
-                {
-                    skip: 0,
-                    limit: 1,
-                    sort: {
-                        views: -1
-                    }
-                })
-                .populate('categorySub', '_id categoryName')
-                .exec((err, succ) => {
-                    if (err) {
-                        console.log(err);
-                        reject(err);
-                    }
-                    else {
-                        console.log("article " + succ);
-                        resolve(succ);
-                    }
-                })
-        })
-    },
-
-    findTop10Category: () => {
-        return new Promise((resolve, reject) => {
-
-            categorySub.findTopCategory().then(listID => {
-                console.log("list ID" + listID);
-
-                let result = [];
-                let i = 0;
-                for (i = 0; i < listID.length; i++) {
-                    baibao.find(
-                        { categorySub: listID[i] },
-                        ['_id', 'title', 'bigAvatar', 'smallAvatar', 'categorySub', 'writeDate', 'postDate', 'views'],
-                        {
-                            skip: 0,
-                            limit: 10,
-                            sort: {
-                                views: -1
-                            }
-                        }).populate('categorySub', '_id categoryName')
-                        .exec((err, succ) => {
-                            if (err)
-                                reject(err);
-                            else {
-                                console.log("one article" + succ);
-                                result.push(succ);
-                            }
-                        })
-                }
-                console.log(result);
-                return result;
-
-            })
-                .catch(err => {
-                    console.log(err);
-                    reject(err);
-                })
-
-        })
-    },
-
-    findTop10CategoryNew: () => {
-        let result = [];
-        categorySub.findTopCategory().then(listID => {
-            console.log("list ID" + listID);
-            let i = 0;
-            for (i = 0; i < listID.length; i++) {
-                baibao.find(
-                    { categorySub: listID[i] },
-                    ['_id', 'title', 'bigAvatar', 'smallAvatar', 'categorySub', 'writeDate', 'postDate', 'views'],
-                    {
-                        skip: 0,
-                        limit: 1,
-                        sort: {
-                            views: -1
-                        }
-                    }).populate('categorySub', '_id categoryName')
-                    .exec((err, succ) => {
-                        if (err)
-                            reject(err);
-                        else {
-                            console.log("one article" + succ);
-                            result.push(succ);
-                        }
-                    })
-            }
-            console.log(result);
-        })
-            .catch(err => {
-                console.log(err);
-                reject(err);
-            })
-        return result;
-    },
 
     findArticleTopCate: (top) => {
         return new Promise((resolve, reject) => {
+            var recentDate = new Date();
+            
             categorySub.findTopCategory(top).then(ID => {
                 baibao.findOne(
-                    { categorySub: ID },
+                    { categorySub: ID,
+                      status: "approved",
+                      postDate: {'$lt': recentDate} },
                     ['_id', 'title', 'bigAvatar', 'smallAvatar', 'categorySub', 'writeDate', 'postDate', 'views'],
                     {
                         skip: 0,
@@ -366,8 +273,12 @@ module.exports = {
 
     findNewest: () => {
         return new Promise((resolve, reject) => {
+            var recentDate = new Date();
+            // recentDate.removeMinutes(minutesSinceLast);
             baibao.find({
                 //filter   
+                status: "approved",
+                postDate: {'$lt': recentDate}
             },
                 ['_id', 'title', 'smallAvatar', 'bigAvatar', 'categorySub', 'writeDate', 'postDate', 'views'],
                 {
@@ -389,8 +300,11 @@ module.exports = {
 
     findNewestCate: (idCate) => {
         return new Promise((resolve, reject) => {
+            var recentDate = new Date();
             baibao.find({
-                //filter   
+                //filter 
+                status: "approved",
+                postDate: {'$lt': recentDate},  
                 categorySub : idCate
             },
                 ['_id', 'title', 'smallAvatar', 'bigAvatar', 'categorySub', 'writeDate', 'postDate', 'views'],
@@ -453,7 +367,10 @@ module.exports = {
 
     findByCategorySub: (idCateSub, limit, offset) => {
         return new Promise((resolve, reject) => {
+                var recentDate = new Date();
             baibao.find({
+                status: "approved",
+                postDate: {'$lt': recentDate},
                 categorySub: idCateSub
             },
                 ['_id', 'title', 'bigAvatar', 'smallAvatar','categoryMain','categorySub', 'writeDate', 'postDate', 'views','abstract','arrayOfTags'],
@@ -478,7 +395,10 @@ module.exports = {
 
     countByCategorySub: (idCateSub) => {
         return new Promise((resolve, reject) => {
+            var recentDate = new Date();
             baibao.countDocuments({
+                status: "approved",
+                postDate: {'$lt': recentDate},
                 categorySub: idCateSub
             })
                 .exec((err, succ) => {
@@ -492,7 +412,10 @@ module.exports = {
 
     findByCategoryMain: (idCateMain, limit, offset) => {
         return new Promise((resolve, reject) => {
+            var recentDate = new Date();
             baibao.find({
+                status: "approved",
+                postDate: {'$lt': recentDate},
                 categoryMain: idCateMain
             },
                 ['_id', 'title', 'bigAvatar', 'smallAvatar','categoryMain','categorySub', 'writeDate', 'postDate', 'views','abstract','arrayOfTags'],
@@ -517,7 +440,10 @@ module.exports = {
 
     countByCategoryMain: (idCateMain) => {
         return new Promise((resolve, reject) => {
+                var recentDate = new Date();
             baibao.countDocuments({
+                status: "approved",
+                postDate: {'$lt': recentDate},
                 categoryMain: idCateMain
             })
                 .exec((err, succ) => {
@@ -531,8 +457,12 @@ module.exports = {
 
     search: (text, limit, offset) => {
         return new Promise((resolve, reject) => {
+            var recentDate = new Date();
+            
             baibao.find({
                 $text: { $search: text },
+                status: "approved",
+                postDate: {'$lt': recentDate}
             },
             ['_id', 'title', 'bigAvatar', 'smallAvatar', 'categoryMain', 'categorySub', 'writeDate', 'postDate', 'views', 'abstract'],
             {
@@ -555,8 +485,11 @@ module.exports = {
 
     countsearch: (text) => {
         return new Promise((resolve, reject) => {
+            var recentDate = new Date();
             baibao.countDocuments({
                 $text: { $search: text },
+                status: "approved",
+                postDate: {'$lt': recentDate}
             })
             .exec((err, succ) => {
                 if (err)
@@ -569,8 +502,10 @@ module.exports = {
 
     findByTag: (idTag, limit, offset) => { 
         return new Promise((resolve, reject) => {
-            
-            baibao.find({               
+            var recentDate = new Date();
+            baibao.find({            
+                status: "approved",
+                postDate: {'$lt': recentDate},
                 arrayOfTags : mongoose.Types.ObjectId(idTag)
             },
                 ['_id', 'title', 'bigAvatar', 'smallAvatar','categoryMain','categorySub', 'writeDate', 'postDate', 'views','abstract','arrayOfTags'],
@@ -595,7 +530,12 @@ module.exports = {
 
     countByTag: (idTag) => {
         return new Promise((resolve, reject) => {
+            var recentDate = new Date();
+                 
+               
             baibao.countDocuments({
+                status: "approved",
+                postDate: {'$lt': recentDate},
                 arrayOfTags: mongoose.Types.ObjectId(idTag)
             })
                 .exec((err, succ) => {

@@ -33,22 +33,6 @@ const intlData = {
 /* GET home page. */
 router.get('/', (req, res, next) => {
 
-  // categoryMain.findSub()
-  //   .then(succ=>{
-  //     console.log(succ);
-  //     res.render('index', {
-  //       title: 'Express',
-  //       listCateMain: succ });
-  //   })
-  //   .catch(err=>{
-  //     console.log(err);
-  //   })
-
- 
-
-  // let temp = articles.findTop10CategoryNew();
-
-  // console.log( articles.findTop10CategoryNew());
 
 
   Promise.all([categoryMain.findSub()
