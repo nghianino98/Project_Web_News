@@ -465,7 +465,22 @@ router.get('/single-page/:id', (req, res, next) => {
         partial = function () { return 'popup-disable' };
       }
       else{
-        isReaded = true;
+        if (req.user.role === "subscriber"){
+          var recentDate = new Date().getTime();
+          var milis = Date.parse(req.user.expire) - recentDate;
+
+          if (milis < 0){
+            isReaded = false;
+            hasCustomCSS = true;
+            partial = function () { return 'popup-disable' };
+          }
+          else{
+            isReaded = true;
+          }
+        }
+        else{
+          isReaded = true;
+        } 
       }
     }
 
