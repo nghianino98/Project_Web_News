@@ -22,6 +22,14 @@ exports.isWriter = (req, res, next) =>{
     res.redirect('/');
 }
 
+exports.isSubscriber = (req, res, next) =>{
+    if (req.user.role === 'subscriber') {
+        return next();
+    }
+
+    res.redirect('/');
+}
+
 exports.isGuest = (req, res, next) =>{
     if (req.user.role === 'guest') {
         return next();

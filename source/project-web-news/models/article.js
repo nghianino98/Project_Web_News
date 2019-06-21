@@ -22,7 +22,7 @@ var articleSchema = Schema({
     smallAvatar: { type: String, default: '/images/news_thumbnail2.jpg' },
     bigAvatar: { type: String, default: '/images/photograph_img2.jpg' },
     arrayOfTags: [{type: Schema.Types.ObjectId, ref: 'Tags', require: true}],
-    isPremiumArticle: { type: String },
+    isPremiumArticle: { type: Boolean },
     comments: [{
         nameUser: {type: String},
         email: {type: String},
