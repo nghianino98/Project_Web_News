@@ -21,6 +21,8 @@ router.use(checkRole.isWriter);
 // Load avatar của user
 router.use((req, res, next) => {
     res.locals.avatar = req.user.avatar;
+    res.locals.userName = req.user.userName;
+    res.locals.role = req.user.role;
     next();
 });
 
@@ -118,7 +120,7 @@ router.post('/post', multer.single('avatar'), (req, res, next) => {
     var accountID = req.user.id;
 
     entity.arrayOfTags = JSON.parse(req.body.arrayOfTags);
-
+    
     if (!req.file) {
         return res.status(500).json({message: 'Something wrong !!!'});
     }

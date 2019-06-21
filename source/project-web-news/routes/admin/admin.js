@@ -30,6 +30,7 @@ router.use(checkRole.isAdmin);
 router.use((req, res, next) => {
     res.locals.avatar = req.user.avatar;
     res.locals.userName = req.user.userName;
+    res.locals.role = req.user.role;
     next();
 });
 

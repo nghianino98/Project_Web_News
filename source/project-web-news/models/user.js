@@ -75,6 +75,7 @@ module.exports = {
             dob: new Date(+entity.year, +entity.month - 1, +entity.day),
             gender: entity.gender,
             isConfirm: true,
+            role: entity.role,
             expire: new Date().setDate(new Date().getDate() + 7)
         });
 
