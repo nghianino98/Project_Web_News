@@ -21,6 +21,8 @@ const intlData = {
     "locales": "en-US"
 };
 
+sharp.cache(false);
+
 // Kiểm tra nếu là admin mới cho qua
 router.use(checkRole.isAdmin);
 

@@ -13,6 +13,8 @@ const intlData = {
     "locales": "en-US"
 };
 
+sharp.cache(false);
+
 // Kiểm tra nếu là writer thì mới cho qua
 router.use(checkRole.isWriter);
 
@@ -117,8 +119,6 @@ router.post('/post', multer.single('avatar'), (req, res, next) => {
 
     entity.arrayOfTags = JSON.parse(req.body.arrayOfTags);
 
-    console.log(entity);
-
     if (!req.file) {
         return res.status(500).json({message: 'Something wrong !!!'});
     }
@@ -165,7 +165,7 @@ router.get('/waiting', (req, res, next) => {
 
     article.findWaiting("approved", _writerID).then(listArticles => {
         let _writerName = req.user.userName;
-        console.log(_writerName);
+        
         res.render('writer/writer-list', {
             topic: "Danh sách bài viết đã duyệt và chờ xuất bản", layout: 'writer-layout',
             title: 'writer', listArticles: listArticles, writerName: _writerName, notEdit: true
@@ -180,7 +180,7 @@ router.get('/published', (req, res, next) => {
 
     article.findPublished("approved", _writerID).then(listArticles => {
         let _writerName = req.user.userName;
-        console.log(_writerName);
+        
         res.render('writer/writer-list', {
             topic: "Danh sách bài viết đã xuất bản", layout: 'writer-layout',
             title: 'writer', listArticles: listArticles, writerName: _writerName, notEdit: true
@@ -196,7 +196,7 @@ router.get('/rejected', (req, res, next) => {
 
     article.find("rejected", _writerID).then(listArticles => {
         let _writerName = req.user.userName;
-        console.log(_writerName);
+        
         res.render('writer/writer-list',
          { topic: "Danh sách bài viết bị từ chối",
           layout: 'writer-layout', title: 'writer',
@@ -217,7 +217,7 @@ router.get('/notApproved', (req, res, next) => {
 
     article.find("notApproved", _writerID).then(listArticles => {
         let _writerName = req.user.userName;
-        console.log(listArticles);
+        
         res.render('writer/writer-list',
          { data: { intl: intlData },
          errors: errors,
@@ -235,7 +235,7 @@ router.get('/notApproved', (req, res, next) => {
 });
 
 router.delete('/delete-article', (req, res, next) => {
-    console.log("call router delete");
+    
     article.deleteOne({ _id: req.body.id })
         .then(result => {
             req.flash('successDelete', 'Xóa bài viết thành công');
