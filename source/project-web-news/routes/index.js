@@ -227,7 +227,6 @@ router.get('/list-articles/categorymain/:id', (req, res, next) => {
     
     if (req.user == undefined){
       articles.findByCategoryMain(idCate,limit,offset).then(rows => {
-        console.log(rows.length);
         res.render('list_articles', {
           listCateMain,
           newestArticles,

@@ -556,7 +556,7 @@ module.exports = {
                 status: "approved",
                 postDate: {'$lt': recentDate}
             },
-            ['_id', 'title', 'bigAvatar', 'smallAvatar', 'categoryMain', 'categorySub', 'writeDate', 'postDate', 'views', 'abstract'],
+            ['_id', 'title', 'bigAvatar', 'smallAvatar', 'categoryMain', 'categorySub', 'writeDate', 'postDate', 'views', 'abstract','arrayOfTags'],
             {
                 skip: offset,
                 limit: limit,
@@ -566,6 +566,7 @@ module.exports = {
             })
             .populate('categoryMain', 'categoryName')
             .populate('categorySub', 'categoryName')
+            .populate('arrayOfTags','tagName')
             .exec((err, succ) => {
                 if (err)
                     reject(err);
@@ -584,7 +585,7 @@ module.exports = {
                 status: "approved",
                 postDate: {'$lt': recentDate}
             },
-            ['_id', 'title', 'bigAvatar', 'smallAvatar', 'categoryMain', 'categorySub', 'writeDate', 'postDate', 'views', 'abstract'],
+            ['_id', 'title', 'bigAvatar', 'smallAvatar', 'categoryMain', 'categorySub', 'writeDate', 'postDate', 'views', 'abstract','arrayOfTags'],
             {
                 skip: offset,
                 limit: limit,
@@ -595,6 +596,7 @@ module.exports = {
             })
             .populate('categoryMain', 'categoryName')
             .populate('categorySub', 'categoryName')
+            .populate('arrayOfTags','tagName')
             .exec((err, succ) => {
                 if (err)
                     reject(err);
