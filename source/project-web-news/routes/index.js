@@ -6,7 +6,28 @@ const categorySub = require('../models/categorySub');
 const articles = require('../models/article');
 const tag = require('../models/tag');
 const intlData = {
-  "locales": "en-US"
+  "locales": "en-US",
+    "formats": {
+        "date": {
+            "short": {
+                "day": "numeric",
+                "month": "long",
+                "year": "numeric"
+            }
+        },
+        "time": {
+            "hhmm": {
+                "hour": "numeric",
+                "minute": "numeric"
+            }
+        },
+        "relative": {
+            "hours": {
+                "units": "hour",
+                "style": "numeric"
+            }
+        }
+    }
 };
 
 /* GET home page. */

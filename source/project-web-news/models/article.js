@@ -126,7 +126,7 @@ module.exports = {
                     postDate: entity.postDate,                      // Editor add
                     categoryMain: entity.categoryMain,              // Update
                     categorySub: entity.categorySub,                // Update
-                    views: entity.views,                            // Guest add
+                    views: 0,                                       // Guest add
                     smallAvatar: entity.smallAvatar,                // Update
                     bigAvatar: entity.bigAvatar,                    // Update
                     arrayOfTags: entity.arrayOfTags,                // Update
@@ -175,7 +175,7 @@ module.exports = {
                     title: entity.title,
                     content: entity.content,
                     abstract: entity.abstract,
-                    writeDate: entity.writeDate,
+                    //writeDate: entity.writeDate,
                     writer: writer,
                     editor: entity.editor,                          // Editor add
                     status: "notApproved",
@@ -183,7 +183,7 @@ module.exports = {
                     postDate: entity.postDate,                      // Editor add
                     categoryMain: entity.categoryMain,              // Update
                     categorySub: entity.categorySub,                // Update
-                    views: entity.views,                            // Guest add
+                    //views: entity.views,                            // Guest add
                     smallAvatar: entity.smallAvatar,                // Update
                     bigAvatar: entity.bigAvatar,                    // Update
                     arrayOfTags: entity.arrayOfTags,                // Update
@@ -429,7 +429,7 @@ module.exports = {
                     nameUser : entity.name,
                     email: entity.email,
                     content: entity.message,
-                    commentDate: new Date(),
+                    commentDate: new Date().toLocaleString(),
                 };
              
                 baibao.findById(id).exec((err, succ) => {

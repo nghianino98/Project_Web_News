@@ -21,7 +21,7 @@
           {{#if isReaded }}
           <div class="post_commentbox"> <a href="javascript:;"><i
                 class="fa fa-user"></i>{{article.writer.pseudonym}}</a> <span><i
-                class="fa fa-calendar"></i>{{formatDate article.writeDate day="numeric" month="long" year="numeric"}}</span>
+                class="fa fa-calendar"></i>{{formatTime article.writeDate "hhmm"}} {{formatDate article.writeDate "short"}}</span>
             <a href="#idcomment"><i class="far fa-comment-alt"></i>{{article.comments.length}}</a> </div>
           <div class="single_page_content">
             {{{article.content}}}
@@ -51,7 +51,7 @@
           {{else}}
           <div class="post_commentbox"> <a href="javascript:;"><i
                 class="fa fa-user"></i>{{article.writer.pseudonym}}</a> <span><i
-                class="fa fa-calendar"></i>{{formatDate article.writeDate day="numeric" month="long" year="numeric"}}</span>
+                class="fa fa-calendar"></i>{{formatTime article.writeDate "hhmm"}} {{formatDate article.writeDate "short"}}</span>
             <a href="#idcomment"><i class="far fa-comment-alt"></i>{{article.comments.length}}</a> </div>
           <div class="single_page_content">
             {{!-- <img class="img-center" src="{{article.bigAvatar}}" alt="{{article.title}}"> --}}
@@ -123,9 +123,9 @@
                     <header class="text-left">
                       <div class="comment-user"><i class="fa fa-user"></i> <strong>{{nameUser}}</strong></div>
                       <time class="comment-date"
-                        datetime="{{formatDate commentDate day="numeric" month="long" year="numeric"}}"><i
+                        datetime="{{formatRelative commentDate}}"><i
                           class="fa fa-clock-o"></i>
-                        {{formatDate commentDate day="numeric" month="long" year="numeric"}}</time>
+                        {{formatRelative commentDate}}</time>
                     </header>
                     <div class="comment-post">
                       {{content}}
@@ -239,7 +239,7 @@
                   <div>
                     <i class="material-icons md-medium">today</i>
                     <span class="" title="" data-second="">
-                      {{formatDate writeDate day="numeric" month="long" year="numeric"}} </span> </div>
+                      {{formatDate writeDate "short"}} </span> </div>
 
                 </div>
               </div>

@@ -27,14 +27,14 @@
       <div>
         {{#each listArticles}}
         <div class="articles_one">
-          <div href="/single-page" class="pic-left-articles">
-            <img alt="" src="/images/left-pic-article.jpg">
+          <div href="/single-page/{{_id}}" class="pic-left-articles">
+            <img alt="{{title}}" src="{{bigAvatar}}">
           </div>
           <div class="content-article">
             <div class="content-article bsbig_fig">
               <div>
                 <figcaption>
-                  <i class="material-icons">bookmarks</i> <a href="/single-page">{{title}} </a>
+                  <i class="material-icons">bookmarks</i> <a href="/single-page/{{_id}}">{{title}} </a>
                 </figcaption>
               </div>
               <div>
@@ -45,7 +45,7 @@
                 </a> -
                 <i class="material-icons md-medium">today</i>
                 <span class="" title="" data-second="">
-                  {{formatDate writeDate day="numeric" month="long" year="numeric"}} </span>
+                  {{formatDate writeDate "short"}} </span>
               </div>
             </div>
             <div>
@@ -165,7 +165,7 @@
                     <a href="/list-articles/category/{{categorySub._id}}" class="">
                       {{categorySub.categoryName}} - </a>
                     <span class="" title="" data-second=""><i class="fas fa-clock"></i>
-                      {{formatDate writeDate day="numeric" month="long" year="numeric"}} </span>
+                      {{formatDate writeDate "short"}} </span>
                   </div>
                 </div>
               </div>
@@ -191,7 +191,7 @@
                     <a href="/list-articles/category/{{categorySub._id}}" class="">
                       {{categorySub.categoryName}} -</a>&nbsp
                     <span class="" title="" data-second=""><i class="fas fa-clock"></i>
-                      {{formatDate writeDate day="numeric" month="long" year="numeric"}} </span>
+                      {{formatDate writeDate "short"}} </span>
                   </div>
                 </div>
               </div>
