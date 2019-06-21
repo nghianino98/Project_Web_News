@@ -39,6 +39,7 @@ function handleSubmitPost(urlHandle) {
     const arrayOfTags = $('#arrayOfTags').val();
     const oldBigAvatar = $('#oldBigAvatar').val();
     const oldSmallAvatar = $('#oldSmallAvatar').val();
+    
     const _articleID = $('#_articleID').val();
     const isPremiumArticle = $('#isPremiumArticle').val();
     const mode = $('#mode').val();
@@ -91,6 +92,7 @@ function handleSubmitPost(urlHandle) {
     data.append('arrayOfTags', JSON.stringify(arrayOfTags));
     
     
+    
     if (avatar) {
         data.append('avatar', avatar);
     }
@@ -105,9 +107,11 @@ function handleSubmitPost(urlHandle) {
         if (res.status === 200) {
             mode === 'create' ? window.location.href = '/user/writer/post' : window.location.href = `/user/writer/post/${_articleID}`;
         } else {
+            // console.log(res.status);
             alert('Submit bài viết thất bại, thử lại sau.');
         }
     }).catch(err => {
+        console.log(err);
         alert('Submit bài viết thất bại, thử lại sau.');
     }).finally(() => {
         $('#submit').prop('disabled', false);
@@ -125,6 +129,7 @@ function handleSubmitPost2(urlHandle) {
     const oldSmallAvatar = $('#oldSmallAvatar').val();
     const _articleID = $('#_articleID').val();
     const isPremiumArticle = $('#isPremiumArticle').val();
+    const writerMain = $('#writerMain').val();
     
     const mode = $('#mode').val();
     
@@ -174,6 +179,7 @@ function handleSubmitPost2(urlHandle) {
     data.append('categorySub', categorySub);
     data.append('arrayOfTags', JSON.stringify(arrayOfTags));
     data.append('isPremiumArticle',isPremiumArticle);
+    data.append('writerMain',writerMain);
     
     if (avatar) {
         data.append('avatar', avatar);

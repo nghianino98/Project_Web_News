@@ -323,7 +323,7 @@ router.post('/edit', multer.single('avatar'), (req, res, next) => {
     var entity = req.body;
     entity.smallAvatar = req.body.oldSmallAvatar;
     entity.bigAvatar = req.body.oldBigAvatar;
-    var accountID = req.user.id;
+    var accountID = req.body.writerMain;
     var updateSmallAvatar;
     
     entity.arrayOfTags = JSON.parse(req.body.arrayOfTags);

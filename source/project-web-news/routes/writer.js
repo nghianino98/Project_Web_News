@@ -134,6 +134,7 @@ router.post('/post', multer.single('avatar'), (req, res, next) => {
             res.status(200).json({message: 'success'});
         })
         .catch(err => {
+            console.log(err);
             res.status(500).json({message: err.message});
         });
 });
@@ -156,6 +157,7 @@ router.post('/edit', multer.single('avatar'), (req, res, next) => {
             req.flash('successPost', 'Chỉnh sửa bài viết thành công');
             res.status(200).json({message: 'success'});
         }).catch(err => {
+            console.log(err);
             res.status(500).json({message: err.message});
         });
 });
@@ -201,6 +203,7 @@ router.get('/rejected', (req, res, next) => {
         
         res.render('writer/writer-list',
          { topic: "Danh sách bài viết bị từ chối",
+         
           layout: 'writer-layout', title: 'writer',
            listArticles: listArticles, writerName: _writerName,
            csrfToken: req.csrfToken() });
