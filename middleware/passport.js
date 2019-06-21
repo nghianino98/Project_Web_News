@@ -43,7 +43,7 @@ module.exports = (app) => {
                             }, 15 * 60 * 1000);
 
                             const token = jwt.generateJWT(result, 'fit-hcmus', 15 * 60);
-                            const url = `localhost:3000/user/confirm/${token}`;
+                            const url = `https://newsfeed-hcmus-nghia.herokuapp.com/user/confirm/${token}`;
 
                             // Cấu hình thư gửi
                             const mailOptions = {
