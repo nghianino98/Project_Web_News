@@ -126,7 +126,7 @@ router.post('/post', multer.single('avatar'), (req, res, next) => {
     entity.bigAvatar = req.file.path.substring(req.file.path.indexOf('\\')).replace(/\\/g,'/');
     entity.smallAvatar = '/uploads/thumbnail-' + req.file.filename;
 
-    Promise.all([sharp(req.file.path).resize({width: 150}).toFile(`./public${entity.smallAvatar}`), article.add(entity, accountID)])
+    Promise.all([sharp(req.file.path).resize({width: 200}).toFile(`./public${entity.smallAvatar}`), article.add(entity, accountID)])
         .then(succ => {
             req.flash('successPost', 'Thêm bài viết thành công');
             res.status(200).json({message: 'success'});
@@ -146,7 +146,7 @@ router.post('/edit', multer.single('avatar'), (req, res, next) => {
     entity.arrayOfTags = JSON.parse(req.body.arrayOfTags);
 
     if (req.file) {
-        updateSmallAvatar = sharp(req.file.path).resize({width: 150}).toFile(`./public${entity.smallAvatar}`);
+        updateSmallAvatar = sharp(req.file.path).resize({width: 200}).toFile(`./public${entity.smallAvatar}`);
     }
 
     Promise.all([updateSmallAvatar, article.findByIdAndUpdate(entity, accountID)])
@@ -163,7 +163,7 @@ router.post('/edit', multer.single('avatar'), (req, res, next) => {
 router.get('/waiting', (req, res, next) => {
     let _writerID = req.user.id;
 
-    article.find("approved", _writerID).then(listArticles => {
+    article.findWaiting("approved", _writerID).then(listArticles => {
         let _writerName = req.user.userName;
         console.log(_writerName);
         res.render('writer/writer-list', {
@@ -178,7 +178,7 @@ router.get('/waiting', (req, res, next) => {
 router.get('/published', (req, res, next) => {
     let _writerID = req.user.id;
 
-    article.find("published", _writerID).then(listArticles => {
+    article.findPublished("approved", _writerID).then(listArticles => {
         let _writerName = req.user.userName;
         console.log(_writerName);
         res.render('writer/writer-list', {

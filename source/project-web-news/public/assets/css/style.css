@@ -333,8 +333,8 @@ figure.effect-layla:hover figcaption::after, figure.effect-layla:hover h2, figur
 .material-icons.md-48 { font-size: 48px; }
 
 /* .content-article {display:flex;flex-direction:column} */
-.content-article-dad{display:flex}
-.content-article {display:flex;flex-direction:row;justify-content:space-between; margin-left: 5px}
+.content-article-dad{display:flex; flex-direction:column}
+.content-article {display:flex;flex-direction:column;justify-content:space-between; margin-left: 5px}
 .content-article-around {display:flex; flex-direction:column;justify-content:space-around}
 .tag-text{display:flex;flex-direction:column;justify-content: space-around}
 .badge {margin: 0 0 0 0}

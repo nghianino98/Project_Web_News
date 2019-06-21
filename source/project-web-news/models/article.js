@@ -93,6 +93,40 @@ module.exports = {
         });
     },
 
+    findWaiting: (statusArticles, writerID) => {
+        return new Promise((resolve, reject) => {
+            var recentDate = new Date();
+                
+            baibao.find({ status: statusArticles, writer: writerID,
+                postDate: {'$gt': recentDate} })
+                .populate('categoryMain', 'categoryName')
+                .populate('categorySub', 'categoryName')
+                .exec((err, succ) => {
+                    if (err)
+                        reject(err);
+                    else
+                        resolve(succ);
+                })
+        });
+    },
+
+    findPublished: (statusArticles, writerID) => {
+        return new Promise((resolve, reject) => {
+            var recentDate = new Date();
+                
+            baibao.find({ status: statusArticles, writer: writerID,
+                postDate: {'$lt': recentDate} })
+                .populate('categoryMain', 'categoryName')
+                .populate('categorySub', 'categoryName')
+                .exec((err, succ) => {
+                    if (err)
+                        reject(err);
+                    else
+                        resolve(succ);
+                })
+        });
+    },
+
     findAll: () => {
         return new Promise((resolve, reject) => {
             baibao.find()

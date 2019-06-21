@@ -329,7 +329,7 @@ router.post('/edit', multer.single('avatar'), (req, res, next) => {
     console.log(req.body);
 
     if (req.file) {
-        updateSmallAvatar = sharp(req.file.path).resize({width: 150}).toFile(`./public${entity.smallAvatar}`);
+        updateSmallAvatar = sharp(req.file.path).resize({width: 200}).toFile(`./public${entity.smallAvatar}`);
     }
 
     Promise.all([updateSmallAvatar, article.findByIdAndUpdate(entity, accountID)])
@@ -391,7 +391,7 @@ router.post('/post', multer.single('avatar'), (req, res, next) => {
     entity.bigAvatar = req.file.path.substring(req.file.path.indexOf('\\')).replace(/\\/g,'/');
     entity.smallAvatar = '/uploads/thumbnail-' + req.file.filename;
 
-    Promise.all([sharp(req.file.path).resize({width: 150}).toFile(`./public${entity.smallAvatar}`), article.add(entity, accountID)])
+    Promise.all([sharp(req.file.path).resize({width: 200}).toFile(`./public${entity.smallAvatar}`), article.add(entity, accountID)])
         .then(succ => {
             req.flash('successPost', 'Thêm bài viết thành công');
             res.status(200).json({message: 'success'});
