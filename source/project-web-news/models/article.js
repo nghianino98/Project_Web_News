@@ -172,7 +172,7 @@ module.exports = {
         return new Promise((resolve, reject) => {
             categorySub.findDad(entity.categorySub).then(succ => {
                 entity.categoryMain = succ.categoryMainID.id;
-                console.log(entity.arrayOfTags);
+                // console.log(entity.arrayOfTags);
                 var obj = {
                     title: entity.title,
                     content: entity.content,
@@ -263,7 +263,7 @@ module.exports = {
                         if (err)
                             reject(err);
                         else {
-                            console.log("get one article" + succ);
+                            // console.log("get one article" + succ);
                             resolve(succ);
                         }
                     })
@@ -285,7 +285,7 @@ module.exports = {
                     skip: 0,
                     limit: 10,
                     sort: {
-                        writeDate: -1
+                        postDate: -1
                     }
                 })
                 .populate('categorySub', '_id categoryName')
@@ -312,7 +312,7 @@ module.exports = {
                     skip: 0,
                     limit: 5,
                     sort: {
-                        writeDate: -1
+                        postDate: -1
                     }
                 })
                 .populate('categorySub', '_id categoryName')

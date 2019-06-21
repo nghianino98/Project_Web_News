@@ -40,6 +40,7 @@ function handleSubmitPost(urlHandle) {
     const oldBigAvatar = $('#oldBigAvatar').val();
     const oldSmallAvatar = $('#oldSmallAvatar').val();
     const _articleID = $('#_articleID').val();
+    const isPremiumArticle = $('#isPremiumArticle').val();
     const mode = $('#mode').val();
     
 
@@ -86,6 +87,7 @@ function handleSubmitPost(urlHandle) {
     data.append('abstract', abstract);
     data.append('content', content);
     data.append('categorySub', categorySub);
+    data.append('isPremiumArticle',isPremiumArticle);
     data.append('arrayOfTags', JSON.stringify(arrayOfTags));
     
     
@@ -122,6 +124,8 @@ function handleSubmitPost2(urlHandle) {
     const oldBigAvatar = $('#oldBigAvatar').val();
     const oldSmallAvatar = $('#oldSmallAvatar').val();
     const _articleID = $('#_articleID').val();
+    const isPremiumArticle = $('#isPremiumArticle').val();
+    
     const mode = $('#mode').val();
     
 
@@ -169,6 +173,7 @@ function handleSubmitPost2(urlHandle) {
     data.append('content', content);
     data.append('categorySub', categorySub);
     data.append('arrayOfTags', JSON.stringify(arrayOfTags));
+    data.append('isPremiumArticle',isPremiumArticle);
     
     if (avatar) {
         data.append('avatar', avatar);

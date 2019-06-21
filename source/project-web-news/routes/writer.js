@@ -117,7 +117,7 @@ router.post('/post', multer.single('avatar'), (req, res, next) => {
 
     entity.arrayOfTags = JSON.parse(req.body.arrayOfTags);
 
-    console.log(req.body.arrayOfTags);
+    console.log(entity);
 
     if (!req.file) {
         return res.status(500).json({message: 'Something wrong !!!'});

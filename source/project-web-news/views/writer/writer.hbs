@@ -137,6 +137,20 @@
               </div>
 
               <div class="form-group row">
+                
+                <label for="isPremiumArticle" class="col-12 col-form-label">Chế độ Premium: {{article.isPremiumArticle}} </label>
+                <div class="col-8">
+                  <select id="isPremiumArticle" name="isPremiumArticle" class="custom-select" required="required">
+                    <option value="{{article.isPremiumArticle}}" selected> Lựa chọn </option>
+    
+                    <option value="true"> Yes </option>
+                    <option value="false"> No </option>
+                    
+                  </select>
+                </div>
+              </div>
+
+              <div class="form-group row">
                 <label for="select" class="col-12 col-form-label">Chọn tag</label>
                 <div class="col-8">
                   <select class="form-control chosen-select" multiple class="standardSelect" tabindex="4" name="arrayOfTags[]" id="arrayOfTags"
@@ -269,6 +283,19 @@
                     {{#each listCategory}}
                     <option value="{{_id}}">{{categoryName}}</option>
                     {{/each}}
+                  </select>
+                </div>
+              </div>
+
+              <div class="form-group row">
+                <label for="isPremiumArticle" class="col-12 col-form-label">Set Premium</label>
+                <div class="col-8">
+                  <select id="isPremiumArticle" name="isPremiumArticle" class="custom-select" required="required">
+                    <option value="false" selected> -- set --</option>
+                    
+                    <option value="true"> Yes </option>
+                    <option value="false"> No </option>
+                    
                   </select>
                 </div>
               </div>
