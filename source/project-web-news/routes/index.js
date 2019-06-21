@@ -121,9 +121,9 @@ router.get('/list-articles/category/:id', (req, res, next) => {
     categoryMain.findSub(),
     articles.findNewest(),
     articles.findTop10(),
-    articles.findByCategorySub(idCate,limit,offset),
+    //articles.findByCategorySub(idCate,limit,offset),
     articles.countByCategorySub(idCate)
-  ]).then(([listCateMain,newestArticles,top10Articles,rows,count_rows])=>{
+  ]).then(([listCateMain,newestArticles,top10Articles,count_rows])=>{
     
 
     let total = count_rows;
@@ -148,18 +148,36 @@ router.get('/list-articles/category/:id', (req, res, next) => {
       
     }
 
-    //console.log(pages);
+    if (req.user == undefined){
+      articles.findByCategorySub(idCate,limit,offset).then(rows => {
+        res.render('list_articles', {
+          listCateMain,
+          newestArticles,
+          top10Articles,
+          pages,
+          listArticles: rows,
+          title: 'Express',
+          categorySub: true,
+          data: {intl: intlData}
+        });
+      })
+    }
+    else {
+        articles.findPreFirstCategorySub(idCate,limit,offset).then(rows => {
+          
+          res.render('list_articles', {
+            listCateMain,
+            newestArticles,
+            top10Articles,
+            pages,
+            listArticles: rows,
+            title: 'Express',
+            categorySub: true,
+            data: {intl: intlData}
+          });
+        })
+    }   
 
-    res.render('list_articles', {
-      listCateMain,
-      newestArticles,
-      top10Articles,
-      pages,
-      listArticles: rows,
-      title: 'Express',
-      categorySub: true,
-      data: {intl: intlData}
-    });
   })
  
 });
@@ -180,11 +198,10 @@ router.get('/list-articles/categorymain/:id', (req, res, next) => {
     categoryMain.findSub(),
     articles.findNewest(),
     articles.findTop10(),
-    articles.findByCategoryMain(idCate,limit,offset),
+    //articles.findByCategoryMain(idCate,limit,offset),
     articles.countByCategoryMain(idCate)
-  ]).then(([listCateMain,newestArticles,top10Articles,rows,count_rows])=>{
+  ]).then(([listCateMain,newestArticles,top10Articles,count_rows])=>{
     
-
     let total = count_rows;
     let nPages = Math.floor(total/limit);
     if(total % limit > 0) nPages++;
@@ -207,18 +224,37 @@ router.get('/list-articles/categorymain/:id', (req, res, next) => {
       
     }
 
-    //console.log(rows);
-
-    res.render('list_articles', {
-      listCateMain,
-      newestArticles,
-      top10Articles,
-      pages,
-      categoryMain:true,
-      listArticles: rows,
-      title: 'Express',
-      data: {intl: intlData}
-    });
+    
+    if (req.user == undefined){
+      articles.findByCategoryMain(idCate,limit,offset).then(rows => {
+        console.log(rows.length);
+        res.render('list_articles', {
+          listCateMain,
+          newestArticles,
+          top10Articles,
+          pages,
+          categoryMain:true,
+          listArticles: rows,
+          title: 'Express',
+          data: {intl: intlData}
+        });
+      })
+    }
+    else {
+        articles.findPreFirstCategoryMain(idCate,limit,offset).then(rows => {
+          
+          res.render('list_articles', {
+            listCateMain,
+            newestArticles,
+            top10Articles,
+            pages,
+            categoryMain:true,
+            listArticles: rows,
+            title: 'Express',
+            data: {intl: intlData}
+          });
+        })
+    }   
   })
 
 });
@@ -262,9 +298,9 @@ router.get('/search',(req,res,next)=>{
     categoryMain.findSub(),
     articles.findNewest(),
     articles.findTop10(),
-    articles.search(text,limit,offset),
+    //articles.search(text,limit,offset),
     articles.countsearch(text)
-  ]).then(([listCateMain,newestArticles,top10Articles,rows,count_rows])=>{
+  ]).then(([listCateMain,newestArticles,top10Articles,count_rows])=>{
     
     let total = count_rows;
     let nPages = Math.floor(total/limit);
@@ -287,19 +323,39 @@ router.get('/search',(req,res,next)=>{
       
     }
 
-    //console.log(pages);
+    if (req.user == undefined){
+      articles.search(text,limit,offset).then(rows => {
+        res.render('list_articles', {
+          listCateMain,
+          newestArticles,
+          top10Articles,
+          text,
+          search: true,
+          pages,
+          listArticles: rows,
+          title: 'Express',
+          data: {intl: intlData}
+        });
+      })
+    }
+    else {
+        articles.searchPreFirst(text,limit,offset).then(rows => {
+          res.render('list_articles', {
+            listCateMain,
+            newestArticles,
+            top10Articles,
+            text,
+            search: true,
+            pages,
+            listArticles: rows,
+            title: 'Express',
+            data: {intl: intlData}
+          });
+          
+        })
+    }   
 
-    res.render('list_articles', {
-      listCateMain,
-      newestArticles,
-      top10Articles,
-      text,
-      search: true,
-      pages,
-      listArticles: rows,
-      title: 'Express',
-      data: {intl: intlData}
-    });
+    
   })
 
 })
@@ -321,9 +377,9 @@ router.get('/list-articles/tag/:id', (req, res, next) => {
     articles.findNewest(),
     articles.findTop10(),
     tag.findById(idTag),
-    articles.findByTag(idTag,limit,offset),
+    //articles.findByTag(idTag,limit,offset),
     articles.countByTag(idTag)
-  ]).then(([listCateMain,newestArticles,top10Articles,tag,rows,count_rows])=>{
+  ]).then(([listCateMain,newestArticles,top10Articles,tag,count_rows])=>{
     
     let total = count_rows;
     let nPages = Math.floor(total/limit);
@@ -347,19 +403,39 @@ router.get('/list-articles/tag/:id', (req, res, next) => {
       
     }
 
-    //console.log(pages);
+    if (req.user == undefined){
+      articles.findByTag(idTag,limit,offset).then(rows => {
+        res.render('list_articles', {
+          listCateMain,
+          newestArticles,
+          top10Articles,
+          tag,
+          pages,
+          listArticles: rows,
+          title: 'Danh sách bài viết theo tag',
+          istag: true,
+          data: {intl: intlData}
+        });
+      })
+    }
+    else {
+        articles.findPreFirstByTag(idTag,limit,offset).then(rows => {
+          res.render('list_articles', {
+            listCateMain,
+            newestArticles,
+            top10Articles,
+            tag,
+            pages,
+            listArticles: rows,
+            title: 'Danh sách bài viết theo tag',
+            istag: true,
+            data: {intl: intlData}
+          });
+          
+        })
+    }   
 
-    res.render('list_articles', {
-      listCateMain,
-      newestArticles,
-      top10Articles,
-      tag,
-      pages,
-      listArticles: rows,
-      title: 'Danh sách bài viết theo tag',
-      istag: true,
-      data: {intl: intlData}
-    });
+   
   })
  
 });

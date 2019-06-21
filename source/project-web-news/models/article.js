@@ -427,6 +427,35 @@ module.exports = {
         });
     },
 
+    findPreFirstCategorySub: (idCateSub, limit, offset) => {
+        return new Promise((resolve, reject) => {
+                var recentDate = new Date();
+            baibao.find({
+                status: "approved",
+                postDate: {'$lt': recentDate},
+                categorySub: idCateSub
+            },
+                ['_id', 'title', 'bigAvatar', 'smallAvatar','categoryMain','categorySub', 'writeDate', 'postDate', 'views','abstract','arrayOfTags'],
+                {
+                    skip: offset,
+                    limit: limit,
+                    sort: {
+                        isPremiumArticle: -1,
+                        postDate: -1
+                    }
+                })
+                .populate('categorySub', '_id categoryName')
+                .populate('categoryMain','_id categoryName')
+                .populate('arrayOfTags','tagName')
+                .exec((err, succ) => {
+                    if (err)
+                        reject(err);
+                    else
+                        resolve(succ);
+                })
+        });
+    },
+
     countByCategorySub: (idCateSub) => {
         return new Promise((resolve, reject) => {
             var recentDate = new Date();
@@ -457,6 +486,35 @@ module.exports = {
                     skip: offset,
                     limit: limit,
                     sort: {
+                        postDate: -1
+                    }
+                })
+                .populate('categorySub', '_id categoryName')
+                .populate('categoryMain','_id categoryName')
+                .populate('arrayOfTags','tagName')
+                .exec((err, succ) => {
+                    if (err)
+                        reject(err);
+                    else
+                        resolve(succ);
+                })
+        });
+    },
+
+    findPreFirstCategoryMain: (idCateMain, limit, offset) => {
+        return new Promise((resolve, reject) => {
+            var recentDate = new Date();
+            baibao.find({
+                status: "approved",
+                postDate: {'$lt': recentDate},
+                categoryMain: idCateMain
+            },
+                ['_id', 'title', 'bigAvatar', 'smallAvatar','categoryMain','categorySub', 'writeDate', 'postDate', 'views','abstract','arrayOfTags'],
+                {
+                    skip: offset,
+                    limit: limit,
+                    sort: {
+                        isPremiumArticle: -1,
                         postDate: -1
                     }
                 })
@@ -517,6 +575,35 @@ module.exports = {
         })
     },
 
+    searchPreFirst: (text, limit, offset) => {
+        return new Promise((resolve, reject) => {
+            var recentDate = new Date();
+            
+            baibao.find({
+                $text: { $search: text },
+                status: "approved",
+                postDate: {'$lt': recentDate}
+            },
+            ['_id', 'title', 'bigAvatar', 'smallAvatar', 'categoryMain', 'categorySub', 'writeDate', 'postDate', 'views', 'abstract'],
+            {
+                skip: offset,
+                limit: limit,
+                sort: {
+                    isPremiumArticle: -1,
+                    postDate: -1
+                }
+            })
+            .populate('categoryMain', 'categoryName')
+            .populate('categorySub', 'categoryName')
+            .exec((err, succ) => {
+                if (err)
+                    reject(err);
+                else
+                    resolve(succ);
+            })
+        })
+    },
+
     countsearch: (text) => {
         return new Promise((resolve, reject) => {
             var recentDate = new Date();
@@ -547,6 +634,35 @@ module.exports = {
                     skip: offset,
                     limit: limit,
                     sort: {
+                        postDate: -1
+                    }
+                })
+                .populate('categorySub', '_id categoryName')
+                .populate('categoryMain','_id categoryName')
+                .populate('arrayOfTags','tagName')
+                .exec((err, succ) => {
+                    if (err)
+                        reject(err);
+                    else
+                        resolve(succ);
+                })
+        });
+    },
+
+    findPreFirstByTag: (idTag, limit, offset) => { 
+        return new Promise((resolve, reject) => {
+            var recentDate = new Date();
+            baibao.find({            
+                status: "approved",
+                postDate: {'$lt': recentDate},
+                arrayOfTags : mongoose.Types.ObjectId(idTag)
+            },
+                ['_id', 'title', 'bigAvatar', 'smallAvatar','categoryMain','categorySub', 'writeDate', 'postDate', 'views','abstract','arrayOfTags'],
+                {
+                    skip: offset,
+                    limit: limit,
+                    sort: {
+                        isPremiumArticle: -1,
                         postDate: -1
                     }
                 })
