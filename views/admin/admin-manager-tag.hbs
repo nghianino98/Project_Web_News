@@ -85,7 +85,7 @@
                 </th>  
                 <th>Tên tag</th>
                 {{!-- <center><center>Tag ID</center></center> --}}
-                <th><center>Bài viết</center></th>
+                {{!-- <th><center>Bài viết</center></th> --}}
                 <th><center>Thao tác</center></th>
               </tr>
             </thead>
@@ -101,7 +101,7 @@
                 </td>  
                 <td><a href="/list-articles/tag/{{_id}}">#{{tagName}}</a></td>
                 {{!-- <td><center><small>{{_id}}</small></center></td>                      --}}
-                <td><a href="/list-articles/tag/{{_id}}"><center><small>{{arrayOfArticles.length}}</small></center></a></td>
+                {{!-- <td><a href="/list-articles/tag/{{_id}}"><center><small>{{arrayOfArticles.length}}</small></center></a></td> --}}
                 <td><center>
                   <a href="javascript:;" id="{{_id}}" title="{{tagName}}" data-toggle="modal"
                       data-target="#updateTag" onclick="return updateTag(id,title)"><i class="fas fa-pencil-alt" title="Sửa tag"></i></a>
