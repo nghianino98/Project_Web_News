@@ -407,7 +407,7 @@ module.exports = {
                 postDate: {'$lt': recentDate},
                 categorySub: idCateSub
             },
-                ['_id', 'title', 'bigAvatar', 'smallAvatar','categoryMain','categorySub', 'writeDate', 'postDate', 'views','abstract','arrayOfTags'],
+                ['_id', 'title', 'bigAvatar', 'smallAvatar','categoryMain','categorySub', 'writeDate', 'postDate', 'views','abstract','arrayOfTags','isPremiumArticle'],
                 {
                     skip: offset,
                     limit: limit,
@@ -435,7 +435,7 @@ module.exports = {
                 postDate: {'$lt': recentDate},
                 categorySub: idCateSub
             },
-                ['_id', 'title', 'bigAvatar', 'smallAvatar','categoryMain','categorySub', 'writeDate', 'postDate', 'views','abstract','arrayOfTags'],
+                ['_id', 'title', 'bigAvatar', 'smallAvatar','categoryMain','categorySub', 'writeDate', 'postDate', 'views','abstract','arrayOfTags','isPremiumArticle'],
                 {
                     skip: offset,
                     limit: limit,
@@ -481,7 +481,7 @@ module.exports = {
                 postDate: {'$lt': recentDate},
                 categoryMain: idCateMain
             },
-                ['_id', 'title', 'bigAvatar', 'smallAvatar','categoryMain','categorySub', 'writeDate', 'postDate', 'views','abstract','arrayOfTags'],
+                ['_id', 'title', 'bigAvatar', 'smallAvatar','categoryMain','categorySub', 'writeDate', 'postDate', 'views','abstract','arrayOfTags','isPremiumArticle'],
                 {
                     skip: offset,
                     limit: limit,
@@ -556,7 +556,7 @@ module.exports = {
                 status: "approved",
                 postDate: {'$lt': recentDate}
             },
-            ['_id', 'title', 'bigAvatar', 'smallAvatar', 'categoryMain', 'categorySub', 'writeDate', 'postDate', 'views', 'abstract','arrayOfTags'],
+            ['_id', 'title', 'bigAvatar', 'smallAvatar', 'categoryMain', 'categorySub', 'writeDate', 'postDate', 'views', 'abstract','arrayOfTags','isPremiumArticle'],
             {
                 skip: offset,
                 limit: limit,
@@ -585,7 +585,7 @@ module.exports = {
                 status: "approved",
                 postDate: {'$lt': recentDate}
             },
-            ['_id', 'title', 'bigAvatar', 'smallAvatar', 'categoryMain', 'categorySub', 'writeDate', 'postDate', 'views', 'abstract','arrayOfTags'],
+            ['_id', 'title', 'bigAvatar', 'smallAvatar', 'categoryMain', 'categorySub', 'writeDate', 'postDate', 'views', 'abstract','arrayOfTags','isPremiumArticle'],
             {
                 skip: offset,
                 limit: limit,
@@ -631,7 +631,7 @@ module.exports = {
                 postDate: {'$lt': recentDate},
                 arrayOfTags : mongoose.Types.ObjectId(idTag)
             },
-                ['_id', 'title', 'bigAvatar', 'smallAvatar','categoryMain','categorySub', 'writeDate', 'postDate', 'views','abstract','arrayOfTags'],
+                ['_id', 'title', 'bigAvatar', 'smallAvatar','categoryMain','categorySub', 'writeDate', 'postDate', 'views','abstract','arrayOfTags','isPremiumArticle'],
                 {
                     skip: offset,
                     limit: limit,
@@ -659,7 +659,7 @@ module.exports = {
                 postDate: {'$lt': recentDate},
                 arrayOfTags : mongoose.Types.ObjectId(idTag)
             },
-                ['_id', 'title', 'bigAvatar', 'smallAvatar','categoryMain','categorySub', 'writeDate', 'postDate', 'views','abstract','arrayOfTags'],
+                ['_id', 'title', 'bigAvatar', 'smallAvatar','categoryMain','categorySub', 'writeDate', 'postDate', 'views','abstract','arrayOfTags','isPremiumArticle'],
                 {
                     skip: offset,
                     limit: limit,

@@ -7,6 +7,7 @@
             {{#if search}}
               <li class="breadcrumb-item active" aria-current="page"> Kết quả tìm kiếm
             </li>
+            
             {{/if}}
             {{#if categoryMain}}
               <li class="breadcrumb-item active" aria-current="page">{{listArticles.0.categoryMain.categoryName}}
@@ -29,13 +30,20 @@
         <div class="articles_one">
           <div href="/single-page/{{_id}}" class="">
             {{!-- <img height="150" width="200" alt="{{title}}" src="/images/left-pic-article.jpg"> --}}
+            
             <img height="150" width="200" alt="{{title}}" src="{{smallAvatar}}">
           </div>
           <div class="content-article">
             <div class="content-article bsbig_fig">
               <div>
                 <figcaption>
-                  <i class="material-icons">bookmarks</i> <a href="/single-page/{{_id}}">{{title}} </a>
+                  
+                  <i class="material-icons">bookmarks</i> <a href="/single-page/{{_id}}">{{title}}</a>
+                  {{#if isPremiumArticle}}
+                
+                        <span class="badge badge-dark">premium</span>
+                        
+                  {{/if}}
                 </figcaption>
               </div>
               <div>
